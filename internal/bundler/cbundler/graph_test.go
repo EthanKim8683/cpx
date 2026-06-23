@@ -180,15 +180,15 @@ func TestTopologicalSort(t *testing.T) {
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
 
-			sorted, err := topologicalSort(test.nodes)
+			sortedNodes, err := topologicalSort(test.nodes)
 			if test.err != nil {
 				require.EqualError(t, err, test.err.Error())
-				assert.Empty(t, sorted)
+				assert.Empty(t, sortedNodes)
 			} else {
 				require.NoError(t, err)
 
 				seen := make(map[*fileNode]struct{})
-				for _, node := range sorted {
+				for _, node := range sortedNodes {
 					for _, dependent := range node.dependents {
 						_, ok := seen[dependent]
 						assert.False(t, ok)
