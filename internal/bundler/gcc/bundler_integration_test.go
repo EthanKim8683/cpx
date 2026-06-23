@@ -1,11 +1,11 @@
-package gpp_test
+package gcc_test
 
 import (
 	"bytes"
 	"os/exec"
 	"testing"
 
-	"github.com/EthanKim8683/cpx/internal/bundler/gpp"
+	"github.com/EthanKim8683/cpx/internal/bundler/gcc"
 	"github.com/sebdah/goldie/v2"
 	"github.com/stretchr/testify/require"
 )
@@ -21,7 +21,7 @@ func TestBundler(t *testing.T) {
 		"-o",
 		"./testdata/src/main",
 	}
-	b, err := gpp.NewBundler("clang", flags)
+	b, err := gcc.NewBundler("clang", flags)
 	require.NoError(t, err)
 
 	bundle, err := b.Bundle(t.Context(), "./testdata/src/main.cpp")

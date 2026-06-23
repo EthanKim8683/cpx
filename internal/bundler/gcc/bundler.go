@@ -1,4 +1,4 @@
-package gpp
+package gcc
 
 import (
 	"github.com/EthanKim8683/cpx/internal/bundler/clang"
