@@ -4,11 +4,11 @@ import (
 	"testing"
 )
 
-func TestGXXNew(t *testing.T) {
+func TestGPPNew(t *testing.T) {
 	t.Parallel()
 
 }
 
-func TestGXXJoin(t *testing.T) {
+func TestGPPJoin(t *testing.T) {
 	t.Parallel()
 }

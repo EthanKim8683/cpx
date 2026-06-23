@@ -64,7 +64,7 @@ func TestNew(t *testing.T) {
 			metadata: &metadata.Metadata{
 				RelPath: "main.cpp",
 				Type:    metadata.MetadataTypeGXX,
-				GXX:     &metadata.GXXMetadata{},
+				GPP:     &metadata.GPPMetadata{},
 			},
 		},
 		"no arguments": {
@@ -112,17 +112,17 @@ func TestJoin(t *testing.T) {
 			lhs: &metadata.Metadata{
 				RelPath: "main.cpp",
 				Type:    metadata.MetadataTypeGXX,
-				GXX:     &metadata.GXXMetadata{},
+				GPP:     &metadata.GPPMetadata{},
 			},
 			rhs: &metadata.Metadata{
 				RelPath: "main.cpp",
 				Type:    metadata.MetadataTypeGXX,
-				GXX:     &metadata.GXXMetadata{},
+				GPP:     &metadata.GPPMetadata{},
 			},
 			metadata: &metadata.Metadata{
 				RelPath: "main.cpp",
 				Type:    metadata.MetadataTypeGXX,
-				GXX:     &metadata.GXXMetadata{},
+				GPP:     &metadata.GPPMetadata{},
 			},
 		},
 		"different paths": {
@@ -137,7 +137,7 @@ func TestJoin(t *testing.T) {
 		"different types": {
 			lhs: &metadata.Metadata{
 				Type: metadata.MetadataTypeGXX,
-				GXX:  &metadata.GXXMetadata{},
+				GPP:  &metadata.GPPMetadata{},
 			},
 			rhs: &metadata.Metadata{
 				Type: metadata.MetadataTypeUnspecified,

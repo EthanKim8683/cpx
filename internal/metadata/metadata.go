@@ -45,7 +45,7 @@ func (t MetadataType) String() string {
 type Metadata struct {
 	RelPath RelPath      `json:"path"`
 	Type    MetadataType `json:"type"`
-	GXX     *GXXMetadata `json:"g++"`
+	GPP     *GPPMetadata `json:"g++"`
 }
 
 func New(args []string) (*Metadata, error) {
@@ -55,7 +55,7 @@ func New(args []string) (*Metadata, error) {
 
 	switch args[0] {
 	case "g++":
-		return gxxNew(args[1:])
+		return gppNew(args[1:])
 	default:
 		return nil, fmt.Errorf("unexpected command: %s", args[0])
 	}
@@ -79,7 +79,7 @@ func Join(lhs, rhs *Metadata) (*Metadata, error) {
 
 	switch lhs.Type {
 	case MetadataTypeGXX:
-		return gxxJoin(lhs, rhs)
+		return gppJoin(lhs, rhs)
 	default:
 		return nil, fmt.Errorf("unexpected metadata type: %s", lhs.Type)
 	}

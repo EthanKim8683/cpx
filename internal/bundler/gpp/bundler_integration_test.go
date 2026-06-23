@@ -1,11 +1,11 @@
-package clangxx_test
+package gpp_test
 
 import (
 	"bytes"
 	"os/exec"
 	"testing"
 
-	"github.com/EthanKim8683/cpx/internal/bundler/clangxx"
+	"github.com/EthanKim8683/cpx/internal/bundler/gpp"
 	"github.com/sebdah/goldie/v2"
 	"github.com/stretchr/testify/require"
 )
@@ -21,7 +21,8 @@ func TestBundler(t *testing.T) {
 		"-o",
 		"./testdata/src/main",
 	}
-	b := clangxx.NewBundler("clang++", flags)
+	b, err := gpp.NewBundler("clang", flags)
+	require.NoError(t, err)
 
 	bundle, err := b.Bundle(t.Context(), "./testdata/src/main.cpp")
 	require.NoError(t, err)
@@ -33,7 +34,7 @@ func TestBundler(t *testing.T) {
 	)
 	cmd := exec.CommandContext(
 		t.Context(),
-		"clang++",
+		"g++",
 		append(flags, "-o", "/dev/null", "-x", "c++", "-")...,
 	)
 	cmd.Stdin = stdin

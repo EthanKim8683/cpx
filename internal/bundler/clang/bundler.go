@@ -1,4 +1,4 @@
-package clangxx
+package clang
 
 import (
 	"bytes"
@@ -24,7 +24,7 @@ func (b *Bundler) Bundle(ctx context.Context, sourcePath string) (string, error)
 	cmd.Stdout = stdout
 	cmd.Stderr = stderr
 	if err := cmd.Run(); err != nil {
-		err = fmt.Errorf("bundling with clang++ preprocessor: %w", err)
+		err = fmt.Errorf("bundling with clang preprocessor: %w", err)
 		if reason := strings.TrimSpace(stderr.String()); reason != "" {
 			err = fmt.Errorf("%w: %s", err, reason)
 		}
