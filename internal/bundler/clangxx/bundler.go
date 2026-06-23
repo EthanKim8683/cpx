@@ -36,22 +36,15 @@ func (b *Bundler) Bundle(ctx context.Context, sourcePath string) (string, error)
 var _ port.Bundler = (*Bundler)(nil)
 
 func NewBundler(command string, flags []string) *Bundler {
-	preprocessFlags := append(
-		make([]string, 0, 4+len(flags)),
-		"-E",
-		"-P",
-		"-fkeep-system-includes",
-		"-fdirectives-only",
-	)
-	for _, flag := range flags {
-		if strings.HasPrefix(flag, "-o") {
-			continue
-		}
-		preprocessFlags = append(preprocessFlags, flag)
-	}
-
 	return &Bundler{
 		command: command,
-		flags:   preprocessFlags,
+		flags: append(
+			flags,
+			"-o-",
+			"-E",
+			"-P",
+			"-fkeep-system-includes",
+			"-fdirectives-only",
+		),
 	}
 }

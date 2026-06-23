@@ -18,7 +18,8 @@ func TestBundler(t *testing.T) {
 	flags := []string{
 		"-std=c++17",
 		"-I./testdata/include",
-		"-o./testdata/src/main",
+		"-o",
+		"./testdata/src/main",
 	}
 	b := clangxx.NewBundler("clang++", flags)
 
@@ -33,7 +34,7 @@ func TestBundler(t *testing.T) {
 	cmd := exec.CommandContext(
 		t.Context(),
 		"clang++",
-		append(flags, "-o/dev/null", "-xc++", "-")...,
+		append(flags, "-o", "/dev/null", "-x", "c++", "-")...,
 	)
 	cmd.Stdin = stdin
 	cmd.Stderr = stderr
