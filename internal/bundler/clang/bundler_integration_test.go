@@ -15,15 +15,19 @@ func TestBundler(t *testing.T) {
 
 	g := goldie.New(t)
 
-	flags := []string{
-		"-std=c++17",
-		"-I./testdata/include",
-		"-o",
-		"./testdata/src/main",
-	}
-	b := clang.NewBundler("clang", flags)
+	var (
+		command = "clang++"
+		flags   = []string{
+			"-std=c++17",
+			"-I./testdata/include",
+			"-o",
+			"./testdata/src/main",
+		}
+		args = append(flags, "./testdata/src/main.cpp")
+	)
+	b := clang.NewBundler(append([]string{command}, args...))
 
-	bundle, err := b.Bundle(t.Context(), "./testdata/src/main.cpp")
+	bundle, err := b.Bundle(t.Context())
 	require.NoError(t, err)
 	g.Assert(t, t.Name(), []byte(bundle))
 
@@ -33,7 +37,7 @@ func TestBundler(t *testing.T) {
 	)
 	cmd := exec.CommandContext(
 		t.Context(),
-		"clang",
+		command,
 		append(flags, "-o", "/dev/null", "-x", "c++", "-")...,
 	)
 	cmd.Stdin = stdin

@@ -11,18 +11,26 @@ import (
 )
 
 type Bundler struct {
-	command string
-	flags   []string
+	args []string
 }
 
-func (b *Bundler) Bundle(ctx context.Context, sourcePath string) (string, error) {
+func (b *Bundler) Bundle(ctx context.Context) (string, error) {
 	var (
+		command = b.args[0]
+		args    = append(b.args[1:],
+			"-o-",
+			"-E",
+			"-P",
+			"-fkeep-system-includes",
+			"-fdirectives-only",
+		)
 		stdout = bytes.NewBuffer([]byte{})
 		stderr = bytes.NewBuffer([]byte{})
 	)
-	cmd := exec.CommandContext(ctx, b.command, append(b.flags, sourcePath)...)
+	cmd := exec.CommandContext(ctx, command, args...)
 	cmd.Stdout = stdout
 	cmd.Stderr = stderr
+
 	if err := cmd.Run(); err != nil {
 		err = fmt.Errorf("bundling with clang preprocessor: %w", err)
 		if reason := strings.TrimSpace(stderr.String()); reason != "" {
@@ -35,16 +43,8 @@ func (b *Bundler) Bundle(ctx context.Context, sourcePath string) (string, error)
 
 var _ port.Bundler = (*Bundler)(nil)
 
-func NewBundler(command string, flags []string) *Bundler {
+func NewBundler(args []string) *Bundler {
 	return &Bundler{
-		command: command,
-		flags: append(
-			flags,
-			"-o-",
-			"-E",
-			"-P",
-			"-fkeep-system-includes",
-			"-fdirectives-only",
-		),
+		args: args,
 	}
 }

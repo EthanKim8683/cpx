@@ -1,10 +1,11 @@
 
 #define FOO1_HPP 
-
-#define BAR_HPP 
 #include <iostream> /* clang -E -fkeep-system-includes */
 
 
+
+#define BAR_HPP 
+#include <iostream> /* clang -E -fkeep-system-includes */
 
 #define QUX_HPP 
 #include <iostream> /* clang -E -fkeep-system-includes */

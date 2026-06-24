@@ -5,6 +5,6 @@ import (
 	"github.com/EthanKim8683/cpx/internal/port"
 )
 
-func NewBundler(command string, flags []string) (port.Bundler, error) {
-	return clang.NewBundler(command, flags), nil
+func NewBundler(args []string) port.Bundler {
+	return clang.NewBundler(append([]string{"clang++"}, args[1:]...))
 }
