@@ -2,5 +2,5 @@
 
 
 int main() {
-  std::cout << "gcc" << std::endl;
+  std::cout << "g++" << std::endl;
 }

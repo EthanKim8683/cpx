@@ -2,8 +2,8 @@
 
 int main() {
 #if defined(__GNUC__) && !defined(__clang__)
-  std::cout << "gcc" << std::endl;
+  std::cout << "g++" << std::endl;
 #else
-  std::cout << "clang" << std::endl;
+  std::cout << "clang++" << std::endl;
 #endif
 }

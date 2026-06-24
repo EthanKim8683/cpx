@@ -1,13 +1,13 @@
 //go:build integration
 
-package gcc_test
+package gpp_test
 
 import (
 	"bytes"
 	"os/exec"
 	"testing"
 
-	"github.com/EthanKim8683/cpx/internal/bundler/gcc"
+	"github.com/EthanKim8683/cpx/internal/bundler/gpp"
 	"github.com/sebdah/goldie/v2"
 	"github.com/stretchr/testify/require"
 )
@@ -18,8 +18,8 @@ func TestBundler(t *testing.T) {
 	g := goldie.New(t)
 
 	var (
-		command = "g++"
-		flags   = []string{
+		executable = "/opt/homebrew/bin/g++-16"
+		flags      = []string{
 			"-std=c++17",
 			"-I./testdata/include",
 			"-o",
@@ -27,7 +27,7 @@ func TestBundler(t *testing.T) {
 		}
 		args = append(flags, "./testdata/main.cpp")
 	)
-	b := gcc.NewBundler(append([]string{command}, args...))
+	b := gpp.NewBundler(append([]string{executable}, args...))
 
 	bundle, err := b.Bundle(t.Context())
 	require.NoError(t, err)
@@ -39,7 +39,7 @@ func TestBundler(t *testing.T) {
 	)
 	cmd := exec.CommandContext(
 		t.Context(),
-		command,
+		executable,
 		append(flags, "-o", "/dev/null", "-x", "c++", "-")...,
 	)
 	cmd.Stdin = stdin

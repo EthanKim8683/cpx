@@ -3,4 +3,5 @@ set -eu
 mkdir -p .cpx
 # 1. kinda fishy
 # 2. bear is lowkey slow/buggy at times
-bear -o .cpx/compile_commands.json -- /Users/ethankim8683/bin/g++ "$@"
+# bear -o .cpx/compile_commands.json --
+/opt/homebrew/bin/g++-16 "$@"

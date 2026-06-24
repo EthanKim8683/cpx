@@ -1,0 +1,1 @@
+centralized config for paths to clang and gcc

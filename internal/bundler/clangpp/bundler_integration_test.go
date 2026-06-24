@@ -1,13 +1,13 @@
 //go:build integration
 
-package clang_test
+package clangpp_test
 
 import (
 	"bytes"
 	"os/exec"
 	"testing"
 
-	"github.com/EthanKim8683/cpx/internal/bundler/clang"
+	"github.com/EthanKim8683/cpx/internal/bundler/clangpp"
 	"github.com/sebdah/goldie/v2"
 	"github.com/stretchr/testify/require"
 )
@@ -18,8 +18,8 @@ func TestBundler(t *testing.T) {
 	g := goldie.New(t)
 
 	var (
-		command = "clang++"
-		flags   = []string{
+		executable = "clang++"
+		flags      = []string{
 			"-std=c++17",
 			"-I./testdata/include",
 			"-o",
@@ -27,7 +27,7 @@ func TestBundler(t *testing.T) {
 		}
 		args = append(flags, "./testdata/src/main.cpp")
 	)
-	b := clang.NewBundler(append([]string{command}, args...))
+	b := clangpp.NewBundler(append([]string{executable}, args...))
 
 	bundle, err := b.Bundle(t.Context())
 	require.NoError(t, err)
@@ -39,7 +39,7 @@ func TestBundler(t *testing.T) {
 	)
 	cmd := exec.CommandContext(
 		t.Context(),
-		command,
+		executable,
 		append(flags, "-o", "/dev/null", "-x", "c++", "-")...,
 	)
 	cmd.Stdin = stdin

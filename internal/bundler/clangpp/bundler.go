@@ -1,4 +1,4 @@
-package clang
+package clangpp
 
 import (
 	"bytes"
@@ -16,8 +16,8 @@ type Bundler struct {
 
 func (b *Bundler) Bundle(ctx context.Context) (string, error) {
 	var (
-		command = b.args[0]
-		args    = append(b.args[1:],
+		executable = b.args[0]
+		args       = append(b.args[1:],
 			"-o-",
 			"-E",
 			"-P",
@@ -27,7 +27,7 @@ func (b *Bundler) Bundle(ctx context.Context) (string, error) {
 		stdout = bytes.NewBuffer([]byte{})
 		stderr = bytes.NewBuffer([]byte{})
 	)
-	cmd := exec.CommandContext(ctx, command, args...)
+	cmd := exec.CommandContext(ctx, executable, args...)
 	cmd.Stdout = stdout
 	cmd.Stderr = stderr
 

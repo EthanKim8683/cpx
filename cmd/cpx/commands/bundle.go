@@ -8,7 +8,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/EthanKim8683/cpx/internal/bundler/gcc"
+	"github.com/EthanKim8683/cpx/internal/bundler/gpp"
 	"github.com/spf13/cobra"
 )
 
@@ -56,7 +56,7 @@ var BundleCmd = &cobra.Command{
 			}
 		}
 
-		b := gcc.NewBundler(withoutDefines)
+		b := gpp.NewBundler(withoutDefines)
 		bundle, err := b.Bundle(context.Background())
 		if err != nil {
 			log.Fatalf("bundling: %v", err)
