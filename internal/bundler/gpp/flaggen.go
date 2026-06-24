@@ -103,7 +103,6 @@ var flags = []string{
 		errs = errors.Join(errs, fmt.Errorf("writing includes: %w", err))
 	}
 	b.WriteString("}")
-
 	if errs != nil {
 		log.Fatal(errs.Error())
 	}

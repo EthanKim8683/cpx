@@ -3,6 +3,7 @@ package clangpp
 import (
 	"bytes"
 	"context"
+	"errors"
 	"fmt"
 	"os/exec"
 	"strings"
@@ -24,12 +25,12 @@ func (b *Bundler) Bundle(ctx context.Context) (string, error) {
 			"-fkeep-system-includes",
 			"-fdirectives-only",
 		)
-		stdout = bytes.NewBuffer([]byte{})
-		stderr = bytes.NewBuffer([]byte{})
+		stdout bytes.Buffer
+		stderr bytes.Buffer
 	)
 	cmd := exec.CommandContext(ctx, executable, args...)
-	cmd.Stdout = stdout
-	cmd.Stderr = stderr
+	cmd.Stdout = &stdout
+	cmd.Stderr = &stderr
 
 	if err := cmd.Run(); err != nil {
 		err = fmt.Errorf("bundling with clang preprocessor: %w", err)
@@ -43,8 +44,12 @@ func (b *Bundler) Bundle(ctx context.Context) (string, error) {
 
 var _ port.Bundler = (*Bundler)(nil)
 
-func NewBundler(args []string) port.Bundler {
+func NewBundler(args []string) (port.Bundler, error) {
+	if len(args) == 0 {
+		return nil, errors.New("no arguments provided")
+	}
+
 	return &Bundler{
 		args: args,
-	}
+	}, nil
 }

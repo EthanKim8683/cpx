@@ -9,6 +9,7 @@ import (
 	"strings"
 
 	"github.com/EthanKim8683/cpx/internal/bundler/gpp"
+	"github.com/EthanKim8683/cpx/internal/config"
 	"github.com/spf13/cobra"
 )
 
@@ -23,6 +24,8 @@ var BundleCmd = &cobra.Command{
 	Use:   "bundle",
 	Short: "Bundle a source file",
 	Run: func(cmd *cobra.Command, args []string) {
+		cfg := config.Load()
+
 		bytes, err := os.ReadFile("./.cpx/compile_commands.json")
 		if err != nil {
 			log.Fatalf("reading compile_commands.json: %v", err)
@@ -56,7 +59,10 @@ var BundleCmd = &cobra.Command{
 			}
 		}
 
-		b := gpp.NewBundler(withoutDefines)
+		b, err := gpp.NewBundler(cfg, withoutDefines)
+		if err != nil {
+			log.Fatalf("creating bundler: %v", err)
+		}
 		bundle, err := b.Bundle(context.Background())
 		if err != nil {
 			log.Fatalf("bundling: %v", err)
