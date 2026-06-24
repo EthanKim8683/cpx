@@ -4,9 +4,14 @@
 	echo "package gcc"
 	echo
 	echo "var clangFlags = []string{"
-	echo '  "-undef",'
-	g++ -v -E -x c++ /dev/null 2>&1 \
-        | grep -E '^[[:space:]][^[:space:]]+$$' \
-        | xargs -n1 -I{} echo '  "-isystem{}",'
+	{
+		g++ -v -E -x c - /dev/null
+		g++ -v -E -x c++ - /dev/null
+	} 2>&1 \
+		| grep -E '^[[:space:]][^[:space:]]+$' \
+		| sort -u \
+		| while read -r path; do
+			echo '  "-isystem'$path'",'
+		done
 	echo "}"
 } > "generated_flags.go"
