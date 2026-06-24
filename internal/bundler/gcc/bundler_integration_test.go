@@ -1,3 +1,5 @@
+//go:build integration
+
 package gcc_test
 
 import (
