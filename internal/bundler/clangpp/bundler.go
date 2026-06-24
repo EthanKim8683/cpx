@@ -3,7 +3,6 @@ package clangpp
 import (
 	"bytes"
 	"context"
-	"errors"
 	"fmt"
 	"os/exec"
 	"slices"
@@ -21,17 +20,17 @@ var bundleFlags = []string{
 }
 
 type Bundler struct {
-	args []string
+	executable string
+	args       []string
 }
 
 func (b *Bundler) Bundle(ctx context.Context) (string, error) {
 	var (
-		executable = b.args[0]
-		args       = slices.Concat(b.args[1:], bundleFlags)
-		stdout     bytes.Buffer
-		stderr     bytes.Buffer
+		args   = slices.Concat(b.args, bundleFlags)
+		stdout bytes.Buffer
+		stderr bytes.Buffer
 	)
-	cmd := exec.CommandContext(ctx, executable, args...)
+	cmd := exec.CommandContext(ctx, b.executable, args...)
 	cmd.Stdout = &stdout
 	cmd.Stderr = &stderr
 
@@ -47,12 +46,9 @@ func (b *Bundler) Bundle(ctx context.Context) (string, error) {
 
 var _ port.Bundler = (*Bundler)(nil)
 
-func NewBundler(args []string) (port.Bundler, error) {
-	if len(args) == 0 {
-		return nil, errors.New("no arguments provided")
-	}
-
+func NewBundler(executable string, args []string) port.Bundler {
 	return &Bundler{
-		args: args,
-	}, nil
+		executable: executable,
+		args:       args,
+	}
 }

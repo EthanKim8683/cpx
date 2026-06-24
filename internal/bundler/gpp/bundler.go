@@ -2,7 +2,6 @@ package gpp
 
 import (
 	"context"
-	"errors"
 	"slices"
 
 	"github.com/EthanKim8683/cpx/internal/bundler/clangpp"
@@ -20,16 +19,8 @@ func (b *Bundler) Bundle(ctx context.Context) (string, error) {
 
 var _ port.Bundler = (*Bundler)(nil)
 
-func NewBundler(cfg config.Config, args []string) (port.Bundler, error) {
-	if len(args) == 0 {
-		return nil, errors.New("no arguments provided")
-	}
-
-	b, err := clangpp.NewBundler(slices.Concat([]string{cfg.Clangpp}, flags, args[1:]))
-	if err != nil {
-		return nil, err
-	}
+func NewBundler(cfg config.Config, args []string) port.Bundler {
 	return &Bundler{
-		clangpp: b,
-	}, nil
+		clangpp: clangpp.NewBundler(cfg.Clangpp, slices.Concat(flags, args)),
+	}
 }

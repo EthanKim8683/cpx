@@ -59,10 +59,7 @@ var BundleCmd = &cobra.Command{
 			}
 		}
 
-		b, err := gpp.NewBundler(cfg, withoutDefines)
-		if err != nil {
-			log.Fatalf("creating bundler: %v", err)
-		}
+		b := gpp.NewBundler(cfg, withoutDefines)
 		bundle, err := b.Bundle(context.Background())
 		if err != nil {
 			log.Fatalf("bundling: %v", err)
