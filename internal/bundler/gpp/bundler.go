@@ -25,7 +25,10 @@ func NewBundler(cfg config.Config, args []string) (port.Bundler, error) {
 		return nil, errors.New("no arguments provided")
 	}
 
-	b, _ := clangpp.NewBundler(slices.Concat([]string{cfg.Clangpp}, flags, args[1:]))
+	b, err := clangpp.NewBundler(slices.Concat([]string{cfg.Clangpp}, flags, args[1:]))
+	if err != nil {
+		return nil, err
+	}
 	return &Bundler{
 		clangpp: b,
 	}, nil

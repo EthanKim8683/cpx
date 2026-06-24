@@ -11,13 +11,11 @@ import (
 	"log"
 	"os"
 	"os/exec"
-	"regexp"
+	"strconv"
 	"strings"
 
 	"github.com/EthanKim8683/cpx/internal/config"
 )
-
-var includeRegexp = regexp.MustCompile(`(?m)^\s(\S+)$`)
 
 func writeGppInfo(ctx context.Context, w io.Writer, gpp string) error {
 	output, err := exec.CommandContext(ctx, gpp, "--version").Output()
@@ -38,18 +36,15 @@ func writeDefines(ctx context.Context, gpp string, w io.Writer) error {
 	}
 
 	for line := range strings.SplitSeq(strings.TrimSpace(string(output)), "\n") {
-		tokens := strings.SplitN(line, " ", 3)
+		tokens := strings.SplitN(strings.TrimSpace(line), " ", 3)
 		if tokens[0] != "#define" {
 			continue
 		}
 		switch len(tokens) {
 		case 2:
-			fmt.Fprintf(w, "\t\"-D%s\",\n", tokens[1])
+			fmt.Fprintf(w, "\t%s,\n", strconv.Quote(fmt.Sprintf("-D%s", tokens[1])))
 		case 3:
-			definition := tokens[2]
-			definition = strings.ReplaceAll(definition, `\`, `\\`)
-			definition = strings.ReplaceAll(definition, `"`, `\"`)
-			fmt.Fprintf(w, "\t\"-D%s=%s\",\n", tokens[1], definition)
+			fmt.Fprintf(w, "\t%s,\n", strconv.Quote(fmt.Sprintf("-D%s=%s", tokens[1], tokens[2])))
 		}
 	}
 	return nil
@@ -61,9 +56,17 @@ func writeIncludes(ctx context.Context, gpp string, w io.Writer) error {
 		return err
 	}
 
-	matches := includeRegexp.FindAllStringSubmatch(string(output), -1)
-	for _, match := range matches {
-		fmt.Fprintf(w, "\t\"-isystem%s\",\n", match[1])
+	write := false
+	for line := range strings.SplitSeq(strings.TrimSpace(string(output)), "\n") {
+		line = strings.TrimSpace(line)
+		switch {
+		case line == "#include <...> search starts here:":
+			write = true
+		case line == "End of search list.":
+			write = false
+		case write:
+			fmt.Fprintf(w, "\t%s,\n", strconv.Quote(fmt.Sprintf("-isystem%s", line)))
+		}
 	}
 	return nil
 }

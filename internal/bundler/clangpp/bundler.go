@@ -6,10 +6,19 @@ import (
 	"errors"
 	"fmt"
 	"os/exec"
+	"slices"
 	"strings"
 
 	"github.com/EthanKim8683/cpx/internal/port"
 )
+
+var bundleFlags = []string{
+	"-o-",
+	"-E",
+	"-P",
+	"-fkeep-system-includes",
+	"-fdirectives-only",
+}
 
 type Bundler struct {
 	args []string
@@ -18,15 +27,9 @@ type Bundler struct {
 func (b *Bundler) Bundle(ctx context.Context) (string, error) {
 	var (
 		executable = b.args[0]
-		args       = append(b.args[1:],
-			"-o-",
-			"-E",
-			"-P",
-			"-fkeep-system-includes",
-			"-fdirectives-only",
-		)
-		stdout bytes.Buffer
-		stderr bytes.Buffer
+		args       = slices.Concat(b.args[1:], bundleFlags)
+		stdout     bytes.Buffer
+		stderr     bytes.Buffer
 	)
 	cmd := exec.CommandContext(ctx, executable, args...)
 	cmd.Stdout = &stdout

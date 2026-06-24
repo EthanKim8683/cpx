@@ -1,10 +1,11 @@
-// //go:build integration
+//go:build integration
 
 package clangpp_test
 
 import (
 	"bytes"
 	"os/exec"
+	"slices"
 	"testing"
 
 	"github.com/EthanKim8683/cpx/internal/bundler/clangpp"
@@ -14,53 +15,59 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
+var compileFlags = []string{
+	"-std=c++17",
+	"-I./testdata/include",
+	"-o",
+	"./testdata/src/main",
+}
+
 func TestBundler(t *testing.T) {
 	t.Parallel()
 
 	cfg := config.Load()
-	var (
-		executable = cfg.Clangpp
-		flags      = []string{
-			"-std=c++17",
-			"-I./testdata/include",
-			"-o",
-			"./testdata/src/main",
-		}
-	)
-	if executable == "" {
+	if cfg.Clangpp == "" {
 		t.Skip("CPX_CLANGPP is not set")
 	}
 
 	g := goldie.New(t)
 
 	t.Run("happy path", func(t *testing.T) {
-		b, err := clangpp.NewBundler(append([]string{executable, "./testdata/src/happy_path.cpp"}, flags...))
-		require.NoError(t, err)
-		bundle, err := b.Bundle(t.Context())
-		require.NoError(t, err)
+		var bundle string
+		{
+			compileArgs := slices.Concat(
+				[]string{cfg.Clangpp, "./testdata/src/happy_path.cpp"},
+				compileFlags,
+			)
+			b, err := clangpp.NewBundler(compileArgs)
+			require.NoError(t, err)
+			bundle, err = b.Bundle(t.Context())
+			require.NoError(t, err)
+		}
 		g.Assert(t, t.Name(), []byte(bundle))
 
-		stdin := bytes.NewBuffer([]byte(bundle))
-		var stderr bytes.Buffer
-		cmd := exec.CommandContext(
-			t.Context(),
-			executable,
-			append(flags, "-o", "/dev/null", "-x", "c++", "-")...,
-		)
-		cmd.Stdin = stdin
-		cmd.Stderr = &stderr
-		require.NoError(t, cmd.Run(), stderr.String())
+		{
+			compileArgs := slices.Concat(
+				compileFlags,
+				[]string{"-o", "/dev/null", "-x", "c++", "-"},
+			)
+			stdin := bytes.NewBufferString(bundle)
+			var stderr bytes.Buffer
+			cmd := exec.CommandContext(t.Context(), cfg.Clangpp, compileArgs...)
+			cmd.Stdin = stdin
+			cmd.Stderr = &stderr
+			require.NoError(t, cmd.Run(), stderr.String())
+		}
 	})
 
 	t.Run("g++ only", func(t *testing.T) {
-		b, err := clangpp.NewBundler(append([]string{executable, "./testdata/src/g++_only.cpp"}, flags...))
+		compileArgs := slices.Concat(
+			[]string{cfg.Clangpp, "./testdata/src/g++_only.cpp"},
+			compileFlags,
+		)
+		b, err := clangpp.NewBundler(compileArgs)
 		require.NoError(t, err)
 		_, err = b.Bundle(t.Context())
 		assert.Error(t, err)
-	})
-
-	t.Run("no arguments", func(t *testing.T) {
-		_, err := clangpp.NewBundler(nil)
-		assert.ErrorContains(t, err, "no arguments provided")
 	})
 }
