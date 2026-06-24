@@ -1,7 +1,7 @@
 #ifndef BAR_HPP
 #define BAR_HPP
 
-#include <iostream>
+#include <bits/stdc++.h>
 
 #include "qux.hpp"
 

@@ -43,7 +43,7 @@ func (b *Bundler) Bundle(ctx context.Context) (string, error) {
 
 var _ port.Bundler = (*Bundler)(nil)
 
-func NewBundler(args []string) *Bundler {
+func NewBundler(args []string) port.Bundler {
 	return &Bundler{
 		args: args,
 	}

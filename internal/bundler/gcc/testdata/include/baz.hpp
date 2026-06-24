@@ -1,7 +1,7 @@
 #ifndef BAZ_HPP
 #define BAZ_HPP
 
-#include <iostream>
+#include <bits/stdc++.h>
 
 #include "qux.hpp"
 

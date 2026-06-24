@@ -1,7 +1,7 @@
 #ifndef QUX_HPP
 #define QUX_HPP
 
-#include <iostream>
+#include <bits/stdc++.h>
 
 void qux() { std::cout << "qux" << std::endl; }
 

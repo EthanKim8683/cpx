@@ -1,7 +1,7 @@
 #ifndef FOO1_HPP
 #define FOO1_HPP
 
-#include <iostream>
+#include <bits/stdc++.h>
 
 #include "bar.hpp"
 #include "baz.hpp"

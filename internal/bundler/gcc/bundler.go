@@ -1,10 +1,25 @@
 package gcc
 
 import (
+	"context"
+
 	"github.com/EthanKim8683/cpx/internal/bundler/clang"
 	"github.com/EthanKim8683/cpx/internal/port"
 )
 
+type Bundler struct {
+	clangBundler port.Bundler
+}
+
+func (b *Bundler) Bundle(ctx context.Context) (string, error) {
+	return b.clangBundler.Bundle(ctx)
+}
+
 func NewBundler(args []string) port.Bundler {
-	return clang.NewBundler(append([]string{"clang++"}, args[1:]...))
+	clangArgs := []string{"clang++"}
+	clangArgs = append(clangArgs, args[1:]...)
+	clangArgs = append(clangArgs, clangFlags...)
+	return &Bundler{
+		clangBundler: clang.NewBundler(clangArgs),
+	}
 }

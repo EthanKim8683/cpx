@@ -1,0 +1,4 @@
+#!/usr/bin/env sh
+set -eu
+mkdir -p .cpx
+bear -o .cpx/compile_commands.json -- /Users/ethankim8683/bin/g++ "$@"
