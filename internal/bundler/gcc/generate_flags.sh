@@ -4,6 +4,7 @@
 	echo "package gcc"
 	echo
 	echo "var clangFlags = []string{"
+	echo '  "-undef",'
 	g++ -v -E -x c++ /dev/null 2>&1 \
         | grep -E '^[[:space:]][^[:space:]]+$$' \
         | xargs -n1 -I{} echo '  "-isystem{}",'

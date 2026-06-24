@@ -1,4 +1,6 @@
 #!/usr/bin/env sh
 set -eu
 mkdir -p .cpx
+# 1. kinda fishy
+# 2. bear is lowkey slow
 bear -o .cpx/compile_commands.json -- /Users/ethankim8683/bin/g++ "$@"

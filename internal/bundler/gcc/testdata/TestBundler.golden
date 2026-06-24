@@ -1,47 +1,4 @@
-
-#define FOO1_HPP 
 #include <bits/stdc++.h> /* clang -E -fkeep-system-includes */
 
 
-
-#define BAR_HPP 
-#include <bits/stdc++.h> /* clang -E -fkeep-system-includes */
-
-
-
-#define QUX_HPP 
-#include <bits/stdc++.h> /* clang -E -fkeep-system-includes */
-
-
-void qux() { std::cout << "qux" << std::endl; }
-
-void bar() {
-  qux();
-  std::cout << "bar" << std::endl;
-}
-
-#define BAZ_HPP 
-#include <bits/stdc++.h> /* clang -E -fkeep-system-includes */
-
-void baz() {
-  qux();
-  std::cout << "baz" << std::endl;
-}
-
-void foo1() {
-  bar();
-  baz();
-  std::cout << "foo1" << std::endl;
-}
-
-
-#define FOO2_HPP 
-#include <bits/stdc++.h> /* clang -E -fkeep-system-includes */
-
-
-void foo2() { std::cout << "foo2" << std::endl; }
-
-int main() {
-  foo1();
-  foo2();
-}
+int main() {}

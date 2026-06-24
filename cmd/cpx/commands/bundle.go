@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"strings"
 
 	"github.com/EthanKim8683/cpx/internal/bundler/gcc"
 	"github.com/spf13/cobra"
@@ -42,7 +43,20 @@ var BundleCmd = &cobra.Command{
 			log.Fatalf("compile command not found for %s", args[0])
 		}
 
-		b := gcc.NewBundler(compileArgs)
+		// TODO: kinda hacky; make this an option or something
+		withoutDefines := make([]string, 0, len(compileArgs))
+		for i := 0; i < len(compileArgs); i++ {
+			arg := compileArgs[i]
+			switch {
+			case arg == "-D":
+				i++
+			case strings.HasPrefix(arg, "-D"):
+			default:
+				withoutDefines = append(withoutDefines, arg)
+			}
+		}
+
+		b := gcc.NewBundler(withoutDefines)
 		bundle, err := b.Bundle(context.Background())
 		if err != nil {
 			log.Fatalf("bundling: %v", err)

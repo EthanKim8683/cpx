@@ -21,9 +21,9 @@ func TestBundler(t *testing.T) {
 			"-std=c++17",
 			"-I./testdata/include",
 			"-o",
-			"./testdata/src/main",
+			"./testdata/main",
 		}
-		args = append(flags, "./testdata/src/main.cpp")
+		args = append(flags, "./testdata/main.cpp")
 	)
 	b := gcc.NewBundler(append([]string{command}, args...))
 
