@@ -1,4 +1,6 @@
 #include <bits/stdc++.h> /* clang -E -fkeep-system-includes */
 
 
-int main() {}
+int main() {
+  std::cout << "gcc" << std::endl;
+}

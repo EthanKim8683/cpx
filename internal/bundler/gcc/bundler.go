@@ -17,8 +17,8 @@ func (b *Bundler) Bundle(ctx context.Context) (string, error) {
 
 func NewBundler(args []string) port.Bundler {
 	clangArgs := []string{"clang++"}
-	clangArgs = append(clangArgs, args[1:]...)
 	clangArgs = append(clangArgs, clangFlags...)
+	clangArgs = append(clangArgs, args[1:]...)
 	return &Bundler{
 		clangBundler: clang.NewBundler(clangArgs),
 	}

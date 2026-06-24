@@ -4,14 +4,26 @@
 	echo "package gcc"
 	echo
 	echo "var clangFlags = []string{"
+	echo "  \"-undef\","
 	{
-		g++ -v -E -x c - /dev/null
-		g++ -v -E -x c++ - /dev/null
+		g++ -E -dM -x c /dev/null
+		g++ -E -dM -x c++ /dev/null
+	}	\
+		| sort -u \
+		| awk '{
+			name = $2
+			$1 = $2 = ""
+			sub(/^ +/, "")
+			gsub(/\\/, "\\\\")
+			gsub(/"/, "\\\"")
+			printf "  \"-D%s=%s\",\n", name, $0
+		}'
+	{
+		g++ -v -E -x c /dev/null
+		g++ -v -E -x c++ /dev/null
 	} 2>&1 \
 		| grep -E '^[[:space:]][^[:space:]]+$' \
 		| sort -u \
-		| while read -r path; do
-			echo '  "-isystem'$path'",'
-		done
+		| xargs -n1 -I{} echo "  \"-isystem{}\","
 	echo "}"
 } > "generated_flags.go"
