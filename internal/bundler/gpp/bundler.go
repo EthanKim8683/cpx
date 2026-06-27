@@ -2,10 +2,8 @@ package gpp
 
 import (
 	"context"
-	"slices"
 
-	"github.com/EthanKim8683/cpx/internal/bundler/clangpp"
-	"github.com/EthanKim8683/cpx/internal/config"
+	"github.com/EthanKim8683/cpx/internal/cdb"
 	"github.com/EthanKim8683/cpx/internal/port"
 )
 
@@ -19,8 +17,9 @@ func (b *Bundler) Bundle(ctx context.Context) (string, error) {
 
 var _ port.Bundler = (*Bundler)(nil)
 
-func NewBundler(cfg config.Config, args []string) port.Bundler {
-	return &Bundler{
-		clangpp: clangpp.NewBundler(cfg.Clangpp, slices.Concat(flags, args)),
-	}
+func NewBundler(co cdb.CommandObject) port.Bundler {
+	// return &Bundler{
+	// 	clangpp: clangpp.NewBundler(executable, slices.Concat(flags, args)),
+	// }
+	return nil
 }

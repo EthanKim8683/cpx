@@ -60,6 +60,18 @@ func TestBundler(t *testing.T) {
 			},
 		)
 		_, err := b.Bundle(t.Context())
-		assert.Error(t, err)
+		assert.ErrorContains(t, err, "bits/stdc++.h")
+	})
+
+	t.Run("multiple files", func(t *testing.T) {
+		b := clangpp.NewBundler(
+			cfg.Clangpp,
+			[]string{
+				"./testdata/src/multiple_files.cpp",
+				"./testdata/src/multiple_files.cpp",
+			},
+		)
+		_, err := b.Bundle(t.Context())
+		assert.ErrorContains(t, err, "multiple")
 	})
 }

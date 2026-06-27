@@ -28,7 +28,7 @@ func TestBundler(t *testing.T) {
 
 	t.Run("happy path", func(t *testing.T) {
 		b := gpp.NewBundler(
-			cfg,
+			cfg.Clangpp,
 			[]string{
 				"-I./testdata/include",
 				"-o./testdata/happy_path",
