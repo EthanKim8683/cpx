@@ -1,6 +1,6 @@
 # Agent docs
 
 
-| Doc | Title |
-| --- | ----- |
-| [workflow.md](workflow.md) | Agent workflow |
+| Doc | Description |
+| --- | ----------- |
+| [rfcs-through-issues.md](rfcs-through-issues.md) | Work out design and workflow decisions through issue comments |
