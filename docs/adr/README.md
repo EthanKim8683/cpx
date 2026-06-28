@@ -1,9 +1,10 @@
 # Architecture Decision Records
 
 
-| ADR                           | Title         | Status   |
-| ----------------------------- | ------------- | -------- |
-| [0001](0001-configuration.md) | Configuration | Accepted |
+| ADR                                      | Title                  | Status   |
+| ---------------------------------------- | ---------------------- | -------- |
+| [0001](0001-configuration.md)          | Configuration          | Accepted |
+| [0002](0002-compilation-database.md)     | Compilation Database   | Accepted |
 
 
 ## Format
