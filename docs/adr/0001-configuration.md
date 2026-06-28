@@ -30,6 +30,18 @@ Environment variables are the shared configuration API across all tools.
 
 Makefile assignments (`VAR := foo`) override imported environment variables. An optional `include config.mk` can provide Make-native defaults when direnv is not in use.
 
+## Alternatives
+
+- **Per-tool `.env` parsing** — each of Go, Make, and AWK reads `.env` independently. Rejected; duplicates loading logic across languages.
+- **Generated bridge artifacts** — a tool generates `config.mk` and other files from a single manifest. Discussed; not chosen as the primary path once direnv handles loading.
+- **`include config.mk` as primary config** — Make-native variables without direnv. Not chosen as the primary path; kept only as an optional fallback.
+
+## Consequences
+
+- **direnv dependency** — the primary dev workflow assumes direnv is installed and allowed.
+- **Make variable shadowing** — Makefile assignments override imported env vars; easy to accidentally break config.
+- **AWK requires explicit passing** — AWK scripts do not automatically inherit Make variables; recipes must pass vars via `-v` or `export`.
+
 ## References
 
 - [CP-9: Configuration ADR](https://linear.app/ethankim8683/issue/CP-9/configuration-adr)
