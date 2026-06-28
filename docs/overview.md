@@ -1,6 +1,6 @@
-# CPX
+# cpx
 
-CPX is a CLI-oriented tool (and supporting library code) for competitive programming workflows: preparing submissions, fetching problem/contest material, and setting up workspace structure.
+cpx is a CLI-oriented tool (and supporting library code) for competitive programming workflows: preparing submissions, fetching problem/contest material, and setting up workspace structure.
 
 ## Goal
 

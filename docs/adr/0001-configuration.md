@@ -6,7 +6,7 @@
 
 ## Context
 
-CPX integrates Go, Make, AWK, go generate, and other tooling. The original implementation never had a single source of truth for configuration shared across these tools. `.env` was the intended source, but loading and sharing it never felt clean — especially for Make, which cannot `include` a `.env` file directly and has its own variable system on top of environment variables.
+cpx integrates Go, Make, AWK, go generate, and other tooling. The original implementation never had a single source of truth for configuration shared across these tools. `.env` was the intended source, but loading and sharing it never felt clean — especially for Make, which cannot `include` a `.env` file directly and has its own variable system on top of environment variables.
 
 ## Decision
 
