@@ -34,12 +34,15 @@ cpx-specific split; see [Code Review Comments](https://go.dev/wiki/CodeReviewCom
 
 **Do**
 
-- Put test fixtures in `testdata/`.
-- Put committed runtime or generated data in `data/` within the package that loads it.
+- Put test fixtures in `testdata/` (committed).
+- Name directories after what they hold — e.g. `config/` for generated compiler option YAML, not a generic `data/`.
+- Keep types and loading logic in sibling `.go` files at the package root (`config.go` loads from `config/*.yaml`); a `config/` directory holds files only, not a separate Go package.
 
 **Do not**
 
-- Mix test fixtures and runtime data in the same directory.
+- Use a vague `data/` folder when a specific name describes the contents.
+- Create a `config/` **subpackage** (`package config`) when `config.go` in the parent package is enough — the folder is for artifacts, not code.
+- Mix test fixtures and generated build inputs in the same directory.
 
 ## Code generation
 
@@ -50,13 +53,23 @@ cpx-specific; see [ADR-0001](../adr/0001-configuration.md) for env loading.
 - Wire generation with `//go:generate` (in the file it relates to, or `doc.go` for package-wide directives).
 - Run external tools (`clang-tblgen`, AWK) inside `generate/*/main.go` under the parent package.
 - Read generation inputs from direnv-loaded env vars.
-- Commit generated artifacts consumed at build time (YAML, `zz_generated.*.go`).
+- Write generated output to a specifically named directory (e.g. `internal/cdb/config/clang.yaml`).
+- Gitignore generated build inputs; regenerate locally with `go generate ./...` before building or testing.
+- Run `go generate` in CI before tests — same model as GCC/Clang, which do not commit generated option tables.
 
 **Do not**
 
+- Commit large generated artifacts (compiler option configs, codegen output). They are reproducible from upstream sources and bloat the repo.
 - Import `generate/` from the library package.
 
 Makefile or CI may run `go generate ./...` — it does not run on `go build`.
+
+**Committed vs generated**
+
+| Artifact | Committed? | Example |
+| --- | --- | --- |
+| Golden test files | Yes — reviewable test expectations | `testdata/*.golden` |
+| Generated build inputs | No — regenerate from source | `config/clang.yaml`, `config/gcc.yaml` |
 
 ## Naming
 
@@ -77,10 +90,11 @@ Golden file testing — pattern from [Advanced Testing with Go](https://www.yout
 
 **Use for**
 
-- Large or complex expected output (bundled source, JSON, generated YAML) where the PR diff should be reviewable.
+- Large or complex **committed test expectations** (bundled source output) where the PR diff should be reviewable.
 
 **Do not use for**
 
+- Generated build inputs (compiler option configs) — those are gitignored and regenerated locally.
 - Small values — use [go-cmp](#go-cmp) or inline checks.
 
 ### go-cmp
