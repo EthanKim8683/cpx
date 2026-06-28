@@ -1,13 +1,13 @@
 //go:build integration
 
-package clangpp_test
+package clang_test
 
 import (
 	"bytes"
 	"os/exec"
 	"testing"
 
-	"github.com/EthanKim8683/cpx/internal/bundler/clangpp"
+	"github.com/EthanKim8683/cpx/internal/bundler/clang"
 	"github.com/EthanKim8683/cpx/internal/config"
 	"github.com/sebdah/goldie/v2"
 	"github.com/stretchr/testify/assert"
@@ -25,7 +25,7 @@ func TestBundler(t *testing.T) {
 	g := goldie.New(t)
 
 	t.Run("happy path", func(t *testing.T) {
-		b := clangpp.NewBundler(
+		b := clang.NewBundler(
 			cfg.Clangpp,
 			[]string{
 				"-I./testdata/include",
@@ -52,7 +52,7 @@ func TestBundler(t *testing.T) {
 	})
 
 	t.Run("g++ only", func(t *testing.T) {
-		b := clangpp.NewBundler(
+		b := clang.NewBundler(
 			cfg.Clangpp,
 			[]string{
 				"./testdata/src/g++_only.cpp",
@@ -64,7 +64,7 @@ func TestBundler(t *testing.T) {
 	})
 
 	t.Run("multiple files", func(t *testing.T) {
-		b := clangpp.NewBundler(
+		b := clang.NewBundler(
 			cfg.Clangpp,
 			[]string{
 				"./testdata/src/multiple_files.cpp",
@@ -72,6 +72,6 @@ func TestBundler(t *testing.T) {
 			},
 		)
 		_, err := b.Bundle(t.Context())
-		assert.ErrorContains(t, err, "multiple")
+		assert.NoError(t, err)
 	})
 }

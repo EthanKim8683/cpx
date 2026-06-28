@@ -1,13 +1,13 @@
 //go:build integration
 
-package gpp_test
+package gcc_test
 
 import (
 	"bytes"
 	"os/exec"
 	"testing"
 
-	"github.com/EthanKim8683/cpx/internal/bundler/gpp"
+	"github.com/EthanKim8683/cpx/internal/bundler/gcc"
 	"github.com/EthanKim8683/cpx/internal/config"
 	"github.com/sebdah/goldie/v2"
 	"github.com/stretchr/testify/require"
@@ -27,8 +27,9 @@ func TestBundler(t *testing.T) {
 	g := goldie.New(t)
 
 	t.Run("happy path", func(t *testing.T) {
-		b := gpp.NewBundler(
+		b := gcc.NewBundler(
 			cfg.Clangpp,
+			cfg.Gpp,
 			[]string{
 				"-I./testdata/include",
 				"-o./testdata/happy_path",
