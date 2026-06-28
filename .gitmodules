@@ -1,3 +1,0 @@
-[submodule "third_party/gcc"]
-	path = third_party/gcc
-	url = https://github.com/gcc-mirror/gcc.git
