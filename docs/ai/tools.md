@@ -1,33 +1,38 @@
 # Tools
 
-External services agents use when working in cpx.
-
-## Rule
-
-**Issues and RFCs → Linear. Code → GitHub.**
+External services agents use when working in cpx. Each tool has its own section below. When a new integration is adopted, add a section here following the same shape.
 
 ## Linear
 
-Use Linear for all issue work:
+Issue tracking and design discussion.
 
-- Create and update issues
-- Track status
-- Design and RFC discussion
+**Use for**
 
-Default to Linear for anything that is not code.
+- Creating and updating issues
+- Tracking status
+- RFC and design threads
 
-GitHub issues are a sync mirror of Linear. Do not create issues on GitHub or drive issue workflow there.
+**Do not use for**
 
-For RFC threads on synced issues, follow [rfcs-through-issues.md](rfcs-through-issues.md): reply to the synced comment thread, not a top-level Linear comment.
+- Commits, branches, or pull requests (use GitHub)
+
+**Conventions**
+
+- Default to Linear for anything that is not code.
+- GitHub issues are a sync mirror — do not create issues on GitHub or drive issue workflow there.
+- On synced issues, follow [rfcs-through-issues.md](rfcs-through-issues.md): reply to the synced comment thread, not a top-level Linear comment.
 
 ## GitHub
 
-Use GitHub for code only:
+Source control, code review, and CI.
+
+**Use for**
 
 - Commits and branches
 - Pull requests and code review
 - CI checks (`gh` CLI)
 
-## Adding tools
+**Do not use for**
 
-This doc grows as new integrations are adopted. When a tool is added, document what it is for and when agents should use it.
+- Creating or managing issues (use Linear)
+- RFC discussion (use Linear)
