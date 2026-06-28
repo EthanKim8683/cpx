@@ -5,7 +5,6 @@
 | ---------------------------------------- | ---------------------- | -------- |
 | [0001](0001-configuration.md)          | Configuration          | Accepted |
 | [0002](0002-compilation-database.md)     | Compilation Database   | Accepted |
-| [0003](0003-agent-workflow.md)           | Agent Workflow         | Accepted |
 
 
 ## Format
