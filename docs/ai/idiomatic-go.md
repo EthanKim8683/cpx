@@ -1,244 +1,115 @@
 # Idiomatic Go
 
-Repo-specific Go conventions for cpx. This is not a Go tutorial — see [Effective Go](https://go.dev/doc/effective_go), [Go Code Review Comments](https://go.dev/wiki/CodeReviewComments), and [Organizing a Go module](https://go.dev/doc/modules/layout) for language and module basics.
+Read the sources below first. They are the authority on idiomatic Go — this doc only records **what cpx adds** on top of them. Do not duplicate their guidance here; link out instead.
 
-Each topic has its own section below. When a new convention area emerges, add a section here following the same shape. Productivity libraries that encode idioms (golden testing, diff comparisons, linting) have their own section and grow as cpx adopts them.
+When a new cpx-specific convention emerges, add a section below following the same shape.
 
-## Formatting
+## Sources
 
-Mechanical style is handled by tools, not by hand.
-
-**Do**
-
-- Run `gofmt` or `goimports` on all Go code before committing.
-- Let the formatter resolve indentation, alignment, and import grouping.
-
-**Do not**
-
-- Hand-format to work around `gofmt` — rearrange the code instead.
+| Source | Covers |
+| --- | --- |
+| [Effective Go](https://go.dev/doc/effective_go) | Language idioms, naming, formatting, errors, methods, interfaces |
+| [Go Code Review Comments](https://go.dev/wiki/CodeReviewComments) | Practical review checklist — formatting, errors, interfaces, receivers, doc comments, tests |
+| [Organizing a Go module](https://go.dev/doc/modules/layout) | `cmd/`, `internal/`, package boundaries |
+| [Go Wiki: TableDrivenTests](https://go.dev/wiki/TableDrivenTests) | Table-driven test structure |
+| [google/go-cmp](https://github.com/google/go-cmp) | Semantic equality and diffs in tests (Go wiki–recommended) |
+| [Advanced Testing with Go](https://www.youtube.com/watch?v=yszygk1cpEc) (Mitchell Hashimoto) | Golden file testing, integration testing patterns |
 
 ## Package layout
 
-How to organize code within and across packages.
+cpx-specific choices on top of [Organizing a Go module](https://go.dev/doc/modules/layout) and [Package Names](https://go.dev/wiki/CodeReviewComments#package-names).
 
 **Do**
 
-- Put binaries in `cmd/` and non-exported library code in `internal/`.
-- Keep multiple `.go` files in one package directory when they share one concern (`config.go`, `index.go` in `package cdb`).
-- Create a subpackage (its own directory and import path) only when another package needs to import it as a distinct unit — e.g. `internal/port/`, Prometheus's `config/`.
-- Split a large file into sibling files in the same package — not into subfolders that do not define a separate package.
+- Keep related code as sibling `.go` files in one package (`config.go`, `index.go` in `package cdb`) rather than a subfolder that mirrors file names.
+- Add a subpackage directory only when another package imports it as a distinct unit (`internal/port/`, `internal/cdb/generate/clang`).
 
 **Do not**
 
-- Nest folders only to mirror file names or JS/Python module trees (`config/schema.go`, `config/load.go` under one `package config` split across paths — use flat files instead).
-- Use meaningless package names (`util`, `common`, `misc`, `api`, `types`, `interfaces`).
+- Mirror JS/Python folder-per-concept layouts (`config/schema.go`, `config/load.go` under one package path).
 
 ## Files and data
 
-How to store artifacts alongside code.
+cpx-specific split; see [Code Review Comments](https://go.dev/wiki/CodeReviewComments) and the `testing` package for general fixture conventions.
 
 **Do**
 
-- Put test fixtures in `testdata/` (Go tooling convention).
-- Put committed runtime or generated data in `data/` when the package loads it at runtime.
-- Load embedded files with `//go:embed`.
+- Put test fixtures in `testdata/`.
+- Put committed runtime or generated data in `data/` within the package that loads it.
 
 **Do not**
 
-- Put production fixtures in `testdata/` or test fixtures in `data/` — keep the distinction.
+- Mix test fixtures and runtime data in the same directory.
 
 ## Code generation
 
-How to wire build-time code generation.
+cpx-specific; see [ADR-0001](../adr/0001-configuration.md) for env loading.
 
 **Do**
 
-- Use `//go:generate` directives in the file they relate to, or in `doc.go` when they apply to the whole package.
-- Invoke external tools (`clang-tblgen`, AWK) inside `generate/*/main.go`.
-- Rely on direnv-loaded env vars for generation inputs (see ADR-0001).
-- Commit generated output when it is consumed at build time (YAML, `zz_generated.*.go`).
+- Wire generation with `//go:generate` (in the file it relates to, or `doc.go` for package-wide directives).
+- Run external tools (`clang-tblgen`, AWK) inside `generate/*/main.go` under the parent package.
+- Read generation inputs from direnv-loaded env vars.
+- Commit generated artifacts consumed at build time (YAML, `zz_generated.*.go`).
 
 **Do not**
 
-- Replace `go generate` with ad hoc shell scripts when a `go:generate` directive would suffice.
+- Import `generate/` from the library package.
 
-Makefile or CI targets that run `go generate ./...` are fine — `go generate` does not run automatically on `go build`.
-
-## Build tools
-
-How to structure generator programs.
-
-**Do**
-
-- Place generators as `package main` under `generate/` within the parent package (e.g. `internal/cdb/generate/clang`) or under repo-root `tools/` when shared across packages.
-- Import the parent package for shared types.
-
-**Do not**
-
-- Import `generate/` or `tools/` from the library package (creates an import cycle).
-
-## Types and API
-
-How to define types and expose behavior.
-
-**Do**
-
-- Use typed constants (`type Kind int` with `iota`) over stringly-typed enums; prefix enum constants with the type name when it aids clarity.
-- Attach behavior to types with methods (`func (c *CompilerConfig) Validate() error`).
-- Use pointer receivers when methods mutate the receiver or the receiver is large; be consistent within a type.
-- Define interfaces in the consumer package, not the implementor — return concrete types from constructors.
-- Name single-method interfaces with the method name plus `-er` (`Reader`, `Stringer`) when the method has a canonical signature.
-
-**Do not**
-
-- Define interfaces on the implementor side "for mocking" — test through the concrete public API.
-- Define interfaces before a realistic consumer exists.
-- Use free functions when a method on the receiver type is natural (`validateConfig(cfg)` → `cfg.Validate()`).
+Makefile or CI may run `go generate ./...` — it does not run on `go build`.
 
 ## Naming
 
-How to name packages, files, and identifiers.
+Domain abbreviations on top of [Effective Go § Names](https://go.dev/doc/effective_go#names) and [Code Review Comments](https://go.dev/wiki/CodeReviewComments#initialisms).
 
-**Do**
-
-- Use short, lowercase, single-word package names without underscores (`cdb`, not `compdb` or `compilation_db`).
-- Name files after their concern or behavior (`config.go`, `request.go`, `reload.go`) — lowercase, no hyphens.
-- Use abbreviations that match the domain (`cdb` for compilation database, `oj` for online judge).
-- Keep initialisms consistent in MixedCaps (`ServeHTTP`, `appID`, `XMLHTTPRequest`).
-- Use receiver names that abbreviate the type (`c` for `Client`); keep them consistent across methods.
-- Omit `Get` from getter names (`Owner()`, not `GetOwner()`).
-
-**Do not**
-
-- Repeat the package name in exported type names (`cdb.Database`, not `cdb.CDBDatabase`).
-- Use `me`, `self`, or `this` as receiver names.
-
-## Errors
-
-How to create, wrap, and check errors.
-
-**Do**
-
-- Return errors from functions; handle them at the boundary (CLI, HTTP handler).
-- Wrap errors with context using `%w`: `fmt.Errorf("load config: %w", err)`.
-- Write error strings in lowercase with no trailing punctuation — they are usually printed after other context.
-- Define sentinel errors as `var ErrFoo = errors.New("…")` for expected conditions callers should branch on.
-- Define custom error types with an `Error` suffix when callers need typed fields; implement `Unwrap()` when wrapping is involved.
-- Use `errors.Is` and `errors.As` to check wrapped errors.
-- Indent error handling — handle errors early and return; avoid unnecessary `else` after error checks.
-
-**Do not**
-
-- Panic for expected error conditions.
-- Discard errors with `_`.
-- Drop the underlying error when wrapping operational failures — use `%w`, not `%v`.
-
-## Tests
-
-How to write and organize tests.
-
-**Do**
-
-- Write table-driven tests in `*_test.go`.
-- Put fixtures in `testdata/`.
-- Use golden files for large or complex expected output (JSON, generated source, bundled text) — store under `testdata/`, review changes in git diffs.
-- Regenerate golden files with `go test -update ./...` only after verifying output is correct.
-- Compare values with [`go-cmp`](https://github.com/google/go-cmp) for readable diffs on structs and slices.
-- Call `t.Helper()` in test helper functions so failures report the caller's line.
-- Add runnable `Example` functions when introducing a new exported package API.
-
-**Do not**
-
-- Put test fixtures outside `testdata/` without good reason.
-- Embed large expected strings inline when a golden file would be clearer.
-- Run `-update` without reviewing the resulting diff.
-- Use assertion frameworks (e.g. `testify/assert`) when stdlib `t.Errorf` plus `go-cmp` suffices.
+| Abbreviation | Meaning |
+| --- | --- |
+| `cdb` | compilation database |
+| `oj` | online judge |
 
 ## Productivity libraries
 
-Go encodes recurring idioms in small, focused libraries rather than large frameworks. Each entry below describes a tool cpx may use and the pattern it represents. Add a section when cpx adopts a new tool.
+Tools cpx adopts to encode idioms. Read each library's own docs for API details — only cpx usage choices are recorded here. Add an entry when cpx adopts a new tool.
 
 ### goldie
 
-Golden file (snapshot) testing for large outputs. Based on the pattern from Mitchell Hashimoto's [Advanced Testing with Go](https://www.youtube.com/watch?v=yszygk1cpEc) talk (HashiCorp); used in the stdlib (`gofmt` tests) and across the Go ecosystem.
+Golden file testing — pattern from [Advanced Testing with Go](https://www.youtube.com/watch?v=yszygk1cpEc). See [goldie](https://github.com/sebdah/goldie).
 
 **Use for**
 
-- Expected output too large or noisy to inline (bundled source, JSON, HTML, generated YAML).
-- Tests where the diff should be reviewable in a pull request.
-
-**Conventions**
-
-- Store files in `testdata/` with a `.golden` suffix (goldie's default).
-- Update with `go test -update ./...`; normal runs compare without updating.
-- Name golden files after the test or subtest (e.g. `testdata/TestBundler/happy_path.golden`).
+- Large or complex expected output (bundled source, JSON, generated YAML) where the PR diff should be reviewable.
 
 **Do not use for**
 
-- Small values better checked inline or with `go-cmp`.
-- Output that changes nondeterministically between runs (timestamps, map order) without normalizing first.
+- Small values — use [go-cmp](#go-cmp) or inline checks.
 
 ### go-cmp
 
-Semantic value comparison with readable diffs. Recommended by the Go wiki over `reflect.DeepEqual` and most assertion libraries.
-
 **Use for**
 
-- Comparing structs, slices, and maps in tests.
-
-**Conventions**
-
-```go
-if diff := cmp.Diff(want, got); diff != "" {
-    t.Errorf("mismatch (-want +got):\n%s", diff)
-}
-```
-
-- Use `cmpopts` to ignore fields, approximate times, or equate empty/nil slices when that matches the intended semantics.
+- Struct, slice, and map comparisons in tests.
 
 **Do not use for**
 
-- Byte-exact output of whole files — use golden files instead.
-
-### stringer and go generate tools
-
-Small code generators that eliminate repetitive boilerplate.
-
-**Use for**
-
-- `stringer` for `String()` methods on enum types.
-- Project-specific generators under `generate/` (see Code generation).
-
-**Conventions**
-
-- Track generator tools in the module (`tools.go` with build tag, or `go get -tool`).
-- Commit generated output; review it in pull requests like golden files.
+- Whole-file byte output — use [goldie](#goldie).
 
 ### golangci-lint
 
-Aggregated linting over many static analysis checks.
-
 **Use for**
 
-- CI and local pre-commit checks beyond `go vet`.
+- CI and local checks beyond `go vet`.
 
-**Do not use for**
+Configure in `.golangci.yml`; keep enabled linters minimal.
 
-- Replacing `gofmt` / `goimports` — formatters stay separate.
+## Tests
 
-**Conventions**
-
-- Configure in `.golangci.yml`; keep enabled linters minimal and purposeful.
-
-## Doc comments
-
-How to document exported API.
+cpx-specific choices on top of [Code Review Comments](https://go.dev/wiki/CodeReviewComments#useful-test-failures) and [Examples](https://go.dev/wiki/CodeReviewComments#examples).
 
 **Do**
 
-- Write doc comments for all exported names and non-trivial unexported declarations.
-- Write full sentences starting with the name being described and ending with a period.
+- Use [goldie](#goldie) and `go test -update ./...` for golden files; review the diff before committing.
+- Use [go-cmp](#go-cmp) for value comparisons.
 
 **Do not**
 
-- Leave exported types or functions undocumented.
+- Use assertion frameworks (e.g. `testify/assert`) when stdlib `t.Errorf` plus go-cmp suffices.
