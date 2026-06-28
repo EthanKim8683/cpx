@@ -15,7 +15,7 @@ Each issue has a system comment noting that the thread is synced with GitHub. **
 When the user states something in conversation:
 
 1. Post a summary as a reply on the GitHub-synced comment thread.
-2. Respond in conversation and post that response on the same synced thread.
+2. Respond in conversation and post that exact response on the same synced thread.
 
 ## Summaries
 
@@ -28,4 +28,4 @@ A summary is a short paragraph written from the user's perspective — as if the
 
 ## Responses
 
-After posting the summary, post a separate reply with your response — acknowledgment, questions, or pushback.
+After posting the summary, post a separate reply with your exact response — the same words you use in conversation, not a summary.
