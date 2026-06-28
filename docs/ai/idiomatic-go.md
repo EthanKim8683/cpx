@@ -2,7 +2,7 @@
 
 Repo-specific Go conventions for cpx. This is not a Go tutorial — see [Effective Go](https://go.dev/doc/effective_go), [Go Code Review Comments](https://go.dev/wiki/CodeReviewComments), and [Organizing a Go module](https://go.dev/doc/modules/layout) for language and module basics.
 
-Each topic has its own section below. When a new convention area emerges, add a section here following the same shape.
+Each topic has its own section below. When a new convention area emerges, add a section here following the same shape. Productivity libraries that encode idioms (golden testing, diff comparisons, linting) have their own section and grow as cpx adopts them.
 
 ## Formatting
 
@@ -141,12 +141,94 @@ How to write and organize tests.
 
 - Write table-driven tests in `*_test.go`.
 - Put fixtures in `testdata/`.
-- Fail with messages that show input, got, and want: `t.Errorf("Foo(%q) = %d; want %d", in, got, want)`.
+- Use golden files for large or complex expected output (JSON, generated source, bundled text) — store under `testdata/`, review changes in git diffs.
+- Regenerate golden files with `go test -update ./...` only after verifying output is correct.
+- Compare values with [`go-cmp`](https://github.com/google/go-cmp) for readable diffs on structs and slices.
+- Call `t.Helper()` in test helper functions so failures report the caller's line.
 - Add runnable `Example` functions when introducing a new exported package API.
 
 **Do not**
 
 - Put test fixtures outside `testdata/` without good reason.
+- Embed large expected strings inline when a golden file would be clearer.
+- Run `-update` without reviewing the resulting diff.
+- Use assertion frameworks (e.g. `testify/assert`) when stdlib `t.Errorf` plus `go-cmp` suffices.
+
+## Productivity libraries
+
+Go encodes recurring idioms in small, focused libraries rather than large frameworks. Each entry below describes a tool cpx may use and the pattern it represents. Add a section when cpx adopts a new tool.
+
+### goldie
+
+Golden file (snapshot) testing for large outputs. Based on the pattern from Mitchell Hashimoto's [Advanced Testing with Go](https://www.youtube.com/watch?v=yszygk1cpEc) talk (HashiCorp); used in the stdlib (`gofmt` tests) and across the Go ecosystem.
+
+**Use for**
+
+- Expected output too large or noisy to inline (bundled source, JSON, HTML, generated YAML).
+- Tests where the diff should be reviewable in a pull request.
+
+**Conventions**
+
+- Store files in `testdata/` with a `.golden` suffix (goldie's default).
+- Update with `go test -update ./...`; normal runs compare without updating.
+- Name golden files after the test or subtest (e.g. `testdata/TestBundler/happy_path.golden`).
+
+**Do not use for**
+
+- Small values better checked inline or with `go-cmp`.
+- Output that changes nondeterministically between runs (timestamps, map order) without normalizing first.
+
+### go-cmp
+
+Semantic value comparison with readable diffs. Recommended by the Go wiki over `reflect.DeepEqual` and most assertion libraries.
+
+**Use for**
+
+- Comparing structs, slices, and maps in tests.
+
+**Conventions**
+
+```go
+if diff := cmp.Diff(want, got); diff != "" {
+    t.Errorf("mismatch (-want +got):\n%s", diff)
+}
+```
+
+- Use `cmpopts` to ignore fields, approximate times, or equate empty/nil slices when that matches the intended semantics.
+
+**Do not use for**
+
+- Byte-exact output of whole files — use golden files instead.
+
+### stringer and go generate tools
+
+Small code generators that eliminate repetitive boilerplate.
+
+**Use for**
+
+- `stringer` for `String()` methods on enum types.
+- Project-specific generators under `generate/` (see Code generation).
+
+**Conventions**
+
+- Track generator tools in the module (`tools.go` with build tag, or `go get -tool`).
+- Commit generated output; review it in pull requests like golden files.
+
+### golangci-lint
+
+Aggregated linting over many static analysis checks.
+
+**Use for**
+
+- CI and local pre-commit checks beyond `go vet`.
+
+**Do not use for**
+
+- Replacing `gofmt` / `goimports` — formatters stay separate.
+
+**Conventions**
+
+- Configure in `.golangci.yml`; keep enabled linters minimal and purposeful.
 
 ## Doc comments
 
