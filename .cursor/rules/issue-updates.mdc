@@ -1,0 +1,36 @@
+---
+description: Record significant updates on Linear issue threads while working
+alwaysApply: true
+---
+
+When working on a Linear issue, record significant updates on its synced comment thread. The thread is the durable record — if it is not on the thread, it is not recorded.
+
+Full details: [docs/ai/issues.md](docs/ai/issues.md).
+
+## Checklist
+
+Before starting:
+
+- [ ] I know which Linear issue this work is about
+- [ ] I will reply to the **synced comment thread** (the system comment), not a top-level Linear comment
+
+While working, record when:
+
+- [ ] Planning completes or scope is clarified
+- [ ] A decision is made (even during planning)
+- [ ] Research yields a finding or turning point
+- [ ] Scope or direction changes
+- [ ] A blocker or surprise surfaces
+- [ ] Implementation starts (record plan and open decisions)
+
+When recording:
+
+- [ ] Capture outcomes — decisions, findings, direction, constraints
+- [ ] Skip routine back-and-forth that does not change understanding
+- [ ] If in doubt whether something is significant, record it
+- [ ] Post multiple comments **sequentially** (parallel posts arrive out of order)
+
+Before finishing:
+
+- [ ] All significant decisions, findings, and direction changes are on the synced thread
+- [ ] Anything missed is backfilled before continuing — one comment at a time, in chronological order
