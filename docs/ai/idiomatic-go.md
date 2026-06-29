@@ -56,6 +56,7 @@ cpx-specific; see [ADR-0001](../adr/0001-configuration.md) for env loading.
 - Write generated output to a specifically named directory (e.g. `internal/cdb/config/clang.yaml`).
 - Gitignore generated build inputs; regenerate locally with `go generate ./...` before building or testing.
 - Run `go generate` in CI before tests — same model as GCC/Clang, which do not commit generated option tables.
+- Run `golangci-lint run ./...` in CI and locally before pushing Go changes.
 
 **Do not**
 
@@ -109,11 +110,22 @@ Golden file testing — pattern from [Advanced Testing with Go](https://www.yout
 
 ### golangci-lint
 
+Static analysis beyond `go vet`. See [golangci-lint](https://golangci-lint.run/).
+
 **Use for**
 
-- CI and local checks beyond `go vet`.
+- CI and local lint checks on all Go packages.
+- Catching unchecked errors, dead code, and common mistakes — especially in codegen-heavy packages.
 
-Configure in `.golangci.yml`; keep enabled linters minimal.
+**Conventions**
+
+- Configure in [`.golangci.yml`](../../.golangci.yml) at the repo root.
+- Default linter set is `standard`; enable additional linters explicitly when needed.
+- Run `golangci-lint run ./...`.
+
+**Do not use for**
+
+- Formatting — use `gofmt` / `goimports`.
 
 ## Tests
 
@@ -123,6 +135,7 @@ cpx-specific choices on top of [Code Review Comments](https://go.dev/wiki/CodeRe
 
 - Use [goldie](#goldie) and `go test -update ./...` for golden files; review the diff before committing.
 - Use [go-cmp](#go-cmp) for value comparisons.
+- Run [golangci-lint](#golangci-lint) before pushing Go changes.
 
 **Do not**
 
