@@ -33,13 +33,11 @@ Run this before, during, and after working on an issue. Make sure every item is 
 
 ### While working
 
-- [ ] Significant updates from this work go on the synced thread as they happen
-- Examples: a decision, a research finding, a direction change, a blocker, something learned
+- [ ] Significant updates from this work go on the synced thread as they happen (e.g. a decision, a research finding, a direction change, a blocker, something learned)
 
 ### When recording
 
-- [ ] Capture outcomes, not routine back-and-forth
-- Examples: what was decided, found, blocked, or constrained
+- [ ] Capture outcomes, not routine back-and-forth (e.g. what was decided, found, blocked, or constrained)
 - [ ] If in doubt whether something is significant, record it
 - [ ] Post multiple comments **sequentially** — **NEVER** in parallel
 
