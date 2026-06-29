@@ -1,6 +1,6 @@
 # Issues
 
-For general Linear conventions, see [linear.md](linear.md).
+For general Linear conventions, see [.agents/skills/linear/SKILL.md](../../.agents/skills/linear/SKILL.md).
 
 Keep Linear issues up to date while you work. Synced issues mirror to GitHub; the **comment thread** is the durable record.
 
