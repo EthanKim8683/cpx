@@ -2,7 +2,7 @@
 
 How agents record significant updates on Linear issues (synced to GitHub).
 
-Post to that issue's synced comment thread whenever something significant comes up while working on it. The thread is the durable record.
+Record on that issue's synced comment thread whenever something significant comes up while working on it. The thread is the durable record.
 
 Issue bodies stay short: a paragraph on what needs figuring out. Put significant details in comments.
 
@@ -10,11 +10,11 @@ Issue bodies stay short: a paragraph on what needs figuring out. Put significant
 
 Each issue has a system comment that syncs with GitHub. **Reply to that comment** — top-level Linear comments do not sync.
 
-Post to the issue the conversation is about.
+Record on the issue the conversation is about.
 
-## What to post
+## What to record
 
-Post when something significant happens:
+Record when something significant happens:
 
 - A decision is made
 - Research yields a finding or turning point
@@ -23,12 +23,12 @@ Post when something significant happens:
 
 Do not skip significant items. If it is not on the thread, it is not recorded.
 
-Do not post routine back-and-forth that does not change understanding.
+Do not record routine back-and-forth that does not change understanding.
 
 Write comments that capture outcomes — decisions, findings, direction, constraints. Use headings, lists, or code blocks when they help.
 
-## Posting
+## Recording
 
-Post multiple comments sequentially — parallel posts can arrive out of order.
+Record multiple comments sequentially — parallel comments can arrive out of order.
 
 If something significant was missed, backfill before continuing: one comment at a time, in order.
