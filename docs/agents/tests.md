@@ -1,6 +1,6 @@
 # Tests
 
-What to test and how to assert it. Test mechanics enforced by [golangci-lint](#golangci-lint).
+What to test and how to assert it. Test mechanics enforced by [golangci-lint](go.md#golangci-lint).
 
 Derived from [Go Test Comments](https://go.dev/wiki/TestComments), [Table-Driven Tests](https://go.dev/wiki/TableDrivenTests), [go-cmp](https://github.com/google/go-cmp), and [golden-file testing](https://www.youtube.com/watch?v=yszygk1cpEc).
 
@@ -24,17 +24,12 @@ Adopted after [Mitchell Hashimoto — Advanced Testing with Go](https://www.yout
 
 ## Principles
 
-**Test cpx logic** — parsing, transforms, selection, and errors this repo owns.
-
-**Do not retest dependencies.** A thin `env.ParseAs` wrapper needs one smoke test, not a per-field table that only echoes env vars back (`config.Load` today).
-
-**Prefer semantics over exact output** — use go-cmp for meaning, not raw bytes. When many answers are valid, assert invariants (topological sort: every `u → v` has `u` before `v`), not one pinned ordering.
-
-**Table-driven when it fits** — same assertion logic, varying inputs ([Go wiki](https://go.dev/wiki/TableDrivenTests)). Skip tables when cases need different logic or a single direct test is clearer.
-
-**Keep unit tests self-contained** — no network, external processes, or stray goroutines ([`testing/synctest`](https://pkg.go.dev/testing/synctest) package docs). For concurrent or time-based code, prefer `synctest` over real sleeps ([VictoriaMetrics](https://victoriametrics.com/blog/go-synctest/), [Go blog](https://go.dev/blog/synctest)).
-
-**Structure** — `t.Run` subtests; descriptive case names; inputs in failure messages; `got` before `want`; `t.Helper()` in helpers; fixtures in `testdata/`.
+- **Test cpx logic** — parsing, transforms, selection, and errors this repo owns
+- **Do not retest dependencies** — a thin `env.ParseAs` wrapper needs one smoke test, not a per-field table that only echoes env vars back (`config.Load` today)
+- **Prefer semantics over exact output** — use go-cmp for meaning, not raw bytes; when many answers are valid, assert invariants (topological sort: every `u → v` has `u` before `v`), not one pinned ordering
+- **Table-driven when it fits** — same assertion logic, varying inputs ([Go wiki](https://go.dev/wiki/TableDrivenTests)); skip tables when cases need different logic or a single direct test is clearer
+- **Keep unit tests self-contained** — no network, external processes, or stray goroutines ([`testing/synctest`](https://pkg.go.dev/testing/synctest) package docs); for concurrent or time-based code, prefer `synctest` over real sleeps ([VictoriaMetrics](https://victoriametrics.com/blog/go-synctest/), [Go blog](https://go.dev/blog/synctest))
+- **Structure** — `t.Run` subtests; descriptive case names; inputs in failure messages; `got` before `want`; `t.Helper()` in helpers; fixtures in `testdata/`
 
 ## Checklist
 
@@ -46,7 +41,3 @@ Adopted after [Mitchell Hashimoto — Advanced Testing with Go](https://www.yout
 - [ ] Multiple valid outputs checked via invariants, not one canonical ordering
 - [ ] Large stable output uses goldie; `-update` diffs reviewed
 - [ ] Fixtures in `testdata/`; generated build inputs are not golden files
-
-## golangci-lint
-
-On `*_test.go` ([`.golangci.yml`](../../.golangci.yml)): blocks testify and `reflect.DeepEqual`; requires `t.Helper()` in helpers and expected output on `Example` functions. Does not catch over-testing delegated logic — checklist above covers that.
