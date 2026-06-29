@@ -24,4 +24,29 @@ Post multiple comments one at a time; parallel posts can land out of order. If y
 
 ## Checklist
 
-The hard checklist lives in [`.cursor/rules/issue-updates.mdc`](../../.cursor/rules/issue-updates.mdc) — agents see it every session.
+Run this before, during, and after working on an issue. Make sure every item is satisfied before finishing.
+
+### Before starting
+
+- [ ] I identified the Linear issue this work is about
+- [ ] I located the synced system comment — I will reply there, **NEVER** as a top-level Linear comment
+
+### While working — record when
+
+- [ ] A decision is made (including during planning)
+- [ ] Research yields a finding or turning point
+- [ ] Scope or direction changes
+- [ ] A blocker or surprise surfaces
+- [ ] Planning completes or implementation starts
+
+### When recording
+
+- [ ] Capture outcomes — decisions, findings, direction, constraints — not routine back-and-forth
+- [ ] If in doubt whether something is significant, record it
+- [ ] Post multiple comments **sequentially** — **NEVER** in parallel
+
+### Before finishing
+
+- [ ] All significant decisions, findings, and direction changes are on the synced thread
+- [ ] Missed items backfilled before continuing — one comment at a time, chronological order
+- [ ] Anything not recorded is explicitly noted on the thread (and why)
