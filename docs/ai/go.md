@@ -1,6 +1,17 @@
-# Idiomatic Go
+# Go
 
-Read the sources below first. They are the authority on idiomatic Go — this doc only records **what cpx adds** on top of them. Do not duplicate their guidance here; link out instead.
+cpx is written in Go. Go is an idiom-focused language — how code is structured matters as much as what it does.
+
+## Maintaining idiomatic Go
+
+Official docs are the authority on idiomatic Go. This doc records **what cpx adds** on top of them. Do not duplicate their guidance here; link out instead.
+
+**How cpx keeps code idiomatic:**
+
+- Read the [sources](#sources) before writing or reviewing Go code.
+- Follow cpx-specific conventions in the sections below.
+- Use [productivity libraries](#productivity-libraries) that encode idioms in tools — not just prose.
+- Run `golangci-lint run ./...` locally and in CI.
 
 When a new cpx-specific convention emerges, add a section below following the same shape.
 
