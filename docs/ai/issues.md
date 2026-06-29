@@ -1,18 +1,12 @@
 # Issues
 
-Keep Linear issues up to date while you work. Synced issues mirror to GitHub; the **comment thread** is the durable record.
-
-Issue bodies stay short — a line or two on what needs figuring out. Put everything else in comments.
-
-## Synced comments
-
-Each synced issue has a system comment linked to GitHub. **Reply to that comment.** Top-level Linear comments don't sync.
+Keep GitHub issues up to date while you work. GitHub is the source of truth for issues — updates sync to Linear automatically.
 
 Use the issue this work is actually about.
 
 ## What to record
 
-When something significant happens, put it on the thread. If it's not there, it didn't happen.
+When something significant happens, put it on the issue. If it's not there, it didn't happen.
 
 Significant: a decision, a finding, a direction change, a blocker, something learned. Skip routine back-and-forth. When unsure, record it.
 
@@ -26,17 +20,16 @@ Run before, during, and after work. Every item must be satisfied before finishin
 
 ### Before starting
 
-- [ ] I know which Linear issue this work is about
-- [ ] I will reply on the synced system comment — **NEVER** top-level
+- [ ] I know which GitHub issue this work is about
 
 ### While working
 
-- [ ] Significant updates go on the synced thread as they happen (e.g. decisions, findings, direction changes, blockers)
+- [ ] Significant updates go on the GitHub issue as they happen (e.g. decisions, findings, direction changes, blockers)
 - [ ] Outcomes, not routine back-and-forth (e.g. what was decided, found, blocked, or constrained)
 - [ ] Multiple comments posted **sequentially** — **NEVER** in parallel
 
 ### Before finishing
 
-- [ ] Significant items from this work are on the synced thread
+- [ ] Significant items from this work are on the GitHub issue
 - [ ] Missed items backfilled — one at a time, chronological order
-- [ ] Anything not recorded is noted on the thread (and why)
+- [ ] Anything not recorded is noted on the issue (and why)
