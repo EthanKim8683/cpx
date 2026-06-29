@@ -31,22 +31,20 @@ Run this before, during, and after working on an issue. Make sure every item is 
 - [ ] I identified the Linear issue this work is about
 - [ ] I located the synced system comment — I will reply there, **NEVER** as a top-level Linear comment
 
-### While working — record when
+### While working
 
-- [ ] A decision is made (including during planning)
-- [ ] Research yields a finding or turning point
-- [ ] Scope or direction changes
-- [ ] A blocker or surprise surfaces
-- [ ] Planning completes or implementation starts
+- [ ] Significant updates from this work go on the synced thread as they happen
+- Examples: a decision, a research finding, a direction change, a blocker, something learned
 
 ### When recording
 
-- [ ] Capture outcomes — decisions, findings, direction, constraints — not routine back-and-forth
+- [ ] Capture outcomes, not routine back-and-forth
+- Examples: what was decided, found, blocked, or constrained
 - [ ] If in doubt whether something is significant, record it
 - [ ] Post multiple comments **sequentially** — **NEVER** in parallel
 
 ### Before finishing
 
-- [ ] All significant decisions, findings, and direction changes are on the synced thread
-- [ ] Missed items backfilled before continuing — one comment at a time, chronological order
+- [ ] Significant items from this work are on the synced thread
+- [ ] Anything missed is backfilled before continuing — one comment at a time, chronological order
 - [ ] Anything not recorded is explicitly noted on the thread (and why)
