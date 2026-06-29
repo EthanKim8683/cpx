@@ -1,19 +1,13 @@
 # Go
 
-cpx is written in Go. Go is an idiom-focused language — how code is structured matters as much as what it does.
+How to write Go in cpx. Go is idiom-focused — structure matters as much as behavior.
 
-## Maintaining idiomatic Go
+1. Read [sources](#sources) for general Go idioms.
+2. Follow [conventions](#conventions) for cpx-specific layout, naming, codegen, and tests.
+3. Use [tools](#tools) that encode idioms in executable checks.
+4. Run [before pushing](#before-pushing).
 
-Official docs are the authority on idiomatic Go. This doc records **what cpx adds** on top of them. Do not duplicate their guidance here; link out instead.
-
-**How cpx keeps code idiomatic:**
-
-- Read the [sources](#sources) before writing or reviewing Go code.
-- Follow cpx-specific conventions in the sections below.
-- Use [productivity libraries](#productivity-libraries) that encode idioms in tools — not just prose.
-- Run `golangci-lint run ./...` locally and in CI.
-
-When a new cpx-specific convention emerges, add a section below following the same shape.
+Official docs are authoritative. This doc only records what cpx adds — link out, do not duplicate.
 
 ## Sources
 
@@ -26,9 +20,11 @@ When a new cpx-specific convention emerges, add a section below following the sa
 | [google/go-cmp](https://github.com/google/go-cmp) | Semantic equality and diffs in tests (Go wiki–recommended) |
 | [Advanced Testing with Go](https://www.youtube.com/watch?v=yszygk1cpEc) (Mitchell Hashimoto) | Golden file testing, integration testing patterns |
 
-## Package layout
+## Conventions
 
-cpx-specific choices on top of [Organizing a Go module](https://go.dev/doc/modules/layout) and [Package Names](https://go.dev/wiki/CodeReviewComments#package-names).
+### Package layout
+
+On top of [Organizing a Go module](https://go.dev/doc/modules/layout) and [Package Names](https://go.dev/wiki/CodeReviewComments#package-names).
 
 **Do**
 
@@ -39,9 +35,9 @@ cpx-specific choices on top of [Organizing a Go module](https://go.dev/doc/modul
 
 - Mirror JS/Python folder-per-concept layouts (`config/schema.go`, `config/load.go` under one package path).
 
-## Files and data
+### Files and data
 
-cpx-specific split; see [Code Review Comments](https://go.dev/wiki/CodeReviewComments) and the `testing` package for general fixture conventions.
+On top of [Code Review Comments](https://go.dev/wiki/CodeReviewComments) and the `testing` package.
 
 **Do**
 
@@ -55,35 +51,7 @@ cpx-specific split; see [Code Review Comments](https://go.dev/wiki/CodeReviewCom
 - Create a `config/` **subpackage** (`package config`) when `config.go` in the parent package is enough — the folder is for artifacts, not code.
 - Mix test fixtures and generated build inputs in the same directory.
 
-## Code generation
-
-cpx-specific; see [ADR-0001](../adr/0001-configuration.md) for env loading.
-
-**Do**
-
-- Wire generation with `//go:generate` (in the file it relates to, or `doc.go` for package-wide directives).
-- Run external tools (`clang-tblgen`, AWK) inside `generate/*/main.go` under the parent package.
-- Read generation inputs from direnv-loaded env vars.
-- Write generated output to a specifically named directory (e.g. `internal/cdb/config/clang.yaml`).
-- Gitignore generated build inputs; regenerate locally with `go generate ./...` before building or testing.
-- Run `go generate` in CI before tests — same model as GCC/Clang, which do not commit generated option tables.
-- Run `golangci-lint run ./...` in CI and locally before pushing Go changes.
-
-**Do not**
-
-- Commit large generated artifacts (compiler option configs, codegen output). They are reproducible from upstream sources and bloat the repo.
-- Import `generate/` from the library package.
-
-Makefile or CI may run `go generate ./...` — it does not run on `go build`.
-
-**Committed vs generated**
-
-| Artifact | Committed? | Example |
-| --- | --- | --- |
-| Golden test files | Yes — reviewable test expectations | `testdata/*.golden` |
-| Generated build inputs | No — regenerate from source | `config/clang.yaml`, `config/gcc.yaml` |
-
-## Naming
+### Naming
 
 Domain abbreviations on top of [Effective Go § Names](https://go.dev/doc/effective_go#names) and [Code Review Comments](https://go.dev/wiki/CodeReviewComments#initialisms).
 
@@ -92,62 +60,75 @@ Domain abbreviations on top of [Effective Go § Names](https://go.dev/doc/effect
 | `cdb` | compilation database |
 | `oj` | online judge |
 
-## Productivity libraries
+### Code generation
 
-Tools cpx adopts to encode idioms. Read each library's own docs for API details — only cpx usage choices are recorded here. Add an entry when cpx adopts a new tool.
+See [ADR-0001](../adr/0001-configuration.md) for env loading.
 
-### goldie
+**Do**
 
-Golden file testing — pattern from [Advanced Testing with Go](https://www.youtube.com/watch?v=yszygk1cpEc). See [goldie](https://github.com/sebdah/goldie).
+- Wire generation with `//go:generate` (in the file it relates to, or `doc.go` for package-wide directives).
+- Run external tools (`clang-tblgen`, AWK) inside `generate/*/main.go` under the parent package.
+- Read generation inputs from direnv-loaded env vars.
+- Write generated output to a specifically named directory (e.g. `internal/cdb/config/clang.yaml`).
+- Gitignore generated build inputs; regenerate locally with `go generate ./...` before building or testing.
 
-**Use for**
+**Do not**
 
-- Large or complex **committed test expectations** (bundled source output) where the PR diff should be reviewable.
+- Commit large generated artifacts (compiler option configs, codegen output). They are reproducible from upstream sources and bloat the repo.
+- Import `generate/` from the library package.
 
-**Do not use for**
+`go generate` does not run on `go build`. Makefile or CI may run `go generate ./...`.
 
-- Generated build inputs (compiler option configs) — those are gitignored and regenerated locally.
-- Small values — use [go-cmp](#go-cmp) or inline checks.
+| Artifact | Committed? | Example |
+| --- | --- | --- |
+| Golden test files | Yes — reviewable test expectations | `testdata/*.golden` |
+| Generated build inputs | No — regenerate from source | `config/clang.yaml`, `config/gcc.yaml` |
 
-### go-cmp
+### Tests
 
-**Use for**
-
-- Struct, slice, and map comparisons in tests.
-
-**Do not use for**
-
-- Whole-file byte output — use [goldie](#goldie).
-
-### golangci-lint
-
-Static analysis beyond `go vet`. See [golangci-lint](https://golangci-lint.run/).
-
-**Use for**
-
-- CI and local lint checks on all Go packages.
-- Catching unchecked errors, dead code, and common mistakes — especially in codegen-heavy packages.
-
-**Conventions**
-
-- Configure in [`.golangci.yml`](../../.golangci.yml) at the repo root.
-- Default linter set is `standard`; enable additional linters explicitly when needed.
-- Run `golangci-lint run ./...`.
-
-**Do not use for**
-
-- Formatting — use `gofmt` / `goimports`.
-
-## Tests
-
-cpx-specific choices on top of [Code Review Comments](https://go.dev/wiki/CodeReviewComments#useful-test-failures) and [Examples](https://go.dev/wiki/CodeReviewComments#examples).
+On top of [Code Review Comments](https://go.dev/wiki/CodeReviewComments#useful-test-failures) and [Examples](https://go.dev/wiki/CodeReviewComments#examples).
 
 **Do**
 
 - Use [goldie](#goldie) and `go test -update ./...` for golden files; review the diff before committing.
-- Use [go-cmp](#go-cmp) for value comparisons.
-- Run [golangci-lint](#golangci-lint) before pushing Go changes.
+- Use [go-cmp](#go-cmp) for struct, slice, and map comparisons.
 
 **Do not**
 
 - Use assertion frameworks (e.g. `testify/assert`) when stdlib `t.Errorf` plus go-cmp suffices.
+
+## Tools
+
+Libraries cpx uses to encode idioms. Read each library's docs for API details — only cpx usage choices are recorded here.
+
+### goldie
+
+Golden file testing — [Advanced Testing with Go](https://www.youtube.com/watch?v=yszygk1cpEc). See [goldie](https://github.com/sebdah/goldie).
+
+**Use for** large committed test expectations (bundled source, JSON) where the PR diff should be reviewable.
+
+**Do not use for** generated build inputs or small values — use [go-cmp](#go-cmp) or inline checks.
+
+### go-cmp
+
+**Use for** struct, slice, and map comparisons in tests.
+
+**Do not use for** whole-file output — use [goldie](#goldie).
+
+### golangci-lint
+
+Static analysis beyond `go vet`. See [golangci-lint](https://golangci-lint.run/). Config: [`.golangci.yml`](../../.golangci.yml) (`standard` linters by default).
+
+**Use for** CI and local lint on all Go packages.
+
+**Do not use for** formatting — use `gofmt` / `goimports`.
+
+## Before pushing
+
+```bash
+go generate ./...
+go test ./...
+golangci-lint run ./...
+```
+
+Review golden file diffs before committing updates.
