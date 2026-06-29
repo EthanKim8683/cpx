@@ -1,7 +1,5 @@
 # Issues
 
-For general Linear conventions, see [linear.md](linear.md).
-
 Keep Linear issues up to date while you work. Synced issues mirror to GitHub; the **comment thread** is the durable record.
 
 Issue bodies stay short — a line or two on what needs figuring out. Put everything else in comments.
