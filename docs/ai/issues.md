@@ -1,42 +1,35 @@
 # Issues
 
-When working through how to resolve an issue — scoping, research, exploring options — record what matters on that issue's synced comment thread (Linear, synced to GitHub). The thread is the durable record for planning.
+How agents record planning on Linear issues (synced to GitHub).
 
-The issue body is short — roughly a paragraph describing what needs to be figured out, not a full spec. Significant details belong in comments, not the issue body.
+While scoping, researching, or exploring how to resolve an issue, post significant updates to that issue's synced comment thread. The thread is the durable record.
 
-This applies during **planning**, not **implementation**. Once work shifts to code, PRs, or building, stop posting planning comments unless the conversation moves back into scoping or research for that issue.
+Stop posting once work moves to implementation — code, PRs, building. Resume only if the conversation returns to planning for that issue.
 
-## Workflow
+Issue bodies stay short: a paragraph on what needs figuring out. Put significant details in comments.
 
-### When to post
+## Synced comments
 
-Post a comment when something **significant** happens — a major decision, a research turning point, or anything important learned or developed while figuring out the issue.
+Each issue has a system comment that syncs with GitHub. **Reply to that comment** — top-level Linear comments do not sync.
 
-**Do not skip significant items.** If something important was decided or discovered and it is not on the thread, it is not recorded.
+Post to the issue the conversation is about.
 
-### Synced comments
+## What to post
 
-Each issue has a system comment noting that the thread is synced with GitHub. **Reply to that comment** — do not post a new top-level comment. Top-level comments on Linear do not sync to GitHub.
+Post when something significant happens:
 
-Post to the issue the conversation is actually about.
+- A decision is made
+- Research yields a finding or turning point
+- Something important is learned or developed
 
-### Order
+Do not skip significant items. If it is not on the thread, it is not recorded.
 
-If posting multiple comments at once, post **sequentially** — wait for each to land before posting the next. Parallel posts can arrive out of order on Linear and GitHub.
+Do not post routine back-and-forth that does not change understanding.
 
-### Backfill
+Write comments that capture outcomes — decisions, findings, direction, constraints. Use headings, lists, or code blocks when they help.
 
-If a significant item was missed, add it before continuing. Post missed comments one at a time, in chronological order.
+## Posting
 
-## Format
+Post multiple comments sequentially — parallel posts can arrive out of order.
 
-Write a comment that captures the important information — what was decided, learned, or developed.
-
-**Do**
-
-- Focus on outcomes: decisions made, findings, direction chosen, constraints discovered
-- Use headings, lists, or code blocks when they help readability
-
-**Do not**
-
-- Record routine back-and-forth that does not change understanding
+If something significant was missed, backfill before continuing: one comment at a time, in order.
