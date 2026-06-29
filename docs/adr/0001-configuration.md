@@ -13,7 +13,7 @@ cpx integrates Go, Make, AWK, go generate, and other tooling. The original imple
 ### Source and loader
 
 - **`.env`** is the human-editable configuration source (gitignored).
-- **direnv** loads it via `.envrc` (`source_env .env`). This is the single loader — no per-tool `.env` parsing.
+- **direnv** loads it via `.envrc` (`source_up_if_exists` + `dotenv`). This is the single loader — no per-tool `.env` parsing.
 
 ### Runtime API
 
