@@ -1,34 +1,42 @@
 # Issues
 
-How agents record significant updates on Linear issues (synced to GitHub).
+Keep Linear issues up to date while you work. Synced issues mirror to GitHub; the **comment thread** is the durable record.
 
-Whenever something significant comes up while working on an issue, record it on that issue's synced comment thread. The thread is the durable record.
-
-Issue bodies stay short — a paragraph on what needs figuring out. Details belong in comments.
+Issue bodies stay short — a line or two on what needs figuring out. Put everything else in comments.
 
 ## Synced comments
 
-Each issue has a system comment synced with GitHub. **Reply to that comment** — top-level Linear comments do not sync.
+Each synced issue has a system comment linked to GitHub. **Reply to that comment.** Top-level Linear comments don't sync.
 
-Use the issue the conversation is actually about.
+Use the issue this work is actually about.
 
 ## What to record
 
-Record when something significant happens:
+When something significant happens, put it on the thread. If it's not there, it didn't happen.
 
-- A decision is made
-- Research yields a finding or turning point
-- Something important is learned or developed
-- A blocker or surprise surfaces during implementation
+Significant: a decision, a finding, a direction change, a blocker, something learned. Skip routine back-and-forth. When unsure, record it.
 
-**Do not skip significant items.** If it is not on the thread, it is not recorded.
+Capture outcomes, not play-by-play (e.g. what was decided, found, blocked, or constrained). Headings, lists, and code blocks are fine.
 
-Skip routine back-and-forth that does not change understanding.
+Post comments one at a time — parallel posts arrive out of order. Backfill anything missed before continuing, in chronological order.
 
-Comments should capture outcomes — decisions, findings, direction, constraints. Headings, lists, and code blocks are fine when they help.
+## Checklist
 
-## Recording
+Run before, during, and after work. Every item must be satisfied before finishing.
 
-When recording multiple comments at once, do so sequentially — parallel comments can arrive out of order.
+### Before starting
 
-If something significant was missed, backfill before continuing: one comment at a time, in chronological order.
+- [ ] I know which Linear issue this work is about
+- [ ] I will reply on the synced system comment — **NEVER** top-level
+
+### While working
+
+- [ ] Significant updates go on the synced thread as they happen (e.g. decisions, findings, direction changes, blockers)
+- [ ] Outcomes, not routine back-and-forth (e.g. what was decided, found, blocked, or constrained)
+- [ ] Multiple comments posted **sequentially** — **NEVER** in parallel
+
+### Before finishing
+
+- [ ] Significant items from this work are on the synced thread
+- [ ] Missed items backfilled — one at a time, chronological order
+- [ ] Anything not recorded is noted on the thread (and why)
