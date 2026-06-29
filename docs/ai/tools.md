@@ -10,7 +10,7 @@ Issue tracking and design discussion.
 
 - Creating and updating issues
 - Tracking status
-- RFC and design threads
+- Planning and design discussion on issue threads
 
 **Do not use for**
 
@@ -20,7 +20,7 @@ Issue tracking and design discussion.
 
 - Default to Linear for anything that is not code.
 - GitHub issues are a sync mirror — do not create issues on GitHub or drive issue workflow there.
-- On synced issues, follow [rfcs.md](rfcs.md): reply to the synced comment thread, not a top-level Linear comment.
+- On synced issues, follow [issues.md](issues.md): reply to the synced comment thread, not a top-level Linear comment.
 
 ## GitHub
 
@@ -35,4 +35,4 @@ Source control, code review, and CI.
 **Do not use for**
 
 - Creating or managing issues (use Linear)
-- RFC discussion (use Linear)
+- Issue planning discussion (use Linear)
