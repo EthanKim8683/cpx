@@ -4,16 +4,41 @@ linters:
   default: standard
   enable:
     - revive
+    - thelper
+    - testifylint
+    - forbidigo
+    - testableexamples
+    - depguard
   settings:
     revive:
       rules:
         - name: exported
         - name: package-comments
+    depguard:
+      rules:
+        tests-no-testify:
+          files:
+            - $test
+          list-mode: lax
+          deny:
+            - pkg: github.com/stretchr/testify
+              desc: use go-cmp and standard testing; see docs/agents/tests.md
+    forbidigo:
+      analyze-types: true
+      forbid:
+        - pattern: ^reflect\.DeepEqual$
+          msg: use github.com/google/go-cmp/cmp.Diff; see docs/agents/tests.md
   exclusions:
     presets:
       - common-false-positives
       - legacy
       - std-error-handling
+    rules:
+      - path-except: '_test\.go'
+        linters:
+          - testifylint
+          - forbidigo
+          - depguard
 
 run:
   timeout: 5m
