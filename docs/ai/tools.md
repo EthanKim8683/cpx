@@ -10,7 +10,7 @@ Issue tracking and design discussion.
 
 - Creating and updating issues
 - Tracking status
-- Planning and design discussion on issue threads
+- Recording significant updates on issue threads
 
 **Do not use for**
 
@@ -35,4 +35,4 @@ Source control, code review, and CI.
 **Do not use for**
 
 - Creating or managing issues (use Linear)
-- Issue planning discussion (use Linear)
+- Issue discussion and updates (use Linear)

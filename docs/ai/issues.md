@@ -2,15 +2,15 @@
 
 How agents record significant updates on Linear issues (synced to GitHub).
 
-Record on that issue's synced comment thread whenever something significant comes up while working on it. The thread is the durable record.
+Whenever something significant comes up while working on an issue, record it on that issue's synced comment thread. The thread is the durable record.
 
-Issue bodies stay short: a paragraph on what needs figuring out. Put significant details in comments.
+Issue bodies stay short — a paragraph on what needs figuring out. Details belong in comments.
 
 ## Synced comments
 
-Each issue has a system comment that syncs with GitHub. **Reply to that comment** — top-level Linear comments do not sync.
+Each issue has a system comment synced with GitHub. **Reply to that comment** — top-level Linear comments do not sync.
 
-Record on the issue the conversation is about.
+Use the issue the conversation is actually about.
 
 ## What to record
 
@@ -21,14 +21,14 @@ Record when something significant happens:
 - Something important is learned or developed
 - A blocker or surprise surfaces during implementation
 
-Do not skip significant items. If it is not on the thread, it is not recorded.
+**Do not skip significant items.** If it is not on the thread, it is not recorded.
 
-Do not record routine back-and-forth that does not change understanding.
+Skip routine back-and-forth that does not change understanding.
 
-Write comments that capture outcomes — decisions, findings, direction, constraints. Use headings, lists, or code blocks when they help.
+Comments should capture outcomes — decisions, findings, direction, constraints. Headings, lists, and code blocks are fine when they help.
 
 ## Recording
 
-Record multiple comments sequentially — parallel comments can arrive out of order.
+When recording multiple comments at once, do so sequentially — parallel comments can arrive out of order.
 
-If something significant was missed, backfill before continuing: one comment at a time, in order.
+If something significant was missed, backfill before continuing: one comment at a time, in chronological order.
