@@ -1,8 +1,0 @@
----
-description: GitHub issue workflow — read docs/agents/issues.md and run its checklist
-alwaysApply: true
----
-
-When working on something that has a GitHub issue, read [docs/agents/issues.md](docs/agents/issues.md) and follow it.
-
-Run the checklist before, during, and after work. Satisfy every item before finishing.

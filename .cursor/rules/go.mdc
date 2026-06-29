@@ -1,9 +1,0 @@
----
-description: Go conventions — read docs/agents/go.md and run its checklist
-globs: **/*.go
-alwaysApply: false
----
-
-When writing or reviewing Go in cpx, read [docs/agents/go.md](docs/agents/go.md) and follow it.
-
-Run the checklist in go.md before finishing. Satisfy every item that applies.

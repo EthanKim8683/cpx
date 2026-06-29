@@ -1,31 +1,38 @@
-# Go
+# Go Guidelines for cpx
 
-How to write Go in cpx.
+Coding standards, references, and verification procedures for writing Go in `cpx`.
 
-1. Follow [topic docs](#topic-docs) for cpx rules.
-2. Run the [checklist](#checklist) before finishing.
+## Authoritative References
 
-Official docs are authoritative — these pages record what cpx adds. Package structure and naming follow issue scope.
+Official sources for standard Go conventions:
 
-## Topic docs
+* **Project Layout**: [golang-standards/project-layout](https://github.com/golang-standards/project-layout) · [Organizing a Go Project](https://go.dev/doc/modules/layout)
+* **Code Style**: [Effective Go](https://go.dev/doc/effective_go) · [Go Code Review Comments](https://go.dev/wiki/CodeReviewComments)
 
-| Doc | Covers |
+## Topic Guides
+
+| Guide | Scope |
 | --- | --- |
-| [comments.md](comments.md) | Comment content |
-| [tests.md](tests.md) | Tests, go-cmp, goldie |
+| [comments.md](comments.md) | Doc comments and inline commentary |
+| [tests.md](tests.md) | Testing mechanics (`go-cmp`, `goldie`) |
+
+## Verification Cheatsheet
+
+Run before completing work:
+
+```bash
+go generate ./...
+go test ./...
+golangci-lint run ./...
+```
+
+* Linter configuration: [`.golangci.yml`](../../.golangci.yml). Use `gofmt` / `goimports` for formatting, not the linter.
 
 ## Checklist
 
-Skip items that do not apply.
-
-- [ ] Change aligns with issue scope
-- [ ] [comments.md](comments.md) satisfied
-- [ ] [tests.md](tests.md) satisfied; golden diffs reviewed if updated
-- [ ] Generated build inputs not committed
-- [ ] `go generate ./...` · `go test ./...` · `golangci-lint run ./...`
-
-## golangci-lint
-
-[golangci-lint.run](https://golangci-lint.run/) · [`.golangci.yml`](../../.golangci.yml). Use `gofmt` / `goimports` for formatting, not the linter.
-
-Comment **style** — revive `exported` + `package-comments` (comments exclusion preset omitted). Comment **content** — [comments.md](comments.md). Tests — [tests.md](tests.md).
+- [ ] Package structure aligns with Go module conventions (`/internal`, `/cmd`).
+- [ ] Code formatted using `gofmt` / `goimports`.
+- [ ] [comments.md](comments.md) satisfied.
+- [ ] [tests.md](tests.md) satisfied; golden diffs reviewed if updated.
+- [ ] Generated build inputs not committed.
+- [ ] Verification commands pass cleanly.

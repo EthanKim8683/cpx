@@ -1,8 +1,8 @@
-# Agent docs
+# Agent Documentation Index
 
-| Doc | Description |
+| Doc | Scope |
 | --- | --- |
-| [go.md](go.md) | Go in cpx — start here |
-| [comments.md](comments.md) | Comment content |
-| [tests.md](tests.md) | Tests |
-| [issues.md](issues.md) | GitHub issues workflow |
+| [go.md](go.md) | Go standards and layout |
+| [comments.md](comments.md) | Doc comments and inline commentary |
+| [tests.md](tests.md) | Testing mechanics (`go-cmp`, `goldie`) |
+| [issues.md](issues.md) | GitHub issue workflow |

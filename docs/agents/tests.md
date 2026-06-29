@@ -1,43 +1,34 @@
-# Tests
+# Testing Standards
 
-What to test and how to assert it. Test mechanics enforced by [golangci-lint](go.md#golangci-lint).
+What to test and how to assert it in `cpx`. Test mechanics enforced by [golangci-lint](go.md#verification-cheatsheet).
 
-Derived from [Go Test Comments](https://go.dev/wiki/TestComments), [Table-Driven Tests](https://go.dev/wiki/TableDrivenTests), [go-cmp](https://github.com/google/go-cmp), and [golden-file testing](https://www.youtube.com/watch?v=yszygk1cpEc).
+## Authoritative References
 
-## Tools
+* **Principles**: [Go Test Comments](https://go.dev/wiki/TestComments) · [Table-Driven Tests](https://go.dev/wiki/TableDrivenTests)
+* **Libraries**: [google/go-cmp](https://pkg.go.dev/github.com/google/go-cmp/cmp) · [goldie (Advanced Testing talk)](https://www.youtube.com/watch?v=yszygk1cpEc)
+* **Concurrency**: [Go 1.24 synctest](https://go.dev/blog/synctest)
 
-### go-cmp
+## Tool Selection Matrix
 
-[github.com/google/go-cmp](https://github.com/google/go-cmp) — `cmp.Diff(want, got)` for structs, slices, and maps. Clearer failures than `reflect.DeepEqual`; matches [Go wiki guidance against assertion libraries](https://go.dev/wiki/TestComments#assert-libraries).
-
-```go
-if diff := cmp.Diff(want, got); diff != "" {
-    t.Errorf("Foo() mismatch (-want +got):\n%s", diff)
-}
-```
-
-### goldie
-
-[github.com/sebdah/goldie](https://github.com/sebdah/goldie) — golden-file assertions in `testdata/`.
-
-Adopted after [Mitchell Hashimoto — Advanced Testing with Go](https://www.youtube.com/watch?v=yszygk1cpEc): store expected output, compare on run, regenerate with `-update`. Use for large generated output (YAML, JSON, rendered commands); run `go test -update ./...` and review the git diff. Not for small values or build inputs.
+| Target | Tool / Pattern | Usage |
+| --- | --- | --- |
+| Structs, slices, maps | `google/go-cmp` | `cmp.Diff(want, got)`. Avoid `reflect.DeepEqual`. |
+| Large generated output | `sebdah/goldie` | Fixtures in `testdata/`. Run `go test -update ./...` and review git diff. |
+| Multi-valid outputs | Invariants | Assert semantic rules (e.g. topological order), not pinned ordering. |
+| Concurrent / time code | `testing/synctest` | Use synthetic clock bubbles instead of real sleeping. |
+| Thin wrappers | Smoke test | Smoke test only unless cpx adds logic on top. |
 
 ## Principles
 
-- **Test cpx logic** — parsing, transforms, selection, and errors this repo owns
-- **Do not retest dependencies** — a thin `env.ParseAs` wrapper needs one smoke test, not a per-field table that only echoes env vars back (`config.Load` today)
-- **Prefer semantics over exact output** — use go-cmp for meaning, not raw bytes; when many answers are valid, assert invariants (topological sort: every `u → v` has `u` before `v`), not one pinned ordering
-- **Table-driven when it fits** — same assertion logic, varying inputs ([Go wiki](https://go.dev/wiki/TableDrivenTests)); skip tables when cases need different logic or a single direct test is clearer
-- **Keep unit tests self-contained** — no network, external processes, or stray goroutines ([`testing/synctest`](https://pkg.go.dev/testing/synctest) package docs); for concurrent or time-based code, prefer `synctest` over real sleeps ([VictoriaMetrics](https://victoriametrics.com/blog/go-synctest/), [Go blog](https://go.dev/blog/synctest))
-- **Structure** — `t.Run` subtests; descriptive case names; inputs in failure messages; `got` before `want`; `t.Helper()` in helpers; fixtures in `testdata/`
+* **Test cpx logic**: Parsing, transforms, selection, and errors this repo owns. Do not retest dependencies.
+* **Structure**: `t.Run` subtests; descriptive case names; inputs in failure messages; `got` before `want`; `t.Helper()` in helpers.
+* **Self-contained**: No network, external processes, or stray goroutines.
 
 ## Checklist
 
-- [ ] Tests exercise cpx-owned logic, not third-party behavior
-- [ ] Thin wrappers: smoke test only unless cpx adds logic on top
-- [ ] Table-driven with `t.Run` when cases share assertion logic
-- [ ] Failure messages include inputs; `got` before `want`; `t.Helper()` on helpers
-- [ ] Structs, slices, maps compared with go-cmp, not `reflect.DeepEqual`
-- [ ] Multiple valid outputs checked via invariants, not one canonical ordering
-- [ ] Large stable output uses goldie; `-update` diffs reviewed
-- [ ] Fixtures in `testdata/`; generated build inputs are not golden files
+- [ ] Tests exercise cpx-owned logic, not third-party behavior.
+- [ ] Structs, slices, maps compared with `go-cmp`, not `reflect.DeepEqual`.
+- [ ] Large stable output uses `goldie` in `testdata/`.
+- [ ] Table-driven with `t.Run` when cases share assertion logic.
+- [ ] Failure messages include inputs; `got` before `want`; `t.Helper()` on helpers.
+- [ ] Concurrent or time code uses `synctest` over `time.Sleep`.
