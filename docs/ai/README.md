@@ -1,7 +1,9 @@
 # Agent docs
 
-
 | Doc | Description |
-| --- | ----------- |
-| [go.md](go.md) | How to write Go in cpx |
-| [issues.md](issues.md) | Keep GitHub issues up to date while working |
+| --- | --- |
+| [go.md](go.md) | Go in cpx — start here |
+| [codegen.md](codegen.md) | `go generate` |
+| [tests.md](tests.md) | Tests |
+| [comments.md](comments.md) | Comment content |
+| [issues.md](issues.md) | GitHub issues workflow |
