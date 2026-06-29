@@ -1,87 +1,75 @@
 ---
 name: linear
-description: Manage issues, projects & team workflows in Linear. Use when the user wants to read, create or updates tickets in Linear.
-metadata:
-  short-description: Manage Linear issues in Codex
+description: Create, read, and update Linear issues and comments via the Linear MCP server. Use when working with Linear issues, issue status, or synced issue threads — not for commits, branches, or pull requests.
 ---
 
 # Linear
 
-## Overview
+Issue tracking in cpx. Use the **Linear MCP server** (`https://mcp.linear.app/mcp`). Read each tool's schema before calling it.
 
-This skill provides a structured workflow for managing issues, projects & team workflows in Linear. It ensures consistent integration with the Linear MCP server, which offers natural-language project management for issues, projects, documentation, and team collaboration.
+If MCP calls fail with an auth error, ask the user to connect Linear in their agent's MCP settings, then retry.
 
-## Prerequisites
-- Linear MCP server must be connected and accessible via OAuth
-- Confirm access to the relevant Linear workspace, teams, and projects
+## cpx conventions
 
-## Required Workflow
+**Use for:** creating and updating issues, tracking status, recording significant updates on issue threads.
 
-**Follow these steps in order. Do not skip steps.**
+**Do not use for:** commits, branches, or pull requests — use the [github](../github/SKILL.md) skill.
 
-### Step 0: Set up Linear MCP (if not already configured)
+- Default to Linear for anything that is not code.
+- GitHub issues are a sync mirror — do not create issues on GitHub or drive issue workflow there.
+- On synced issues, follow [docs/ai/issues.md](../../docs/ai/issues.md): reply to the synced system comment (`parentId`), not a top-level comment.
 
-If any MCP call fails because Linear MCP is not connected, pause and set it up:
+Default team: **Competitive Programming**. Issue IDs look like `CP-123`.
 
-1. Add the Linear MCP:
-   - `codex mcp add linear --url https://mcp.linear.app/mcp`
-2. Enable remote MCP client:
-   - Set `[features] rmcp_client = true` in `config.toml` **or** run `codex --enable rmcp_client`
-3. Log in with OAuth:
-   - `codex mcp login linear`
+Issue bodies stay short. Put decisions, findings, and progress in comments.
 
-After successful login, the user will have to restart codex. You should finish your answer and tell them so when they try again they can continue with Step 1.
+## How to call tools
 
-**Windows/WSL note:** If you see connection errors on Windows, try configuring the Linear MCP to run via WSL:
-```json
-{"mcpServers": {"linear": {"command": "wsl", "args": ["npx", "-y", "mcp-remote", "https://mcp.linear.app/sse", "--transport", "sse-only"]}}}
-```
+1. Read the tool schema in the MCP descriptor before calling.
+2. Pass markdown in `description` and `body` as literal text — real newlines, not `\n` escape sequences.
+3. Read before write: `get_issue` / `list_issues` / `list_comments`, then `save_issue` / `save_comment`.
+4. Post issue comments **one at a time** — parallel replies arrive out of order.
 
-### Step 1
-Clarify the user's goal and scope (e.g., issue triage, sprint planning, documentation audit, workload balance). Confirm team/project, priority, labels, cycle, and due dates as needed.
+## Issues
 
-### Step 2
-Select the appropriate workflow (see Practical Workflows below) and identify the Linear MCP tools you will need. Confirm required identifiers (issue ID, project ID, team key) before calling tools.
+### Read
 
-### Step 3
-Execute Linear MCP tool calls in logical batches:
-- Read first (list/get/search) to build context.
-- Create or update next (issues, projects, labels, comments) with all required fields.
-- For bulk operations, explain the grouping logic before applying changes.
+| Tool | When |
+| --- | --- |
+| `get_issue` | One issue by ID (`CP-123`). Set `includeRelations` when you need blockers/duplicates. |
+| `list_issues` | Search or filter. Use `team`, `state`, `assignee` (`me`), `query`, `project`, `label`. |
 
-### Step 4
-Summarize results, call out remaining gaps or blockers, and propose next actions (additional issues, label changes, assignments, or follow-up comments).
+### Create
 
-## Available Tools
+`save_issue` — omit `id`. Required: `title`, `team` (`Competitive Programming`).
 
-Issue Management: `list_issues`, `get_issue`, `create_issue`, `update_issue`, `list_my_issues`, `list_issue_statuses`, `list_issue_labels`, `create_issue_label`
+Keep `description` to a line or two. Optional: `state`, `priority` (0=None … 4=Low), `project`, `labels`, `assignee` (`me`).
 
-Project & Team: `list_projects`, `get_project`, `create_project`, `update_project`, `list_teams`, `get_team`, `list_users`
+### Update
 
-Documentation & Collaboration: `list_documents`, `get_document`, `search_documentation`, `list_comments`, `create_comment`, `list_cycles`
+`save_issue` — pass `id` (`CP-123` or UUID). Only include fields to change: `state`, `title`, `description`, `priority`, `assignee`, etc.
 
-## Practical Workflows
+Use `list_issue_statuses` when you need valid state names for the team.
 
-- Sprint Planning: Review open issues for a target team, pick top items by priority, and create a new cycle (e.g., "Q1 Performance Sprint") with assignments.
-- Bug Triage: List critical/high-priority bugs, rank by user impact, and move the top items to "In Progress."
-- Documentation Audit: Search documentation (e.g., API auth), then open labeled "documentation" issues for gaps or outdated sections with detailed fixes.
-- Team Workload Balance: Group active issues by assignee, flag anyone with high load, and suggest or apply redistributions.
-- Release Planning: Create a project (e.g., "v2.0 Release") with milestones (feature freeze, beta, docs, launch) and generate issues with estimates.
-- Cross-Project Dependencies: Find all "blocked" issues, identify blockers, and create linked issues if missing.
-- Automated Status Updates: Find your issues with stale updates and add status comments based on current state/blockers.
-- Smart Labeling: Analyze unlabeled issues, suggest/apply labels, and create missing label categories.
-- Sprint Retrospectives: Generate a report for the last completed cycle, note completed vs. pushed work, and open discussion issues for patterns.
+## Comments
 
-## Tips for Maximum Productivity
+Synced issues have a system comment linked to GitHub. **Reply to that comment**, not the issue top-level.
 
-- Batch operations for related changes; consider smart templates for recurring issue structures.
-- Use natural queries when possible ("Show me what John is working on this week").
-- Leverage context: reference prior issues in new requests.
-- Break large updates into smaller batches to avoid rate limits; cache or reuse filters when listing frequently.
+1. `list_comments` with `issueId` — find the synced system comment (top-level, links to GitHub).
+2. `save_comment` with `parentId` set to that comment's ID and your `body`.
 
-## Troubleshooting
+For a new top-level thread (rare in cpx): `save_comment` with `issueId` and `body`, no `parentId`.
 
-- Authentication: Clear browser cookies, re-run OAuth, verify workspace permissions, ensure API access is enabled.
-- Tool Calling Errors: Confirm the model supports multiple tool calls, provide all required fields, and split complex requests.
-- Missing Data: Refresh token, verify workspace access, check for archived projects, and confirm correct team selection.
-- Performance: Remember Linear API rate limits; batch bulk operations, use specific filters, or cache frequent queries.
+To edit an existing comment: `save_comment` with `id` and updated `body`.
+
+## Other tools
+
+Use when needed — not part of the default workflow:
+
+| Tool | Purpose |
+| --- | --- |
+| `list_projects` / `get_project` / `save_project` | Projects |
+| `list_documents` / `get_document` / `save_document` | Linear docs |
+| `search_documentation` | Search Linear help docs |
+| `list_issue_labels` / `create_issue_label` | Labels |
+| `create_attachment` / `get_attachment` | File attachments on issues |
