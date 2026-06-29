@@ -1,63 +1,27 @@
 # Issues
 
-How agents record significant updates on Linear issues (synced to GitHub).
+How agents keep Linear issues up to date. Issues sync to GitHub; the comment thread is where the real conversation lives.
 
-Whenever something significant comes up while working on an issue, record it on that issue's synced comment thread. The thread is the durable record — future agents and the user depend on it.
+## The thread is the record
 
-Issue bodies stay short — a paragraph on what needs figuring out. Details belong in comments.
+Issue bodies stay short — a paragraph on what needs figuring out. Everything else goes in comments.
 
-## Checklist
+When something significant happens while you're working, put it on the thread. If it's not there, it didn't happen — for future you, future agents, and anyone reading the GitHub mirror.
 
-Use this before, during, and after working on an issue. If in doubt whether something is significant, record it.
-
-### Before starting
-
-- [ ] I know which Linear issue this work is about
-- [ ] I will reply to the **synced comment thread** (the system comment), not a top-level Linear comment
-
-### While working, record when
-
-- [ ] Planning completes or scope is clarified
-- [ ] A decision is made (even during planning)
-- [ ] Research yields a finding or turning point
-- [ ] Scope or direction changes
-- [ ] A blocker or surprise surfaces
-- [ ] Implementation starts (record plan and open decisions)
-
-### When recording
-
-- [ ] Capture outcomes — decisions, findings, direction, constraints
-- [ ] Skip routine back-and-forth that does not change understanding
-- [ ] Post multiple comments **sequentially** (parallel posts arrive out of order)
-
-### Before finishing
-
-- [ ] All significant decisions, findings, and direction changes are on the synced thread
-- [ ] Anything missed is backfilled before continuing — one comment at a time, in chronological order
+**Significant** means a decision, a research finding, a direction change, a blocker, or something learned. Skip routine back-and-forth that doesn't change anyone's understanding. When unsure, record it.
 
 ## Synced comments
 
-Each issue has a system comment synced with GitHub. **Reply to that comment** — top-level Linear comments do not sync.
+Each synced issue has a system comment that mirrors to GitHub. **Reply to that comment** — top-level Linear comments on synced issues don't sync.
 
 Use the issue the conversation is actually about.
 
-## What to record
+## How to write comments
 
-Record when something significant happens:
+Capture outcomes: what was decided, found, or blocked — not play-by-play. Headings, lists, and code blocks are fine when they help.
 
-- A decision is made
-- Research yields a finding or turning point
-- Something important is learned or developed
-- A blocker or surprise surfaces during implementation
+Post multiple comments one at a time; parallel posts can land out of order. If you missed something, backfill before moving on — chronological order, one comment at a time.
 
-**Do not skip significant items.** If it is not on the thread, it is not recorded.
+## Checklist
 
-Skip routine back-and-forth that does not change understanding.
-
-Comments should capture outcomes — decisions, findings, direction, constraints. Headings, lists, and code blocks are fine when they help.
-
-## Recording
-
-When recording multiple comments at once, do so sequentially — parallel comments can arrive out of order.
-
-If something significant was missed, backfill before continuing: one comment at a time, in chronological order.
+The hard checklist lives in [`.cursor/rules/issue-updates.mdc`](../../.cursor/rules/issue-updates.mdc) — agents see it every session.

@@ -3,34 +3,29 @@ description: Record significant updates on Linear issue threads while working
 alwaysApply: true
 ---
 
-When working on a Linear issue, record significant updates on its synced comment thread. The thread is the durable record — if it is not on the thread, it is not recorded.
+When working on a Linear issue, record significant updates on its synced comment thread. Reference: [docs/ai/issues.md](docs/ai/issues.md).
 
-Full details: [docs/ai/issues.md](docs/ai/issues.md).
+## Before starting
 
-## Checklist
+- [ ] I identified the Linear issue this work is about
+- [ ] I located the synced system comment — I will reply there, **NEVER** as a top-level Linear comment
 
-Before starting:
+## While working — record when
 
-- [ ] I know which Linear issue this work is about
-- [ ] I will reply to the **synced comment thread** (the system comment), not a top-level Linear comment
-
-While working, record when:
-
-- [ ] Planning completes or scope is clarified
-- [ ] A decision is made (even during planning)
+- [ ] A decision is made (including during planning)
 - [ ] Research yields a finding or turning point
 - [ ] Scope or direction changes
 - [ ] A blocker or surprise surfaces
-- [ ] Implementation starts (record plan and open decisions)
+- [ ] Planning completes or implementation starts
 
-When recording:
+## When recording
 
-- [ ] Capture outcomes — decisions, findings, direction, constraints
-- [ ] Skip routine back-and-forth that does not change understanding
+- [ ] Capture outcomes — decisions, findings, direction, constraints — not routine back-and-forth
 - [ ] If in doubt whether something is significant, record it
-- [ ] Post multiple comments **sequentially** (parallel posts arrive out of order)
+- [ ] Post multiple comments **sequentially** — **NEVER** in parallel
 
-Before finishing:
+## Before finishing
 
 - [ ] All significant decisions, findings, and direction changes are on the synced thread
-- [ ] Anything missed is backfilled before continuing — one comment at a time, in chronological order
+- [ ] Missed items backfilled before continuing — one comment at a time, chronological order
+- [ ] Anything not recorded is explicitly noted on the thread (and why)
