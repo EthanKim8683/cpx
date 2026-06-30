@@ -144,7 +144,7 @@ Verify the generated changes in the `testdata/` directory using `git diff` befor
 
 ## 6. Recursive Directory Structure and File Verification
 
-When testing functions that generate or modify directories (e.g., project skeleton generators, package bundlers, file system sync utilities), you must verify both the directory structure (presence of files) and their contents recursively.
+While **Golden File Testing** (Section 5) is ideal for verifying a single, large, or complex output payload, **Recursive Directory Verification** is the standard pattern when your code generates or modifies entire directory skeletons (e.g., project skeleton generators, package bundlers, file system sync utilities) and the file layout itself is part of the correctness contract.
 
 ### The Idiomatic Go Pattern
 
@@ -178,7 +178,9 @@ func readDirTree(t *testing.T, dir string) map[string]string {
 			return err
 		}
 
-		tree[rel] = string(content)
+		// Normalize line endings to avoid cross-platform test flakiness
+		normalizedContent := strings.ReplaceAll(string(content), "\r\n", "\n")
+		tree[rel] = normalizedContent
 		return nil
 	})
 
@@ -209,10 +211,21 @@ func TestGenerateProject(t *testing.T) {
 }
 ```
 
-### Rationale: Standard-Library-First & Clean Diffs
-- **No Third-Party Assertions**: Third-party assertions (like `testify/assert.DirExists` or directory structure verification libraries) often introduce bloated dependencies, offer rigid assertions (e.g., they only verify file existence but not contents), and produce hard-to-read error messages. This aligns with the **No Testify** and standard-library-first principles.
-- **Go Standard Library Heuristics**: Walking the directory structure using standard library APIs is transparent and flexible. The Go compiler's own core testing suite uses `filepath.WalkDir` to verify compiler outputs and test setups recursively (see `src/cmd/internal/testdir/testdir_test.go` in the Go toolchain).
-- **Leverage go-cmp**: Mapping the directory tree into a `map[string]string` allows us to leverage `go-cmp/cmp.Diff` natively. This yields extremely clean, line-by-line diffs showing exactly which files are missing, extra, or contain mismatched contents.
+### Key Guidelines and Gotchas for Agents
+
+When implementing recursive directory testing, keep these design considerations in mind:
+- **Exclude System/VCS Files**: Do not assume the temp directory will only contain the files you wrote. If necessary, skip OS or VCS files (like `.DS_Store`, `.git`, or temporary locks) during the walk.
+- **Normalize Line Endings**: Windows uses `\r\n` (CRLF) while Linux and macOS use `\n` (LF). Always use `strings.ReplaceAll(content, "\r\n", "\n")` on read files to prevent tests from failing on Windows CI environments.
+- **Verify Permissions/Modes**: If executable bits or symlink targets are part of your contract, map the relative path to a custom struct containing both the mode and content rather than just a raw string:
+  ```go
+  type fileInfo struct {
+      Mode    fs.FileMode
+      Content string
+  }
+  ```
+
+> [!NOTE]
+> This standard-library-first approach (using `filepath.WalkDir` and `cmp.Diff`) is modeled after the Go compiler's own test suite (`src/cmd/internal/testdir/testdir_test.go`). It avoids rigid third-party assertion dependencies, provides transparent control over file traversal, and leverages `go-cmp` to output clean line-by-line diffs on mismatch.
 
 ---
 
@@ -262,6 +275,7 @@ func TestFetchSourceLive(t *testing.T) {
 
 ## Authoritative References
 
+For deeper reading on Go testing standards and patterns:
 - [Go Test Comments](https://go.dev/wiki/TestComments)
 - [Table-Driven Tests](https://go.dev/wiki/TableDrivenTests)
 - [Advanced Testing with Go (Mitchell Hashimoto)](https://www.youtube.com/watch?v=yszygk1cpEc)
