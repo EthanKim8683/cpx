@@ -225,9 +225,9 @@ When implementing recursive directory testing, keep these design considerations 
   ```
 
 ### Rationale: Standard-Library-First & Clean Diffs
-- **No Third-Party Assertions**: Third-party assertions (like `testify/assert.DirExists` or directory structure verification libraries) often introduce bloated dependencies, offer rigid assertions (e.g., they only verify file existence but not contents), and produce hard-to-read error messages. This aligns with the **No Testify** and standard-library-first principles.
-- **Go Standard Library Heuristics**: Walking the directory structure using standard library APIs is transparent and flexible. The Go compiler's own core testing suite uses `filepath.WalkDir` to verify compiler outputs and test setups recursively (see `src/cmd/internal/testdir/testdir_test.go` in the Go toolchain).
-- **Leverage go-cmp**: Mapping the directory tree into a `map[string]string` allows us to leverage `go-cmp/cmp.Diff` natively. This yields extremely clean, line-by-line diffs showing exactly which files are missing, extra, or contain mismatched contents.
+- **Direct Traversal Control**: Using standard library APIs like `filepath.WalkDir` gives you direct, transparent control over traversal semantics (such as explicitly handling or ignoring symlinks, permissions, and system files) without relying on rigid, black-box directory assertion helpers.
+- **Go Core Testing Alignment**: Walking the directory structure using standard library APIs is the standard approach used by the Go compiler's own testing suite to verify compiler outputs and test setups recursively (see `src/cmd/internal/testdir/testdir_test.go` in the Go toolchain).
+- **Leverage go-cmp**: Mapping the directory tree into a `map[string]string` (or a structured type) allows us to leverage `go-cmp/cmp.Diff` natively. This yields extremely clean, line-by-line diffs showing exactly which files are missing, extra, or contain mismatched contents.
 
 ---
 
