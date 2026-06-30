@@ -25,6 +25,7 @@ We adopt **`github.com/spf13/afero`** as the standard file system abstraction la
     -   Use `afero.NewMemMapFs()` for write/read workloads.
     -   Use the standard library `testing/fstest.MapFS` for read-only workloads.
 3.  **Integration Testing**: Use `afero.NewOsFs()` when validating actual physical disk outputs is strictly required.
+4.  **Method Call Ergonomics**: To maintain clean and readable method-based syntax, wrap `afero.Fs` in `&afero.Afero{Fs: fs}` inside functions and test verification routines. Avoid using Afero package-level function wrappers (e.g., prefer `afs.ReadFile(path)` over `afero.ReadFile(fs, path)`).
 
 ---
 
@@ -45,5 +46,5 @@ We adopt **`github.com/spf13/afero`** as the standard file system abstraction la
 
 ## References
 
--   [Go Testing Guidelines](file:///Users/ethankim8683/Competitive%20Programming/Utilities/cpx/docs/agents/tests.md)
+-   [Go Testing Guidelines](../agents/tests.md)
 -   [GitHub Issue #55](https://github.com/EthanKim8683/cpx/issues/55)
