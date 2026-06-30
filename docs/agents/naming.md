@@ -45,7 +45,36 @@ For executable command tools (`package main` files under `internal/cdb/cmd/`):
 
 ---
 
-## 5. Standard Variable Identifier Lookup Table
+## 5. Idiomatic Verb Selection for Functions and Methods
+
+When naming functions or methods that perform actions, use simple, direct, and standard verbs. Avoid overly verbose naming patterns or un-idiomatic verbs.
+
+### Recommend Simple, Standard Verbs
+Prefer standard library verbs to represent actions:
+- **`Read` / `Write`**: For input/output operations (e.g., `io.Reader.Read`, `io.Writer.Write`).
+- **`Load`**: For retrieving configurations, states, or external assets (e.g., `config.Load()`).
+- **`Get`**: Use **only** for map-like lookups (e.g., `Header.Get("Key")`) or network fetches (e.g., `http.Get()`). Never use `Get` for struct field accessors (see below).
+- **`Prepare`**: Setup or compile resources (e.g., `sql.Stmt.Prepare()`).
+- **`Parse`**: For parsing raw input into structured data (e.g., `time.Parse()`, `url.Parse()`).
+- **`Create` / `Open` / `Close`**: For managing resource lifecycles (e.g., `os.Create()`, `os.Open()`, `Close()`).
+- **`Run`**: For executing processes, tasks, or long-running workers (e.g., `exec.Cmd.Run()`).
+
+### Discourage Un-idiomatic and Verbose Naming
+- **Avoid `populate`**: Do not use `populate` to fill structs. Use parsed/constructor methods (e.g., `parseUser()` or `newUser()`) or direct assignments instead of `populateUser()`.
+- **Avoid Verbose Helper Verbs**: Do not prefix functions with helper verbs like `Calculate`, `Compute`, or `Find` when the noun or property alone is sufficient.
+  - **Bad**: `CalculateArea()`, `FindUser()`
+  - **Good**: `Area()`, `User()`
+
+### When to Omit Verbs
+Go commonly omits verbs to keep the API surface concise and noun-focused:
+- **Getter Methods**: Omit the `Get` prefix entirely. Use `user.Email()` instead of `user.GetEmail()`. Setters should still use `Set` (e.g., `user.SetEmail()`).
+- **Properties and Calculations**: For simple properties or computed states, use the noun. E.g., `buf.Len()` instead of `buf.GetLength()`, `rect.Area()` instead of `rect.CalculateArea()`.
+- **Type Conversions**: Omit helper verbs like `To` or `As`. E.g., `String()` instead of `ToString()`, `Bytes()` instead of `ToBytes()`.
+- **Constructor Context**: Omit verbs like `Create` or `New` when the package name itself provides clear context. E.g., `errors.New()` instead of `errors.CreateError()`.
+
+---
+
+## 6. Standard Variable Identifier Lookup Table
 
 Use these standard Go variable names for common types and contexts:
 
@@ -60,6 +89,15 @@ Use these standard Go variable names for common types and contexts:
 | Option slice / struct | `opts` | `opts := []Option{...}` |
 | Buffer / byte slice | `b` or `buf` | `b, err := io.ReadAll(r)` |
 | Method receiver | 1-2 letters matching type | `func (c *Client) Connect()` |
+
+### Context-Specific & Reserved Identifiers
+Certain identifiers carry a very strong semantic meaning in Go. Do not use them for other types or contexts to avoid shadowing and confusion:
+- **`ctx`**: Reserved exclusively for `context.Context`. Do not name general/custom contexts (like AST context or canvas rendering context) as `ctx` (use `astCtx` or `renderCtx`). For web framework contexts (e.g., `gin.Context`), use `c`.
+- **`err`**: Reserved exclusively for `error`. Do not name lists of error structures or other variables as `err`.
+- **`t` and `b`**: Reserved exclusively for `*testing.T` and `*testing.B` in tests/benchmarks. Do not use them for loop counters, time variables, or other values within test files.
+- **`mu`**: Reserved exclusively for mutexes (`sync.Mutex` or `sync.RWMutex`).
+- **`tx`**: Reserved exclusively for database transactions.
+- **`ch`**: Reserved for Go channels (`chan T`).
 
 ---
 
