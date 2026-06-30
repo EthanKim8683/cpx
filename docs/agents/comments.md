@@ -47,7 +47,9 @@ cmd := exec.Command(path, "-dumpfullversion")
 ## 3. Sensible Redundancy & Contextual Comments
 
 - **Avoid Repetitive Boilerplate**: Do not repeat identical contextual explanations inside every branch of an `if-else` chain or `switch` block.
-- **Overarching & Localized Strategy**: Precede the conditional block with an overarching comment to explain the main strategy or high-level context. Then, distribute specific, localized comments "on-demand" inside individual branches exactly where they are executed and most relevant to read.
+- **Contextual Distribution**: Instead of grouping all explanations into a single massive block at the top, distribute comments hierarchically:
+  - **Unified Strategy**: Place an overarching comment above the block, switch, or sequence of statements to explain the overall context, purpose, or strategy.
+  - **Localized Steps**: Place specific, localized comments directly inside individual branches, cases, or statement steps to explain localized details at the exact moment they run.
 
 ### Example
 ```go
