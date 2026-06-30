@@ -31,4 +31,5 @@ Use the GitHub CLI (`gh`) to post clear, free-form markdown comments:
 gh issue comment <issue-number> --body "<comment-text>"
 ```
 
-*Note: If working from a Linear issue ID, locate the corresponding GitHub issue number first before commenting.*
+> [!NOTE]
+> If working from a Linear issue ID, locate the corresponding GitHub issue number first before commenting.
