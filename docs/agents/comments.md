@@ -44,19 +44,19 @@ cmd := exec.Command(path, "-dumpfullversion")
 
 ---
 
-## 3. Sensible Redundancy & Unified Branch Documentation
+## 3. Sensible Redundancy & Contextual Comments
 
 - **Avoid Repetitive Boilerplate**: Do not repeat identical contextual explanations inside every branch of an `if-else` chain or `switch` block.
-- **Grouped Branch Comments**: When multiple conditional branches stem from the same underlying context or decision point, place a single overarching block comment preceding the branching block to explain the shared context and strategy.
+- **Overarching & Localized Strategy**: Precede the conditional block with an overarching comment to explain the main strategy or high-level context. Then, distribute specific, localized comments "on-demand" inside individual branches exactly where they are executed and most relevant to read.
 
 ### Example
 ```go
-// The compiler binary could be missing, or it might be an older installation (< GCC 7)
-// that does not support the -dumpfullversion flag. We check the full version first
-// and fall back to -dumpversion if the command fails.
+// GCC 7 introduced -dumpfullversion to guarantee a 3-part version string (major.minor.patch) suitable
+// for release tag matching (https://gcc.gnu.org/gcc-7/changes.html).
 cmd := exec.Command(path, "-dumpfullversion")
 out, err := cmd.Output()
 if err != nil {
+    // Compilers older than GCC 7 do not support -dumpfullversion, but -dumpversion returned the full version on those releases.
     cmd = exec.Command(path, "-dumpversion")
     out, err = cmd.Output()
     if err != nil {
