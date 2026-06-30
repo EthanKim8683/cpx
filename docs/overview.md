@@ -24,3 +24,4 @@ For detailed standards and conventions in the repository:
 - [Go Commenting Guidelines](agents/comments.md)
 - [Go Naming Guidelines](agents/naming.md)
 - [Go Error Handling Guidelines](agents/errors.md)
+- [Go Testing Guidelines](agents/tests.md)
