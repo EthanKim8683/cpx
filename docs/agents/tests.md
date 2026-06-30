@@ -275,6 +275,7 @@ func TestFetchSourceLive(t *testing.T) {
 
 ## Authoritative References
 
+For deeper reading on Go testing standards and patterns:
 - [Go Test Comments](https://go.dev/wiki/TestComments)
 - [Table-Driven Tests](https://go.dev/wiki/TableDrivenTests)
 - [Advanced Testing with Go (Mitchell Hashimoto)](https://www.youtube.com/watch?v=yszygk1cpEc)
