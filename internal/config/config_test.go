@@ -2,6 +2,8 @@ package config
 
 import (
 	"testing"
+
+	"github.com/stretchr/testify/require"
 )
 
 func TestLoad(t *testing.T) {
@@ -9,7 +11,6 @@ func TestLoad(t *testing.T) {
 	t.Setenv("CLANG", "/usr/bin/clang")
 	t.Setenv("CLANG_TBLGEN", "/usr/bin/clang-tblgen")
 
-	if _, err := Load(); err != nil {
-		t.Fatalf("Load() error = %v", err)
-	}
+	_, err := Load()
+	require.NoError(t, err)
 }

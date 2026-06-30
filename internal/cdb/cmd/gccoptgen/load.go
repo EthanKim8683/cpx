@@ -7,7 +7,10 @@ import (
 	"io"
 	"net/http"
 	"os/exec"
+	"path/filepath"
 	"strings"
+
+	"github.com/spf13/afero"
 )
 
 // ErrUnexpectedStatus indicates an HTTP request returned a non-200 status code.
@@ -64,3 +67,43 @@ func fetchSource(client *http.Client, version, path string) (string, error) {
 
 	return string(b), nil
 }
+
+// files is the manifest of upstream GCC files required for option generation.
+var files = []string{
+	"gcc/common.opt",
+	"gcc/c-family/c.opt",
+	"gcc/params.opt",
+	"gcc/analyzer/analyzer.opt",
+	"gcc/opt-functions.awk",
+	"gcc/opt-read.awk",
+	"gcc/opt-gather.awk",
+}
+
+// load detects the compiler version, fetches all required source option files, and writes them to the specified directory.
+// It returns the detected compiler version, or an error if the process fails.
+func load(fs afero.Fs, client *http.Client, compilerPath, dir string) (string, error) {
+	version, err := detectVersion(compilerPath)
+	if err != nil {
+		return "", fmt.Errorf("detecting version: %w", err)
+	}
+
+	afs := &afero.Afero{Fs: fs}
+	for _, file := range files {
+		content, err := fetchSource(client, version, file)
+		if err != nil {
+			return "", fmt.Errorf("fetching source %s: %w", file, err)
+		}
+
+		destPath := filepath.Join(dir, filepath.FromSlash(file))
+		if err := afs.MkdirAll(filepath.Dir(destPath), 0755); err != nil {
+			return "", fmt.Errorf("creating parent directories for %s: %w", destPath, err)
+		}
+
+		if err := afs.WriteFile(destPath, []byte(content), 0644); err != nil {
+			return "", fmt.Errorf("writing file %s: %w", destPath, err)
+		}
+	}
+
+	return version, nil
+}
+

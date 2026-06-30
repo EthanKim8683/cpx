@@ -45,5 +45,5 @@ We adopt **`github.com/stretchr/testify`** (`assert` and `require`) as the prima
 
 ## References
 
--   [Go Testing Guidelines](file:///Users/ethankim8683/Competitive%20Programming/Utilities/cpx/docs/agents/tests.md)
+-   [Go Testing Guidelines](../agents/tests.md)
 -   [GitHub Issue #55](https://github.com/EthanKim8683/cpx/issues/55)
