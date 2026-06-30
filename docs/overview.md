@@ -1,15 +1,26 @@
-# cpx
+# Project Overview: cpx
 
-cpx is a CLI-oriented tool (and supporting library code) for competitive programming workflows: preparing submissions, fetching problem/contest material, and setting up workspace structure.
+cpx is a CLI-oriented tool and supporting library designed to streamline competitive programming workflows, including preparing submissions, fetching problem/contest material, and setting up workspace structures.
 
-## Goal
+---
 
-Reduce repetitive manual labor in competitive programming.
+## 1. Goal
 
-## Features
+The primary goal of `cpx` is to reduce repetitive manual labor and minimize friction in competitive programming setups, allowing developers to focus strictly on solving algorithmic problems.
 
-| Feature | Description |
-|---------|-------------|
-| **Bundling** | Turn a source file and its dependencies into a single source file suitable for submission on online judges (Codeforces, AtCoder, etc.). |
-| **Scraping** | Scrape problems and contests; submit solutions to online judges. |
-| **Scaffolding** | Create directory structure for solving individual problems or participating in contests. |
+---
+
+## 2. Features
+
+- **Bundling**: Turn a Go source file and its local dependencies into a single, unified source file suitable for submission to online judges (such as Codeforces, AtCoder, etc.).
+- **Scraping**: Automatically retrieve problem descriptions, contest configurations, and submit solutions directly to online judges.
+- **Scaffolding**: Automatically generate clean directory structures, test file templates, and helper files for individual problems or live contests.
+
+---
+
+## Related Documents
+
+For detailed standards and conventions in the repository:
+- [Go Commenting Guidelines](agents/comments.md)
+- [Go Naming Guidelines](agents/naming.md)
+- [Go Error Handling Guidelines](agents/errors.md)
