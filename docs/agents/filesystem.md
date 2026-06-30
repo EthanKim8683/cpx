@@ -6,7 +6,7 @@ To ensure test isolation, parallelizability, and cross-platform compatibility, a
 
 ## 1. The Core Standard: No Direct `os` Calls
 
-Production code must not call package-level file operations from the standard library `os` package (e.g., `os.Create`, `os.Open`, `os.ReadFile`). Instead, operations must be performed using an injected `afero.Fs` interface.
+Production code must not call package-level file operations from the standard library `os` package (e.g., `os.Create`, `os.Open`, `os.ReadFile`). Instead, operations must be performed using an injected `afero.Fs` interface, preferably wrapped in `afero.Afero` for cleaner method-based syntax.
 
 ### Bad: Direct OS Binding
 ```go
@@ -15,10 +15,11 @@ func LoadConfig(path string) ([]byte, error) {
 }
 ```
 
-### Good: Dependency Injection
+### Good: Dependency Injection (using afero.Afero wrapper)
 ```go
 func LoadConfig(fs afero.Fs, path string) ([]byte, error) {
-	return afero.ReadFile(fs, path) // Fully mockable
+	afs := &afero.Afero{Fs: fs}
+	return afs.ReadFile(path) // Method syntax, fully mockable
 }
 ```
 
@@ -26,15 +27,15 @@ func LoadConfig(fs afero.Fs, path string) ([]byte, error) {
 
 ## 2. Structured Abstractions
 
-For packages that manage multiple file system interactions, receive the `afero.Fs` dependency at struct initialization:
+For packages that manage multiple file system interactions, receive the `afero.Fs` dependency at struct initialization, and wrap it internally in `afero.Afero` to keep method calls clean:
 
 ```go
 type Generator struct {
-	fs afero.Fs
+	fs *afero.Afero
 }
 
 func NewGenerator(fs afero.Fs) *Generator {
-	return &Generator{fs: fs}
+	return &Generator{fs: &afero.Afero{Fs: fs}}
 }
 
 func (g *Generator) CreateSkeleton(dir string) error {
@@ -46,13 +47,14 @@ func (g *Generator) CreateSkeleton(dir string) error {
 
 ## 3. Useful Afero Helpers
 
-The `afero` library provides utility functions that mirror standard packages (`os`, `io/ioutil`). Always prefer using these wrapper functions:
+Always wrap `afero.Fs` in `&afero.Afero{Fs: fs}` to use its rich helper methods directly as method calls rather than using package-level function wrappers:
 
-*   **Read File**: `afero.ReadFile(fs, path)`
-*   **Write File**: `afero.WriteFile(fs, path, data, perm)`
-*   **Check Existence**: `afero.Exists(fs, path)`
-*   **Create/Overwrite File**: `fs.Create(path)`
-*   **Remove Directory/File**: `fs.RemoveAll(path)`
+*   **Read File**: `afs.ReadFile(path)`
+*   **Write File**: `afs.WriteFile(path, data, perm)`
+*   **Check Existence**: `afs.Exists(path)`
+*   **Check Dir**: `afs.IsDir(path)`
+*   **Create/Overwrite File**: `afs.Create(path)`
+*   **Remove Directory/File**: `afs.RemoveAll(path)`
 
 ---
 
@@ -69,7 +71,8 @@ func TestGenerator(t *testing.T) {
 	err := gen.CreateSkeleton("/test")
 	require.NoError(t, err)
 
-	exists, err := afero.Exists(mockFS, "/test")
+	afs := &afero.Afero{Fs: mockFS}
+	exists, err := afs.Exists("/test")
 	require.NoError(t, err)
 	assert.True(t, exists)
 }

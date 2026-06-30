@@ -175,29 +175,35 @@ func TestParseConfigs(t *testing.T) {
 
 ```go
 func WriteConfig(fs afero.Fs, path string, data string) error {
-	return afero.WriteFile(fs, path, []byte(data), 0644)
+	afs := &afero.Afero{Fs: fs}
+	return afs.WriteFile(path, []byte(data), 0644)
 }
 
 func TestWriteConfig(t *testing.T) {
 	appFS := afero.NewMemMapFs()
+	afs := &afero.Afero{Fs: appFS}
 
 	err := WriteConfig(appFS, "/app/config.json", `{"enabled": true}`)
 	require.NoError(t, err)
 
-	exists, err := afero.Exists(appFS, "/app/config.json")
+	exists, err := afs.Exists("/app/config.json")
 	require.NoError(t, err)
 	assert.True(t, exists)
 
-	content, err := afero.ReadFile(appFS, "/app/config.json")
+	content, err := afs.ReadFile("/app/config.json")
 	require.NoError(t, err)
 	assert.Equal(t, `{"enabled": true}`, string(content))
 }
 ```
 
-### B. Secondary Standard: Recursive Directory Tree Mapping (Integration Testing)
+### B. Secondary Standard: Recursive Directory Tree Mapping (Last Resort Integration Testing)
 
-When testing operations that *must* interact with the physical disk (e.g., compiler generation, code templating output), walk the target directory tree, map it to a structured map, and compare maps using Testify's `assert.Equal`.
+> [!IMPORTANT]
+> Recursive directory tree walking on the physical disk is a **last-resort integration testing pattern**. It must only be used when testing operations where dependency injection is impossible (e.g. executing a pre-compiled black-box compiler binary, running closed-source third-party generator tools, or interacting with legacy systems where you cannot pass an `afero.Fs`).
+>
+> If you have control over the source code, you must inject `afero.Fs` and test in memory (Section 6.A) instead.
 
+When this last-resort scenario is met and you must verify physical disk output:
 1. **Traverse & Map**: Walk the directory using `filepath.WalkDir` and build a `map[string]string` of relative paths to normalized contents.
 2. **Assert**: Compare the mapped structure with the expected layout map using `assert.Equal(t, want, got)`.
 
@@ -324,9 +330,9 @@ For deeper reading on Go testing standards and patterns:
 - [Advanced Testing with Go (Mitchell Hashimoto)](https://www.youtube.com/watch?v=yszygk1cpEc)
 - [github.com/stretchr/testify](https://github.com/stretchr/testify)
 - [github.com/sebdah/goldie/v2](https://github.com/sebdah/goldie)
-- [filesystem.md](file:///Users/ethankim8683/Competitive%20Programming/Utilities/cpx/docs/agents/filesystem.md)
-- [ADR-0003: File System Abstraction](file:///Users/ethankim8683/Competitive%20Programming/Utilities/cpx/docs/adr/0003-filesystem-abstraction.md)
-- [ADR-0004: Testing and Assertion Framework](file:///Users/ethankim8683/Competitive%20Programming/Utilities/cpx/docs/adr/0004-testing-framework.md)
+- [filesystem.md](filesystem.md)
+- [ADR-0003: File System Abstraction](../adr/0003-filesystem-abstraction.md)
+- [ADR-0004: Testing and Assertion Framework](../adr/0004-testing-framework.md)
 - [Go Build Constraints / Tags](https://pkg.go.dev/go/build)
 - [Go Test Flags (-short)](https://pkg.go.dev/cmd/go#hdr-Testing_flags)
 - [Go toolchain testdir helper (src/cmd/internal/testdir/testdir_test.go)](https://cs.opensource.google/go/go/+/master:src/cmd/internal/testdir/testdir_test.go)
