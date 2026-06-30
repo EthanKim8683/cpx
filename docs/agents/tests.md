@@ -6,9 +6,8 @@ Testing in `cpx` is built on Go standard library patterns, emphasizing readabili
 
 ## 1. Tool Selection and Library Guidelines
 
-- **Use the Standard Library**: Rely primarily on the Go standard `testing` package.
-- **No Testify**: Do not use third-party assertion libraries such as `github.com/stretchr/testify`. Use simple `if` statements and standard comparisons instead.
-- **Compare Complex Data with `go-cmp`**: Use [go-cmp](https://pkg.go.dev/github.com/google/go-cmp/cmp) (`github.com/google/go-cmp/cmp`) to compare structs, slices, maps, and other nested types. Avoid using `reflect.DeepEqual`, as it is less flexible and does not produce human-readable diffs.
+- **Use Testify Assertions**: Use the [testify](https://github.com/stretchr/testify) assertion library (`assert` and `require`) to perform all test assertions. Use `github.com/stretchr/testify/assert` for non-fatal checks and `github.com/stretchr/testify/require` for assertions that must stop execution immediately (e.g., failed setup or nil pointers).
+- **No go-cmp**: Avoid introducing additional third-party comparison/assertion dependencies like `github.com/google/go-cmp/cmp`. Testify's `assert.Equal` is sufficient for map, slice, and struct comparisons, and outputs clear visual diffs out of the box.
 
 ---
 
@@ -42,16 +41,14 @@ func TestParseVersion(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			got, err := parseVersion(tt.input)
 
-			if (err != nil) != tt.wantErr {
-				t.Fatalf("parseVersion() error = %v, wantErr %v", err, tt.wantErr)
-			}
 			if tt.wantErr {
+				require.Error(t, err)
+				assert.Empty(t, got)
 				return
 			}
 
-			if got != tt.want {
-				t.Errorf("parseVersion() = %q; want %q", got, tt.want)
-			}
+			require.NoError(t, err)
+			assert.Equal(t, tt.want, got)
 		})
 	}
 }
@@ -59,14 +56,18 @@ func TestParseVersion(t *testing.T) {
 
 ---
 
-## 3. Asserting Correctness: got-before-want Ordering
+## 3. Asserting Correctness: expected-before-actual Ordering (Testify)
 
-Failure messages must be uniform across the codebase. Always present the actual result (`got`) before the expected result (`want`) in assertion messages.
+When using Testify assertions, it is critical to follow the signature convention of the framework. Always place the expected result (`want`) before the actual result (`got`).
 
-- **Good**: `t.Errorf("parseVersion() = %q; want %q", got, tt.want)`
-- **Bad**: `t.Errorf("expected %q, but got %q", tt.want, got)`
+- **Good**: `assert.Equal(t, tt.want, got)`
+- **Bad**: `assert.Equal(t, got, tt.want)`
 
-Using `got` followed by `want` is standard Go practice and helps maintain consistency, reducing cognitive overhead when scanning failed test outputs.
+> [!WARNING]
+> Mismatching the parameter order in Testify (i.e., putting `got` before `want`) will result in confusing failure output where "Expected" and "Actual" values are inverted in the test report.
+>
+> If you write manual standard library assertions with `t.Errorf`, use the standard Go `got` before `want` pattern:
+> `t.Errorf("parseVersion() = %q; want %q", got, tt.want)`
 
 ---
 
@@ -142,15 +143,63 @@ Verify the generated changes in the `testdata/` directory using `git diff` befor
 
 ---
 
-## 6. Recursive Directory Structure and File Verification
+## 6. Directory Structure and File Verification
 
-While **Golden File Testing** (Section 5) is ideal for verifying a single, large, or complex output payload, **Recursive Directory Verification** is the standard pattern when your code generates or modifies entire directory skeletons (e.g., project skeleton generators, package bundlers, file system sync utilities) and the file layout itself is part of the correctness contract.
+Verifying file system layouts and file contents must follow industry standards. Depending on the scenario, choose the appropriate strategy:
 
-### The Idiomatic Go Pattern
+### A. Primary Standard: In-Memory Verification (Unit Testing)
 
-To verify directory structures without external helper libraries:
-1. **Traverse & Map**: Use `filepath.WalkDir` to walk the target directory. Map the relative file paths (as keys) to their contents (as values).
-2. **Compare**: Use `cmp.Diff` (from `github.com/google/go-cmp/cmp`) to assert the generated actual map structure against the expected (mocked) map structure.
+Whenever possible, decouple your code from the physical storage disk.
+- **For Reading**: Implement your functions to take Go's standard `fs.FS` interface. In tests, use Go's standard `testing/fstest.MapFS` to mock file system contents entirely in memory.
+- **For Writing**: Use [afero](https://github.com/spf13/afero) (`afero.Fs`) as detailed in [filesystem.md](file:///Users/ethankim8683/Competitive%20Programming/Utilities/cpx/docs/agents/filesystem.md). In tests, swap the disk filesystem with `afero.NewMemMapFs()` and check results in memory.
+
+#### Example using `fstest.MapFS` (Mocking Read I/O)
+
+```go
+func ParseConfigs(fds fs.FS) (map[string]string, error) {
+	// ... logic reading from fds ...
+}
+
+func TestParseConfigs(t *testing.T) {
+	mockFS := fstest.MapFS{
+		"config.json": &fstest.MapFile{Data: []byte(`{"version": "1.0"}`)},
+	}
+
+	got, err := ParseConfigs(mockFS)
+	require.NoError(t, err)
+	assert.Equal(t, "1.0", got["version"])
+}
+```
+
+#### Example using `afero.Fs` (Mocking Write I/O)
+
+```go
+func WriteConfig(fs afero.Fs, path string, data string) error {
+	return afero.WriteFile(fs, path, []byte(data), 0644)
+}
+
+func TestWriteConfig(t *testing.T) {
+	appFS := afero.NewMemMapFs()
+
+	err := WriteConfig(appFS, "/app/config.json", `{"enabled": true}`)
+	require.NoError(t, err)
+
+	exists, err := afero.Exists(appFS, "/app/config.json")
+	require.NoError(t, err)
+	assert.True(t, exists)
+
+	content, err := afero.ReadFile(appFS, "/app/config.json")
+	require.NoError(t, err)
+	assert.Equal(t, `{"enabled": true}`, string(content))
+}
+```
+
+### B. Secondary Standard: Recursive Directory Tree Mapping (Integration Testing)
+
+When testing operations that *must* interact with the physical disk (e.g., compiler generation, code templating output), walk the target directory tree, map it to a structured map, and compare maps using Testify's `assert.Equal`.
+
+1. **Traverse & Map**: Walk the directory using `filepath.WalkDir` and build a `map[string]string` of relative paths to normalized contents.
+2. **Assert**: Compare the mapped structure with the expected layout map using `assert.Equal(t, want, got)`.
 
 #### Example Implementation
 
@@ -184,9 +233,7 @@ func readDirTree(t *testing.T, dir string) map[string]string {
 		return nil
 	})
 
-	if err != nil {
-		t.Fatalf("failed to walk directory %s: %v", dir, err)
-	}
+	require.NoError(t, err, "failed to walk directory %s", dir)
 
 	return tree
 }
@@ -195,9 +242,7 @@ func TestGenerateProject(t *testing.T) {
 	tmp := t.TempDir()
 
 	err := generateProjectSkeleton(tmp)
-	if err != nil {
-		t.Fatalf("generateProjectSkeleton() error = %v", err)
-	}
+	require.NoError(t, err)
 
 	got := readDirTree(t, tmp)
 	want := map[string]string{
@@ -205,9 +250,7 @@ func TestGenerateProject(t *testing.T) {
 		"src/main.go": "package main\n\nfunc main() {}\n",
 	}
 
-	if diff := cmp.Diff(want, got); diff != "" {
-		t.Errorf("directory structure mismatch (-want +got):\n%s", diff)
-	}
+	assert.Equal(t, want, got)
 }
 ```
 
@@ -225,7 +268,7 @@ When implementing recursive directory testing, keep these design considerations 
   ```
 
 > [!NOTE]
-> This standard-library-first approach (using `filepath.WalkDir` and `cmp.Diff`) is modeled after the Go compiler's own test suite (`src/cmd/internal/testdir/testdir_test.go`). It avoids rigid third-party assertion dependencies, provides transparent control over file traversal, and leverages `go-cmp` to output clean line-by-line diffs on mismatch.
+> Combining in-memory FS abstractions with map-based Testify assertions is the standard approach used by major Go projects (such as Hugo and the Go compiler itself). This prevents disk test leakage, is cross-platform safe, and delivers clear line-by-line mismatch reports without third-party diff engines.
 
 ---
 
@@ -279,8 +322,11 @@ For deeper reading on Go testing standards and patterns:
 - [Go Test Comments](https://go.dev/wiki/TestComments)
 - [Table-Driven Tests](https://go.dev/wiki/TableDrivenTests)
 - [Advanced Testing with Go (Mitchell Hashimoto)](https://www.youtube.com/watch?v=yszygk1cpEc)
-- [google/go-cmp](https://pkg.go.dev/github.com/google/go-cmp/cmp)
+- [github.com/stretchr/testify](https://github.com/stretchr/testify)
 - [github.com/sebdah/goldie/v2](https://github.com/sebdah/goldie)
+- [filesystem.md](file:///Users/ethankim8683/Competitive%20Programming/Utilities/cpx/docs/agents/filesystem.md)
+- [ADR-0003: File System Abstraction](file:///Users/ethankim8683/Competitive%20Programming/Utilities/cpx/docs/adr/0003-filesystem-abstraction.md)
+- [ADR-0004: Testing and Assertion Framework](file:///Users/ethankim8683/Competitive%20Programming/Utilities/cpx/docs/adr/0004-testing-framework.md)
 - [Go Build Constraints / Tags](https://pkg.go.dev/go/build)
 - [Go Test Flags (-short)](https://pkg.go.dev/cmd/go#hdr-Testing_flags)
 - [Go toolchain testdir helper (src/cmd/internal/testdir/testdir_test.go)](https://cs.opensource.google/go/go/+/master:src/cmd/internal/testdir/testdir_test.go)
