@@ -65,14 +65,14 @@ Prefer standard library verbs to represent actions:
 *   **`Run`**: For executing processes, tasks, or long-running workers (e.g., `exec.Cmd.Run()`).
 
 ### Discouraged and Verbose Naming
-*   **Avoid `populate`**: Do not use `populate` to fill structs. Use parsed/constructor methods (e.g., `parseUser()` or `newUser()`) or direct assignments instead of `populateUser()`.
+*   **Avoid Vague Action Verbs**: Do not use vague, generic action verbs (such as `populate`, `process`, `handle`, or `manage`) for functions or methods when a more precise verb or idiomatic Go pattern exists (e.g., constructors, parsers, or direct assignments).
 *   **Avoid Verbose Helper Verbs**: Do not prefix functions with helper verbs like `Calculate`, `Compute`, or `Find` when the noun or property alone is sufficient.
 
 | Bad | Good |
 | :--- | :--- |
 | `CalculateArea()` | `Area()` |
 | `FindUser()` | `User()` |
-| `PopulateUserTable()` | `LoadUsers()` / `AddUsers()` |
+| `ProcessData()` | `ParseData()` / `WriteData()` |
 
 ### When to Omit Verbs
 Go commonly omits verbs to keep the API surface concise and noun-focused:
