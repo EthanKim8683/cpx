@@ -142,7 +142,81 @@ Verify the generated changes in the `testdata/` directory using `git diff` befor
 
 ---
 
-## 6. Integration Testing
+## 6. Recursive Directory Structure and File Verification
+
+When testing functions that generate or modify directories (e.g., project skeleton generators, package bundlers, file system sync utilities), you must verify both the directory structure (presence of files) and their contents recursively.
+
+### The Idiomatic Go Pattern
+
+To verify directory structures without external helper libraries:
+1. **Traverse & Map**: Use `filepath.WalkDir` to walk the target directory. Map the relative file paths (as keys) to their contents (as values).
+2. **Compare**: Use `cmp.Diff` (from `github.com/google/go-cmp/cmp`) to assert the generated actual map structure against the expected (mocked) map structure.
+
+#### Example Implementation
+
+```go
+// readDirTree walks dir recursively and returns a map of relative file paths to their string contents.
+func readDirTree(t *testing.T, dir string) map[string]string {
+	t.Helper()
+
+	tree := make(map[string]string)
+	err := filepath.WalkDir(dir, func(path string, d fs.DirEntry, err error) error {
+		if err != nil {
+			return err
+		}
+		if d.IsDir() {
+			return nil
+		}
+
+		rel, err := filepath.Rel(dir, path)
+		if err != nil {
+			return err
+		}
+
+		content, err := os.ReadFile(path)
+		if err != nil {
+			return err
+		}
+
+		tree[rel] = string(content)
+		return nil
+	})
+
+	if err != nil {
+		t.Fatalf("failed to walk directory %s: %v", dir, err)
+	}
+
+	return tree
+}
+
+func TestGenerateProject(t *testing.T) {
+	tmp := t.TempDir()
+
+	err := generateProjectSkeleton(tmp)
+	if err != nil {
+		t.Fatalf("generateProjectSkeleton() error = %v", err)
+	}
+
+	got := readDirTree(t, tmp)
+	want := map[string]string{
+		"README.md":   "# Project Name\n",
+		"src/main.go": "package main\n\nfunc main() {}\n",
+	}
+
+	if diff := cmp.Diff(want, got); diff != "" {
+		t.Errorf("directory structure mismatch (-want +got):\n%s", diff)
+	}
+}
+```
+
+### Rationale: Standard-Library-First & Clean Diffs
+- **No Third-Party Assertions**: Third-party assertions (like `testify/assert.DirExists` or directory structure verification libraries) often introduce bloated dependencies, offer rigid assertions (e.g., they only verify file existence but not contents), and produce hard-to-read error messages. This aligns with the **No Testify** and standard-library-first principles.
+- **Go Standard Library Heuristics**: Walking the directory structure using standard library APIs is transparent and flexible. The Go compiler's own core testing suite uses `filepath.WalkDir` to verify compiler outputs and test setups recursively (see `src/cmd/internal/testdir/testdir_test.go` in the Go toolchain).
+- **Leverage go-cmp**: Mapping the directory tree into a `map[string]string` allows us to leverage `go-cmp/cmp.Diff` natively. This yields extremely clean, line-by-line diffs showing exactly which files are missing, extra, or contain mismatched contents.
+
+---
+
+## 7. Integration Testing
 
 Integration tests in `cpx` verify the interaction between multiple components or with external services (such as raw compiler binaries, the filesystem, or live network endpoints).
 
@@ -195,3 +269,4 @@ func TestFetchSourceLive(t *testing.T) {
 - [github.com/sebdah/goldie/v2](https://github.com/sebdah/goldie)
 - [Go Build Constraints / Tags](https://pkg.go.dev/go/build)
 - [Go Test Flags (-short)](https://pkg.go.dev/cmd/go#hdr-Testing_flags)
+- [Go toolchain testdir helper (src/cmd/internal/testdir/testdir_test.go)](https://cs.opensource.google/go/go/+/master:src/cmd/internal/testdir/testdir_test.go)
