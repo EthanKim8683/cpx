@@ -63,7 +63,7 @@ Use these standard Go variable names for common types and contexts:
 
 ---
 
-## 6. Authoritative References
+## Authoritative References
 
 For deeper reading on idiomatic Go style:
 - [Effective Go: Naming](https://go.dev/doc/effective_go#names)

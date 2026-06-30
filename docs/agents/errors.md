@@ -67,7 +67,7 @@ Errors in Go are first-class values and must be handled with deliberate care. AI
 
 ---
 
-## 5. Authoritative References
+## Authoritative References
 
 For deeper reading on Go error handling:
 - [Go Blog: Working with Errors in Go 1.13](https://go.dev/blog/go1.13-errors)
