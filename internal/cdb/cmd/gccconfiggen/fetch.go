@@ -1,0 +1,65 @@
+package main
+
+import (
+	"errors"
+	"fmt"
+	"io"
+	"net/http"
+	"os/exec"
+	"strings"
+)
+
+// errUnexpectedStatus indicates an HTTP request returned a non-200 status code.
+var errUnexpectedStatus = errors.New("unexpected HTTP status")
+
+// detectVersion queries the GCC driver binary at path to extract its release version string (e.g., "14.2.0").
+func detectVersion(path string) (string, error) {
+	// GCC 7 introduced -dumpfullversion to guarantee a 3-part version string (major.minor.patch) suitable
+	// for release tag matching (https://gcc.gnu.org/gcc-7/changes.html).
+	cmd := exec.Command(path, "-dumpfullversion")
+	out, err := cmd.Output()
+	if err != nil {
+		// Compilers older than GCC 7 do not support -dumpfullversion, but -dumpversion returned the full version on those releases.
+		cmd = exec.Command(path, "-dumpversion")
+		out, err = cmd.Output()
+		if err != nil {
+			return "", fmt.Errorf("detecting GCC version via %s: %w", path, err)
+		}
+	}
+
+	version := strings.TrimSpace(string(out))
+	if version == "" {
+		return "", fmt.Errorf("detecting GCC version via %s: empty output returned", path)
+	}
+
+	return version, nil
+}
+
+// rawURL constructs the raw HTTP download URL for a GCC repository file at a specific release version tag.
+func rawURL(version, path string) string {
+	tag := fmt.Sprintf("releases/gcc-%s", version)
+	return fmt.Sprintf("https://raw.githubusercontent.com/gcc-mirror/gcc/%s/%s", tag, path)
+}
+
+// fetchOptFile downloads a single GCC repository file over HTTP for a specified release version.
+// It returns the raw text content string of the requested file relative path (e.g. "gcc/common.opt").
+func fetchOptFile(client *http.Client, version, path string) (string, error) {
+	u := rawURL(version, path)
+	resp, err := client.Get(u)
+	if err != nil {
+		return "", fmt.Errorf("fetching .opt file %s: %w", path, err)
+	}
+
+	if resp.StatusCode != http.StatusOK {
+		resp.Body.Close()
+		return "", fmt.Errorf("fetching .opt file %s from %s: %w (%d)", path, u, errUnexpectedStatus, resp.StatusCode)
+	}
+
+	b, err := io.ReadAll(resp.Body)
+	resp.Body.Close()
+	if err != nil {
+		return "", fmt.Errorf("reading .opt file body of %s: %w", path, err)
+	}
+
+	return string(b), nil
+}
