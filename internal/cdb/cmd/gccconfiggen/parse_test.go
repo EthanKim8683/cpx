@@ -16,12 +16,37 @@ func TestNegateName(t *testing.T) {
 		{"msse", "mno-sse"},
 		{"grecord", "gno-record"},
 		{"O3", ""},
-		{"g", ""}, // 'g' on its own should not be negated since length <= 1
+		{"g", ""},
 	}
 
 	for _, tt := range tests {
 		t.Run(tt.input, func(t *testing.T) {
 			assert.Equal(t, tt.want, negateName(tt.input))
+		})
+	}
+}
+
+func TestNegateRE(t *testing.T) {
+	tests := []struct {
+		input string
+		want  bool
+	}{
+		{"fcommon", true},
+		{"Wextra", true},
+		{"msse", true},
+		{"grecord", true},
+		{"f", false},
+		{"W", false},
+		{"m", false},
+		{"g", false},
+		{"O3", false},
+		{"fcommon=", false},
+		{"Wno-all=always", false},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.input, func(t *testing.T) {
+			assert.Equal(t, tt.want, negateRE.MatchString(tt.input))
 		})
 	}
 }

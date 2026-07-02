@@ -37,12 +37,13 @@ func expandOptRecords(records []optRecord) []optRecord {
 	expanded := make([]optRecord, 0, len(records)*2)
 	expanded = append(expanded, records...)
 	for _, r := range records {
-		if hasAttr(r.attrs, "RejectNegative") {
+		if !negateRE.MatchString(r.name) || hasAttr(r.attrs, "RejectNegative") {
 			continue
 		}
 
+		// Negate name
 		neg := negateName(r.name)
-		if neg == "" || explicit[neg] {
+		if explicit[neg] {
 			continue
 		}
 
