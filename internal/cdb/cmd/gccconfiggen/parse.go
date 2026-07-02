@@ -2,6 +2,7 @@ package main
 
 import (
 	"regexp"
+	"strconv"
 	"strings"
 
 	"github.com/EthanKim8683/cpx/internal/cdb"
@@ -10,6 +11,7 @@ import (
 var (
 	negateRE = regexp.MustCompile(`^[Wfgm][^=]+$`)
 	aliasRE  = regexp.MustCompile(`\bAlias\(([^)]+)\)`)
+	argsRE   = regexp.MustCompile(`\bArgs\((\d+)\)`)
 )
 
 // hasAttr checks if target is set as a space-separated property in attrs.
@@ -56,7 +58,16 @@ func parseOptRecord(record optRecord) (cdb.OptionPattern, cdb.OptionAlias) {
 	var kind cdb.OptionKind
 	var numArgs int
 
-	if hasAttr(record.attrs, "CommaJoined") {
+	// First parse Args(N) if present
+	if m := argsRE.FindStringSubmatch(record.attrs); len(m) > 1 {
+		if n, err := strconv.Atoi(m[1]); err == nil && n > 0 {
+			numArgs = n
+		}
+	}
+
+	if numArgs > 1 {
+		kind = cdb.OptionKindMultiArg
+	} else if hasAttr(record.attrs, "CommaJoined") {
 		kind = cdb.OptionKindCommaJoined
 		numArgs = 1
 	} else if hasAttr(record.attrs, "Joined") && hasAttr(record.attrs, "Separate") {
@@ -79,7 +90,17 @@ func parseOptRecord(record optRecord) (cdb.OptionPattern, cdb.OptionAlias) {
 		NumArgs:  numArgs,
 	}
 
-	// return option pattern and placeholder option alias
+	// alias string is:
+	// - if no alias attribute, it's the name of the record
+	// - else, it's the alias attribute
+	//
+	// convert alias string to id by hashing
+
+	// determine alias args from attributes if there are any
+
+	// construct option alias from id and args
+
+	// return option pattern and option alias
 	return pattern, cdb.OptionAlias{}
 }
 

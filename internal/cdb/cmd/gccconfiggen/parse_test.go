@@ -195,6 +195,36 @@ func TestParseOptRecord(t *testing.T) {
 			wantKind:   cdb.OptionKindCommaJoined,
 			wantNumArg: 1,
 		},
+		{
+			name: "multi-arg option (Args(2))",
+			record: optRecord{
+				name:  "sectcreate",
+				attrs: "Args(2) Separate",
+			},
+			wantSpell:  "-sectcreate",
+			wantKind:   cdb.OptionKindMultiArg,
+			wantNumArg: 2,
+		},
+		{
+			name: "multi-arg option (Args(4))",
+			record: optRecord{
+				name:  "fourargs",
+				attrs: "Args(4)",
+			},
+			wantSpell:  "-fourargs",
+			wantKind:   cdb.OptionKindMultiArg,
+			wantNumArg: 4,
+		},
+		{
+			name: "single-arg option (Args(1))",
+			record: optRecord{
+				name:  "onearg",
+				attrs: "Args(1) Separate",
+			},
+			wantSpell:  "-onearg",
+			wantKind:   cdb.OptionKindSeparate,
+			wantNumArg: 1,
+		},
 	}
 
 	for _, tt := range tests {
