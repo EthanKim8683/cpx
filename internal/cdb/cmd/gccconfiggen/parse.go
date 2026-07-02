@@ -18,11 +18,8 @@ func hasAttr(attrs, target string) bool {
 }
 
 // negateName negates a GCC option name by inserting "no-" after the prefix.
-// It returns an empty string if the option name does not qualify for automated negation.
+// It assumes the option name has already been validated as negatable.
 func negateName(name string) string {
-	if !negateRE.MatchString(name) {
-		return ""
-	}
 	return name[0:1] + "no-" + name[1:]
 }
 
@@ -41,7 +38,6 @@ func expandOptRecords(records []optRecord) []optRecord {
 			continue
 		}
 
-		// Negate name
 		neg := negateName(r.name)
 		if explicit[neg] {
 			continue

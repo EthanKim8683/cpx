@@ -15,8 +15,6 @@ func TestNegateName(t *testing.T) {
 		{"Wextra", "Wno-extra"},
 		{"msse", "mno-sse"},
 		{"grecord", "gno-record"},
-		{"O3", ""},
-		{"g", ""},
 	}
 
 	for _, tt := range tests {
