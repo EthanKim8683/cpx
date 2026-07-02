@@ -3,6 +3,7 @@ package main
 import (
 	"testing"
 
+	"github.com/EthanKim8683/cpx/internal/cdb"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -134,4 +135,74 @@ func TestExpandOptRecords(t *testing.T) {
 	}
 
 	assert.ElementsMatch(t, expected, got)
+}
+
+func TestParseOptRecord(t *testing.T) {
+	tests := []struct {
+		name       string
+		record     optRecord
+		wantSpell  string
+		wantKind   cdb.OptionKind
+		wantNumArg int
+	}{
+		{
+			name: "flag option",
+			record: optRecord{
+				name:  "fcommon",
+				attrs: "Common Var(flag_common)",
+			},
+			wantSpell:  "-fcommon",
+			wantKind:   cdb.OptionKindFlag,
+			wantNumArg: 0,
+		},
+		{
+			name: "joined option",
+			record: optRecord{
+				name:  "std=",
+				attrs: "Joined RejectNegative",
+			},
+			wantSpell:  "-std=",
+			wantKind:   cdb.OptionKindJoined,
+			wantNumArg: 1,
+		},
+		{
+			name: "separate option",
+			record: optRecord{
+				name:  "o",
+				attrs: "Separate",
+			},
+			wantSpell:  "-o",
+			wantKind:   cdb.OptionKindSeparate,
+			wantNumArg: 1,
+		},
+		{
+			name: "joined or separate option",
+			record: optRecord{
+				name:  "I",
+				attrs: "Joined Separate",
+			},
+			wantSpell:  "-I",
+			wantKind:   cdb.OptionKindJoinedOrSeparate,
+			wantNumArg: 1,
+		},
+		{
+			name: "comma joined option",
+			record: optRecord{
+				name:  "fsanitize=",
+				attrs: "CommaJoined Joined",
+			},
+			wantSpell:  "-fsanitize=",
+			wantKind:   cdb.OptionKindCommaJoined,
+			wantNumArg: 1,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			gotPattern, _ := parseOptRecord(tt.record)
+			assert.Equal(t, tt.wantSpell, gotPattern.Spelling)
+			assert.Equal(t, tt.wantKind, gotPattern.Kind)
+			assert.Equal(t, tt.wantNumArg, gotPattern.NumArgs)
+		})
+	}
 }

@@ -52,20 +52,35 @@ func expandOptRecords(records []optRecord) []optRecord {
 }
 
 func parseOptRecord(record optRecord) (cdb.OptionPattern, cdb.OptionAlias) {
-	// determine spelling, kind and num args from attributes
+	spelling := "-" + record.name
+	var kind cdb.OptionKind
+	var numArgs int
 
-	// alias string is:
-	// - if no alias attribute, it's the name of the record
-	// - else, it's the alias attribute
-	//
-	// convert alias string to id by hashing
+	if hasAttr(record.attrs, "CommaJoined") {
+		kind = cdb.OptionKindCommaJoined
+		numArgs = 1
+	} else if hasAttr(record.attrs, "Joined") && hasAttr(record.attrs, "Separate") {
+		kind = cdb.OptionKindJoinedOrSeparate
+		numArgs = 1
+	} else if hasAttr(record.attrs, "Joined") {
+		kind = cdb.OptionKindJoined
+		numArgs = 1
+	} else if hasAttr(record.attrs, "Separate") {
+		kind = cdb.OptionKindSeparate
+		numArgs = 1
+	} else {
+		kind = cdb.OptionKindFlag
+		numArgs = 0
+	}
 
-	// determine alias args from attributes if there are any
+	pattern := cdb.OptionPattern{
+		Spelling: spelling,
+		Kind:     kind,
+		NumArgs:  numArgs,
+	}
 
-	// construct option alias from id and args
-
-	// return option pattern and option alias
-	return cdb.OptionPattern{}, cdb.OptionAlias{}
+	// return option pattern and placeholder option alias
+	return pattern, cdb.OptionAlias{}
 }
 
 func parseOptRecords(records []optRecord) *cdb.Config {
