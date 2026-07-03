@@ -46,14 +46,14 @@ func TestExtractOptRecord(t *testing.T) {
 		content := "fcommon\nCommon Var(flag_conserve_stack)\nSome description here"
 		got := extractOptRecord(content)
 		assert.Equal(t, "fcommon", got.name)
-		assert.Equal(t, "Common Var(flag_conserve_stack)", got.attrs)
+		assert.Equal(t, "Common Var(flag_conserve_stack)", got.props)
 	})
 
 	t.Run("without attributes", func(t *testing.T) {
 		content := "fcommon"
 		got := extractOptRecord(content)
 		assert.Equal(t, "fcommon", got.name)
-		assert.Empty(t, got.attrs)
+		assert.Empty(t, got.props)
 	})
 }
 
@@ -78,11 +78,11 @@ Another option.
 	expected := []optRecord{
 		{
 			name:  "fcommon",
-			attrs: "Common Var(flag_conserve_stack) Init(0)",
+			props: "Common Var(flag_conserve_stack) Init(0)",
 		},
 		{
 			name:  "fother",
-			attrs: "Common Joined",
+			props: "Common Joined",
 		},
 	}
 

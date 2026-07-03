@@ -10,13 +10,14 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-// TestFetchOptFileLiveIntegration performs a live network fetch from raw.githubusercontent.com for a known GCC release file and verifies its content against a golden file.
-func TestFetchOptFileLiveIntegration(t *testing.T) {
+// TestFetchFileLiveIntegration performs a live network fetch from raw.githubusercontent.com
+// for GCC's BASE-VER file, verifying that it contains the correct version string and matches the golden file.
+func TestFetchFileLiveIntegration(t *testing.T) {
 	version := "14.2.0"
-	path := "gcc/analyzer/analyzer.opt"
-	got, err := fetchOptFile(http.DefaultClient, version, path)
+	path := "gcc/BASE-VER"
+	got, err := fetchFile(http.DefaultClient, version, path)
 	require.NoError(t, err)
 
 	g := goldie.New(t)
-	g.Assert(t, "analyzer.opt", []byte(got))
+	g.Assert(t, "BASE-VER", []byte(got))
 }

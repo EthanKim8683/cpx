@@ -1,3 +1,8 @@
+// fetch.go provides functions to query the local compiler executable version
+// and retrieve remote option specification (.opt) files from the GCC mirror repository.
+// For details on GCC options, see the GCC Command Options Documentation
+// (https://gcc.gnu.org/onlinedocs/gcc/Option-Summary.html).
+
 package main
 
 import (
@@ -9,10 +14,11 @@ import (
 	"strings"
 )
 
-// errUnexpectedStatus indicates an HTTP request returned a non-200 status code.
+// errUnexpectedStatus is returned when a remote fetch yields a non-200 HTTP response.
 var errUnexpectedStatus = errors.New("unexpected HTTP status")
 
-// detectVersion queries the GCC driver binary at path to extract its release version string (e.g., "14.2.0").
+// detectVersion queries the GCC driver binary at path to extract its release version string.
+// The path must be non-empty and point to a valid GCC binary.
 func detectVersion(path string) (string, error) {
 	// GCC 7 introduced -dumpfullversion to guarantee a 3-part version string (major.minor.patch) suitable
 	// for release tag matching (https://gcc.gnu.org/gcc-7/changes.html).
@@ -31,35 +37,32 @@ func detectVersion(path string) (string, error) {
 	if version == "" {
 		return "", fmt.Errorf("detecting GCC version via %s: empty output returned", path)
 	}
-
 	return version, nil
 }
 
-// rawURL constructs the raw HTTP download URL for a GCC repository file at a specific release version tag.
+// rawURL resolves the GitHub raw download URL for a GCC source file at a given version tag.
 func rawURL(version, path string) string {
 	tag := fmt.Sprintf("releases/gcc-%s", version)
 	return fmt.Sprintf("https://raw.githubusercontent.com/gcc-mirror/gcc/%s/%s", tag, path)
 }
 
-// fetchOptFile downloads a single GCC repository file over HTTP for a specified release version.
-// It returns the raw text content string of the requested file relative path (e.g. "gcc/common.opt").
-func fetchOptFile(client *http.Client, version, path string) (string, error) {
+// fetchFile downloads a single GCC option specification file from the git mirror.
+// It returns the file content as a string, or an error if the request fails or returns a non-200 status.
+func fetchFile(client *http.Client, version, path string) (string, error) {
 	u := rawURL(version, path)
 	resp, err := client.Get(u)
 	if err != nil {
-		return "", fmt.Errorf("fetching .opt file %s: %w", path, err)
+		return "", fmt.Errorf("fetching file %s: %w", path, err)
 	}
+	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
-		resp.Body.Close()
-		return "", fmt.Errorf("fetching .opt file %s from %s: %w (%d)", path, u, errUnexpectedStatus, resp.StatusCode)
+		return "", fmt.Errorf("fetching file %s from %s: %w (%d)", path, u, errUnexpectedStatus, resp.StatusCode)
 	}
 
 	b, err := io.ReadAll(resp.Body)
-	resp.Body.Close()
 	if err != nil {
-		return "", fmt.Errorf("reading .opt file body of %s: %w", path, err)
+		return "", fmt.Errorf("reading file body of %s: %w", path, err)
 	}
-
 	return string(b), nil
 }

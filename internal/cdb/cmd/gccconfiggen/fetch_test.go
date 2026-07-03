@@ -59,7 +59,7 @@ func TestFetchOptFileMock(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			client := newMockHTTPClient(t, tt.handler)
-			got, err := fetchOptFile(client, "14.2.0", tt.path)
+			got, err := fetchFile(client, "14.2.0", tt.path)
 
 			if tt.wantErr != nil {
 				assert.ErrorIs(t, err, tt.wantErr)
