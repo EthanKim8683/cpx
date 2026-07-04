@@ -12,7 +12,8 @@
 // Clang's InputArgList) using accessors like getLastArg or hasFlag to dynamically resolve the final compiler state.
 package cdb
 
-//go:generate go run ./cmd/gccconfiggen -o config/gcc.go
+// //go:generate go run ./cmd/gccconfiggen -o config/gcc.go
+//go:generate go run ./cmd/clangconfiggen -o config/clang.go
 
 // OptionKind defines the parsing behavior for a compiler option pattern,
 // determining how subsequent command-line arguments are consumed.
@@ -29,6 +30,10 @@ const (
 	OptionKindMultiArg OptionKind = "MultiArg"
 	// OptionKindJoinedAndSeparate represents an option with both a joined and a separate argument.
 	OptionKindJoinedAndSeparate OptionKind = "JoinedAndSeparate"
+	// OptionKindRemainingArgs represents an option that consumes all remaining arguments.
+	OptionKindRemainingArgs OptionKind = "RemainingArgs"
+	// OptionKindRemainingArgsJoined represents an option with a joined argument that consumes all remaining arguments.
+	OptionKindRemainingArgsJoined OptionKind = "RemainingArgsJoined"
 )
 
 // OptionPattern represents a single command-line spelling variant of an option.

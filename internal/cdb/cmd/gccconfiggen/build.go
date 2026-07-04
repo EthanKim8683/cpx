@@ -33,7 +33,7 @@ func buildOptionPatterns(record parsedOptRecord) []cdb.OptionPattern {
 	if record.separate {
 		switch {
 		case record.noDriverArg:
-			// Option behaves like flag to driver
+			// NoDriverArg makes the option behave like a flag to the driver.
 			partials = append(partials, cdb.OptionPattern{
 				Kind: cdb.OptionKindFlag,
 			})
@@ -49,7 +49,7 @@ func buildOptionPatterns(record parsedOptRecord) []cdb.OptionPattern {
 		}
 	}
 	if record.joinedOrMissing {
-		// JoinedOrMissing can be decomposed into a Joined and a Flag pattern
+		// JoinedOrMissing can be decomposed into Joined and Flag.
 		partials = append(partials, cdb.OptionPattern{
 			Kind: cdb.OptionKindFlag,
 		})
