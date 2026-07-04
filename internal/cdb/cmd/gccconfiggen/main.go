@@ -34,12 +34,6 @@ func main() {
 		log.Fatalf("failed to load config: %v", err)
 	}
 
-	// Detect the local GCC version to determine which release tag to fetch from.
-	v, err := detectVersion(cfg.GCC)
-	if err != nil {
-		log.Fatalf("failed to detect GCC version: %v", err)
-	}
-
 	var c http.Client
 	var records []optRecord
 	var errs error
@@ -53,7 +47,7 @@ func main() {
 		"gcc/params.opt",
 		"gcc/analyzer/analyzer.opt",
 	} {
-		content, err := fetchFile(&c, v, path)
+		content, err := fetchFile(&c, cfg.GCCBaseURL, path)
 		if err != nil {
 			errs = errors.Join(errs, err)
 			continue
