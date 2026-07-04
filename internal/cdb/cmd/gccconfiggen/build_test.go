@@ -16,7 +16,7 @@ func TestBuildOptionPatterns(t *testing.T) {
 		{
 			name: "flag option with implicit negation",
 			record: parsedOptRecord{
-				name:   "fcommon",
+				name: "fcommon",
 			},
 			want: []cdb.OptionPattern{
 				{
@@ -78,7 +78,11 @@ func TestBuildOptionPatterns(t *testing.T) {
 			want: []cdb.OptionPattern{
 				{
 					Spelling: "-I",
-					Kind:     cdb.OptionKindJoinedOrSeparate,
+					Kind:     cdb.OptionKindJoined,
+				},
+				{
+					Spelling: "-I",
+					Kind:     cdb.OptionKindSeparate,
 				},
 			},
 		},
@@ -91,7 +95,11 @@ func TestBuildOptionPatterns(t *testing.T) {
 			want: []cdb.OptionPattern{
 				{
 					Spelling: "-D",
-					Kind:     cdb.OptionKindJoinedOrMissing,
+					Kind:     cdb.OptionKindJoined,
+				},
+				{
+					Spelling: "-D",
+					Kind:     cdb.OptionKindFlag,
 				},
 			},
 		},
@@ -137,7 +145,7 @@ func TestBuildOptionPatterns(t *testing.T) {
 func TestBuildConfig(t *testing.T) {
 	records := []parsedOptRecord{
 		{
-			name:   "fcommon",
+			name: "fcommon",
 		},
 		{
 			name:           "Wextra",

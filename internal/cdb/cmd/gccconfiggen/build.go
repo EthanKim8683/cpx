@@ -24,42 +24,56 @@ func buildOptionPatterns(record parsedOptRecord) []cdb.OptionPattern {
 		return nil
 	}
 
-	var kind cdb.OptionKind
-	var numArgs int
-
-	switch {
-	case record.noDriverArg:
-		// Separate options with NoDriverArg do not pass arguments during the driver stage.
-		// They act as simple flags to prevent the parser from consuming subsequent command-line tokens.
-		kind = cdb.OptionKindFlag
-	case record.args != 0:
-		kind = cdb.OptionKindMultiArg
-		numArgs = record.args
-	case record.joined && record.separate:
-		kind = cdb.OptionKindJoinedOrSeparate
-	case record.joined:
-		kind = cdb.OptionKindJoined
-	case record.separate:
-		kind = cdb.OptionKindSeparate
-	case record.joinedOrMissing:
-		kind = cdb.OptionKindJoinedOrMissing
-	default:
-		kind = cdb.OptionKindFlag
+	var partials []cdb.OptionPattern
+	if record.joined {
+		partials = append(partials, cdb.OptionPattern{
+			Kind: cdb.OptionKindJoined,
+		})
+	}
+	if record.separate {
+		switch {
+		case record.noDriverArg:
+			// Option behaves like flag to driver
+			partials = append(partials, cdb.OptionPattern{
+				Kind: cdb.OptionKindFlag,
+			})
+		case record.args != 0:
+			partials = append(partials, cdb.OptionPattern{
+				Kind:    cdb.OptionKindMultiArg,
+				NumArgs: record.args,
+			})
+		default:
+			partials = append(partials, cdb.OptionPattern{
+				Kind: cdb.OptionKindSeparate,
+			})
+		}
+	}
+	if record.joinedOrMissing {
+		// JoinedOrMissing can be decomposed into a Joined and a Flag pattern
+		partials = append(partials, cdb.OptionPattern{
+			Kind: cdb.OptionKindFlag,
+		})
+		partials = append(partials, cdb.OptionPattern{
+			Kind: cdb.OptionKindJoined,
+		})
+	}
+	if partials == nil {
+		partials = append(partials, cdb.OptionPattern{
+			Kind: cdb.OptionKindFlag,
+		})
 	}
 
 	var patterns []cdb.OptionPattern
-	patterns = append(patterns, cdb.OptionPattern{
-		Spelling: "-" + record.name,
-		Kind:     kind,
-		NumArgs:  numArgs,
-	})
+	for _, partial := range partials {
+		partial.Spelling = "-" + record.name
+		patterns = append(patterns, partial)
+	}
 
 	if negateRE.MatchString(record.name) && !record.rejectNegative {
-		patterns = append(patterns, cdb.OptionPattern{
-			Spelling: "-" + negative(record.name),
-			Kind:     kind,
-			NumArgs:  numArgs,
-		})
+		for _, partial := range partials {
+			partial.Spelling = "-" + negative(record.name)
+			patterns = append(patterns, partial)
+		}
 	}
 	return patterns
 }

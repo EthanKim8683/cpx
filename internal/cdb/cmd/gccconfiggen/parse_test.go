@@ -4,7 +4,6 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/stretchr/testify/require"
 )
 
 func TestHasProp(t *testing.T) {
@@ -58,10 +57,9 @@ func TestPropArgs(t *testing.T) {
 
 func TestParseOptRecord(t *testing.T) {
 	tests := []struct {
-		name    string
-		record  optRecord
-		want    parsedOptRecord
-		wantErr bool
+		name   string
+		record optRecord
+		want   parsedOptRecord
 	}{
 		{
 			name: "flag option",
@@ -98,27 +96,12 @@ func TestParseOptRecord(t *testing.T) {
 				noDriverArg: true,
 			},
 		},
-		{
-			name:    "invalid args value",
-			record:  optRecord{name: "invalid", props: "Args(abc)"},
-			wantErr: true,
-		},
 	}
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got, err := parseOptRecord(tt.record)
-			if tt.wantErr {
-				require.Error(t, err)
-				return
-			}
-			require.NoError(t, err)
-			assert.Equal(t, tt.want.name, got.name)
-			assert.Equal(t, tt.want.rejectNegative, got.rejectNegative)
-			assert.Equal(t, tt.want.joined, got.joined)
-			assert.Equal(t, tt.want.separate, got.separate)
-			assert.Equal(t, tt.want.args, got.args)
-			assert.Equal(t, tt.want.noDriverArg, got.noDriverArg)
+			got := parseOptRecord(tt.record)
+			assert.Equal(t, tt.want, got)
 		})
 	}
 }

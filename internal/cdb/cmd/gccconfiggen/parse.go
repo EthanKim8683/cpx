@@ -5,7 +5,6 @@
 package main
 
 import (
-	"fmt"
 	"regexp"
 	"strconv"
 	"strings"
@@ -56,7 +55,7 @@ func propArgs(name, props string) string {
 }
 
 // parseOptRecord decodes the properties of a raw option record into a parsedOptRecord.
-func parseOptRecord(record optRecord) (parsedOptRecord, error) {
+func parseOptRecord(record optRecord) parsedOptRecord {
 	var parsed parsedOptRecord
 	parsed.name = record.name
 	props := record.props
@@ -65,13 +64,8 @@ func parseOptRecord(record optRecord) (parsedOptRecord, error) {
 	parsed.joined = hasProp("Joined", props)
 	parsed.separate = hasProp("Separate", props)
 	parsed.joinedOrMissing = hasProp("JoinedOrMissing", props)
-	if s := propArgs("Args", props); s != "" {
-		n, err := strconv.Atoi(s)
-		if err != nil {
-			return parsed, fmt.Errorf("parsing Args(n): atoi(n): %w", err)
-		}
-		parsed.args = n
-	}
+	// We are not responsible for validating properties
+	parsed.args, _ = strconv.Atoi(propArgs("Args", props))
 	parsed.noDriverArg = hasProp("NoDriverArg", props)
-	return parsed, nil
+	return parsed
 }
