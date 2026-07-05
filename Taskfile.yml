@@ -1,0 +1,9 @@
+version: 3
+tasks:
+  default:
+    cmds:
+      - task: gen-env-example
+  gen-env-example:
+    desc: Generate .env.example file
+    cmds:
+      - npx -y @dotenvx/dotenvx ext genexample -f .env

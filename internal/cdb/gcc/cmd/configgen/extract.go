@@ -9,7 +9,7 @@ import (
 
 var (
 	commentRE = regexp.MustCompile(`(?m)^[ \t]*;.*$`)
-	splitRE   = regexp.MustCompile(`(?:\n\s*){2,}`)
+	splitRE   = regexp.MustCompile(`(?:[ \t]*\n){2,}`)
 )
 
 // excludes contains record types to exclude when extracting option records.
