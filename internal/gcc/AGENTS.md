@@ -16,12 +16,14 @@ exist. It is gitignored.
 
 ### 1. Detect the installed GCC
 
-Read the `GCC` environment variable (set in `.env` and loaded via direnv)
-to find the GCC executable path. Run:
+Read the `GCC` environment variable to find the GCC executable path. Run:
 
 ```sh
 $GCC --version
 ```
+
+If the variable is not set, work with the user to locate their GCC
+installation.
 
 Parse the output to determine the version number and installation prefix.
 The version output typically identifies the distribution (Homebrew, system,
@@ -29,54 +31,59 @@ etc.).
 
 If the version cannot be determined, ask the user to clarify.
 
-### 2. Locate the `.opt` source files
+### 2. Locate the upstream source
 
-GCC option definitions live in `.opt` files within the source tree. The
-agent must find or obtain them:
+Find the matching GCC source repository. The upstream repository contains
+the `.opt` files and build system definitions that dictate which option
+sources are required — all subsequent steps derive from it.
 
-| Source | Path in repo | Notes |
-|---|---|---|
-| **Upstream GCC** | `gcc/gcc/` | Mirror: `https://github.com/gcc-mirror/gcc` with tag `releases/gcc-<major>` |
-| **Homebrew** | Varies by platform | Typically not shipped with the installed GCC — the agent must fetch from upstream. |
+GCC typically has a mirror at `https://github.com/gcc-mirror/gcc`. Find the
+branch or tag matching the detected version:
 
-The key `.opt` files are:
+- **Released versions** (e.g., 14.1.0): look for a tag like
+  `releases/gcc-<major>`.
+- **Development versions** (e.g., 16.1.0 before release): use the `trunk`
+  branch, which tracks the current development head.
 
-| File | Description |
-|---|---|
-| `c.opt` | C and C++ language options |
-| `common.opt` | Common driver options shared across frontends |
-| `driver` | Driver-level options |
-| `objc` | Objective-C language options |
-| `go` | Go language options |
-| `lto` | Link-time optimization options |
+### 3. Discover which `.opt` files are required
 
-Do not assume a fixed list. Trace which `.opt` files are required from the
-upstream source for the detected version.
+Do not assume a fixed set of files. Reverse-engineer the required `.opt`
+sources from the upstream build system:
 
-### 3. Fetch the `.opt` source files
+1. **Find the Make variable.** Locate `gcc/gcc/Makefile.in` in the
+   repository. Within it, find the variable that aggregates `.opt` files
+   (typically `ALL_OPT_FILES` or similar) and trace the variables it
+   references.
+2. **Parse the variable assignments.** Resolve the variable chain to
+   determine the full set of `.opt` files. Paths are relative to `gcc/gcc/`
+   in the repository.
+3. **Skip configure substitutions.** Variable assignments containing
+   `@`-delimited configure substitutions (e.g., `@lang_opt_files@`) expand
+   at build time and are not available from the source alone. Only use the
+   concrete file paths listed directly in `Makefile.in`.
+4. **Record what you find.** Note each required `.opt` file, its
+   repository path, and its role (driver options, language options, etc.).
 
-Download the required `.opt` files into `internal/gcc/scratch/`, **preserving
-the directory structure from the repository**. This is critical for the
-agent to reference the original layout.
+### 4. Fetch the `.opt` source files
 
-For example, if the repository has:
-```
-gcc/gcc/c.opt
-gcc/gcc/common.opt
-gcc/gcc/driver
-```
+Download the files discovered in step 3 into `internal/gcc/scratch/`,
+**preserving the directory structure from the repository**. This is critical
+for the code generator to correctly resolve relative paths within `.opt`
+files.
 
-Then `scratch/` should contain:
-```
-internal/gcc/scratch/gcc/c.opt
-internal/gcc/scratch/gcc/common.opt
-internal/gcc/scratch/gcc/driver
-```
+Use the raw content base URL for the repository and branch/tag identified
+in step 2. Append each relative file path to fetch the content.
 
-Use raw content URLs from the upstream mirror. If network access is
-restricted, inform the user and ask them to place the files manually.
+If network access is restricted, see step 5.
 
-### 4. Run the code generator
+### 5. Fallback: if `.opt` files cannot be fetched
+
+Work with the user to resolve this. They may have a local source tree,
+want to clone the repository, or be able to place the files manually.
+
+Do not install system packages or clone repositories without user permission.
+
+### 6. Run the code generator
 
 ```sh
 go run ./internal/gcc/cmd/cdbconfiggen \

@@ -16,12 +16,15 @@ exist. It is gitignored.
 
 ### 1. Detect the installed Clang
 
-Read the `CLANG` environment variable (set in `.env` and loaded via direnv)
-to find the Clang executable path. Run:
+Read the `CLANG` environment variable to find the Clang executable path.
+Run:
 
 ```sh
 $CLANG --version
 ```
+
+If the variable is not set, work with the user to locate their Clang
+installation.
 
 Parse the output to determine the version number and distribution (upstream
 LLVM, Apple Clang, etc.). The version output typically identifies which one.
@@ -39,15 +42,12 @@ option generation works — all subsequent steps derive from it.
 | **LLVM** (upstream) | `https://raw.githubusercontent.com/llvm/llvm-project/<tag>/` | Tags: `release/<major>.x` or `llvmorg-<version>` |
 | **Apple Clang** | `https://raw.githubusercontent.com/swiftlang/llvm-project/<tag>/` | Apple's fork. Only publishes Swift tags, not clang version tags. |
 
-Apple Clang is built from Apple's fork (`swiftlang/llvm-project`), but Apple
-does not publish clang version tags — only Swift release and snapshot tags.
-For option definitions, fall back to the matching upstream LLVM release
-(`llvm/llvm-project` with `release/<major>.x`). The option definitions are
-nearly identical. For example, Apple Clang 17 → `release/17.x`.
+Apple Clang does not publish clang version tags. For option definitions,
+fall back to the matching upstream LLVM release — the definitions are nearly
+identical. For example, Apple Clang 17 → `release/17.x`.
 
-Append a relative file path to the base URL to fetch raw content. If the
-distribution does not match one of these, search GitHub for the appropriate
-repository and derive its raw content base URL.
+If the distribution does not match one of these, search GitHub for the
+appropriate repository and derive its raw content base URL.
 
 ### 3. Determine which `.td` files are required
 
@@ -71,18 +71,6 @@ the directory structure from the repository**. This is critical — tblgen
 resolves `include` directives relative to `-I` paths, and a mirrored layout
 ensures those paths resolve correctly.
 
-For example, if the repository has:
-```
-llvm-project/clang/include/clang/Driver/Options.td
-llvm-project/llvm/include/llvm/Option/OptParser.td
-```
-
-Then `scratch/` should contain:
-```
-internal/clang/scratch/clang/include/clang/Driver/Options.td
-internal/clang/scratch/llvm/include/llvm/Option/OptParser.td
-```
-
 Use the raw content base URL from step 2. If network access is restricted,
 inform the user and ask them to place the files manually.
 
@@ -94,38 +82,20 @@ backend flags. Substitute `--dump-json` for the original backend flag to
 produce JSON instead of C++ source.
 
 Either `clang-tblgen` or `llvm-tblgen` can be used — both support
-`--dump-json` and produce identical output.
+`--dump-json` and produce identical output. If neither is available, see
+step 6.
 
 Infer the `-I` flags from the repository layout so that `include` directives
-resolve. For example, if the CMakeLists.txt says:
-```cmake
-set(LLVM_TARGET_DEFINITIONS Options.td)
-tablegen(LLVM Options.inc -gen-opt-parser-defs)
-```
-
-And the entry-point file is at `clang/include/clang/Driver/Options.td`, the
-equivalent standalone invocation is:
-```sh
-clang-tblgen -I ./internal/clang/scratch/llvm/include \
-  -I ./internal/clang/scratch/clang/include \
-  ./internal/clang/scratch/clang/include/clang/Driver/Options.td \
-  --dump-json > ./internal/clang/scratch/options.json
-```
-
-Verify the exact paths and flags against the upstream source for the detected
-version.
+resolve. Verify the exact paths and flags against the upstream source for
+the detected version.
 
 ### 6. Fallback: if tblgen is not available
 
-If neither `clang-tblgen` nor `llvm-tblgen` can be found:
+If neither `clang-tblgen` nor `llvm-tblgen` can be found, work with the
+user to resolve this. They may know where tblgen is installed, want to
+install it, or be able to provide a pre-built JSON dump directly.
 
-1. Ask the user if they would like to install one. Provide platform-specific
-   instructions if possible.
-2. If declined, check for a pre-built JSON dump online (CI artifacts, LLVM
-   release assets, package repositories).
-3. As a last resort, ask the user to provide the dump file directly.
-
-Do not install system packages without user permission.
+Do not install system packages or clone repositories without user permission.
 
 ### 7. Verify the dump
 
