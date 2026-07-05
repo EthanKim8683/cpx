@@ -1,3 +1,6 @@
+// cdbconfiggen generates GCC CDB option configurations from .opt files. It
+// reads all .opt files from a directory, parses option records, and writes a
+// Go source file containing a *cdb.Config.
 package main
 
 import (

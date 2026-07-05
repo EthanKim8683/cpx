@@ -16,8 +16,9 @@ type defRef struct {
 	Def string `json:"def"`
 }
 
-// def represents a single TableGen def, following the Option class
-// defined in llvm/include/llvm/Option/OptParser.td.
+// def represents a single TableGen def following the Option class defined in
+// llvm/include/llvm/Option/OptParser.td. It captures the spelling, kind, flags,
+// and prefix information needed to generate CDB option patterns.
 type def struct {
 	Superclasses []string `json:"!superclasses"`
 	Prefixes     []string `json:"Prefixes"`

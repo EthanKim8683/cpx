@@ -8,8 +8,10 @@ import (
 )
 
 var (
+	// commentRE matches full-line comments in GCC .opt files (lines starting with ';').
 	commentRE = regexp.MustCompile(`(?m)^[ \t]*;.*$`)
-	splitRE   = regexp.MustCompile(`(?:[ \t]*\n){2,}`)
+	// splitRE splits record blocks separated by one or more blank lines.
+	splitRE = regexp.MustCompile(`(?:[ \t]*\n){2,}`)
 )
 
 // excludes contains record types to exclude when parsing option records.

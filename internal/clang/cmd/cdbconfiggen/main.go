@@ -1,3 +1,6 @@
+// cdbconfiggen generates Clang CDB option configurations from TableGen JSON
+// dumps. It reads a JSON dump produced by clang-tblgen or llvm-tblgen and
+// writes a Go source file containing a *cdb.Config.
 package main
 
 import (
