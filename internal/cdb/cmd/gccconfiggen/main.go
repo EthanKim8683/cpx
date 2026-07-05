@@ -1,70 +1,41 @@
-// Package main orchestrates the GCC configuration generation tool.
-// It detects the installed GCC version, fetches option description files,
-// extracts option records, parses option properties, builds option patterns,
-// and writes the compiled configuration to a file.
-//
-// This tool adopts a stateless parsing strategy inspired by LLVM/Clang.
-// Slicing of command-line arguments is performed at parse-time based on option
-// prefixes, while option negations, exclusions, and overrides are resolved
-// dynamically when querying the parsed arguments (for example, using accessors
-// on internal/cdb/config.go).
 package main
 
 import (
-	"errors"
 	"flag"
 	"fmt"
 	"log"
-	"net/http"
 	"os"
 	"path/filepath"
-
-	"github.com/EthanKim8683/cpx/internal/config"
 )
 
-// main runs the configuration generator by executing the pipeline:
-// version detection -> download .opt files -> extract records -> parse properties -> compile patterns -> write config.go.
 func main() {
 	var output string
+	flag.Usage = func() {
+		fmt.Fprintf(flag.CommandLine.Output(), `Usage: %s [flags] <dir>
+  dir  search for .opt files in dir
+`, os.Args[0])
+		flag.PrintDefaults()
+	}
 	flag.StringVar(&output, "o", "", "write output to `file`")
 	flag.Parse()
 
-	cfg, err := config.Load()
+	args := flag.Args()
+	if len(args) != 1 {
+		log.Fatalf("expected 1 argument, got %v", args)
+	}
+	dir := args[0]
+
+	contents, err := readOptFiles(dir)
 	if err != nil {
-		log.Fatalf("failed to load config: %v", err)
+		log.Fatalf("failed to read opt files: %v", err)
 	}
 
-	var c http.Client
-	var records []optRecord
-	var errs error
-
-	// The following list mirrors the exact set of option description files parsed
-	// in GCC's official Makefile (gcc/Makefile.in at releases/gcc-16,
-	// https://github.com/gcc-mirror/gcc/blob/releases/gcc-16/gcc/Makefile.in).
-	for _, path := range []string{
-		"gcc/c-family/c.opt",
-		"gcc/common.opt",
-		"gcc/params.opt",
-		"gcc/analyzer/analyzer.opt",
-	} {
-		content, err := fetchFile(&c, cfg.GCCBaseURL, path)
-		if err != nil {
-			errs = errors.Join(errs, err)
-			continue
-		}
-
+	records := make([]optRecord, 0, len(contents))
+	for _, content := range contents {
 		records = append(records, extractOptRecords(content)...)
 	}
-	if errs != nil {
-		log.Fatalf("failed to fetch opt files: %v", errs)
-	}
 
-	parsedRecords := make([]parsedOptRecord, 0, len(records))
-	for _, record := range records {
-		parsedRecords = append(parsedRecords, parseOptRecord(record))
-	}
-
-	config := buildConfig(parsedRecords)
+	config := buildConfig(records)
 
 	w := os.Stdout
 	if output != "" {
@@ -86,7 +57,7 @@ package config
 import "github.com/EthanKim8683/cpx/internal/cdb"
 
 var GCC = %#v
-`, &config); err != nil {
+`, config); err != nil {
 		log.Fatalf("failed to write config: %v", err)
 	}
 }

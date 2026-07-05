@@ -1,7 +1,4 @@
-// extract.go extracts individual option record blocks from GCC option file content.
-// It handles comment stripping, newline normalization, and excludes metadata definitions.
-// For the underlying file layout specifications, see the GCC Option File format specs
-// (https://gcc.gnu.org/onlinedocs/gccint/Option-file-format.html).
+// extract.go contains logic for extracting option records from GCC option files.
 
 package main
 
@@ -11,17 +8,13 @@ import (
 )
 
 var (
-	// commentRE matches semicolons at the start of a line (possibly with leading whitespace),
-	// which represent comments in GCC option files.
 	commentRE = regexp.MustCompile(`(?m)^[ \t]*;.*$`)
-
-	// splitRE matches double or more newlines with any intervening whitespace,
-	// separating distinct option records or metadata blocks.
-	splitRE = regexp.MustCompile(`(?:\n\s*){2,}`)
+	splitRE   = regexp.MustCompile(`(?:\n\s*){2,}`)
 )
 
-// excludes lists metadata keywords in GCC option files that do not define command-line flags.
-// See: https://gcc.gnu.org/onlinedocs/gccint/Option-file-format.html
+// excludes contains record types to exclude when extracting option records.
+// Record types documentation:
+// https://gcc.gnu.org/onlinedocs/gccint/Option-file-format.html
 var excludes = map[string]bool{
 	"Language":       true,
 	"Variable":       true,
@@ -32,14 +25,13 @@ var excludes = map[string]bool{
 	"EnumValue":      true,
 }
 
-// optRecord holds the raw name and properties block of an option definition.
+// optRecord represents an extracted option record.
 type optRecord struct {
 	name  string
 	props string
 }
 
-// isOptRecord checks if the given raw record block represents an option flag,
-// filtering out metadata declarations like Language, Variable, or Enum.
+// isOptRecord checks if the given record block defines an option record.
 func isOptRecord(content string) bool {
 	line, _, _ := strings.Cut(content, "\n")
 	name := strings.TrimSpace(line)
@@ -49,7 +41,7 @@ func isOptRecord(content string) bool {
 	return !excludes[name]
 }
 
-// extractOptRecord parses a single raw record block into its name and properties string.
+// extractOptRecord parses a record block into an optRecord.
 func extractOptRecord(content string) optRecord {
 	lines := strings.SplitN(content, "\n", 3)
 	name := strings.TrimSpace(lines[0])
@@ -63,11 +55,8 @@ func extractOptRecord(content string) optRecord {
 	}
 }
 
-// extractOptRecords parses the raw content of a GCC .opt file, strips comments,
-// and extracts all option records.
+// extractOptRecords extracts option records from the content of a GCC .opt file.
 func extractOptRecords(content string) []optRecord {
-	// Normalizing carriage returns prevents parsing drift when files are checked out
-	// on Windows with core.autocrlf enabled.
 	content = strings.ReplaceAll(content, "\r\n", "\n")
 	content = commentRE.ReplaceAllString(content, "")
 

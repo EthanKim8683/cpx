@@ -1,62 +1,44 @@
-// Package main implements the Clang option configuration generator tool.
-// For the general game plan of option configuration and static lookup, refer to:
-// internal/cdb/config.go
-//
-// This file is the entrypoint to coordinate fetching option files, compiling them using clang-tblgen, and writing the final configuration.
 package main
 
 import (
-	"errors"
 	"flag"
 	"fmt"
 	"log"
-	"net/http"
 	"os"
 	"path/filepath"
-
-	"github.com/EthanKim8683/cpx/internal/config"
-	"github.com/spf13/afero"
 )
 
 func main() {
 	var output string
+	flag.Usage = func() {
+		fmt.Fprintf(flag.CommandLine.Output(), `Usage: %s [flags] <dump>
+  dump  path to TableGen JSON dump
+`, os.Args[0])
+		flag.PrintDefaults()
+	}
 	flag.StringVar(&output, "o", "", "write output to `file`")
 	flag.Parse()
 
-	cfg, err := config.Load()
+	args := flag.Args()
+	if len(args) != 1 {
+		log.Fatalf("expected 1 argument, got %v", args)
+	}
+	dumpFile := args[0]
+
+	data, err := os.ReadFile(dumpFile)
 	if err != nil {
-		log.Fatalf("failed to load config: %v", err)
+		log.Fatalf("failed to read dump file: %v", err)
 	}
 
-	tmpDir, err := os.MkdirTemp("", "clangconfiggen-*")
-	if err != nil {
-		log.Fatalf("failed to create temporary directory: %v", err)
-	}
-	defer os.RemoveAll(tmpDir)
-
-	tmpFS := afero.NewBasePathFs(afero.NewOsFs(), tmpDir)
-
-	// Fetch Options.td (trying driver folder, then new options folder)
-	var c http.Client
-	var errs error
-	errs = errors.Join(errs, fetchFile(&c, tmpFS, cfg.LLVMBaseURL, "clang/include/clang/Options/Options.td"))
-	errs = errors.Join(errs, fetchFile(&c, tmpFS, cfg.LLVMBaseURL, "clang/include/clang/Options/FlangOptions.td"))
-	errs = errors.Join(errs, fetchFile(&c, tmpFS, cfg.LLVMBaseURL, "llvm/include/llvm/Option/OptParser.td"))
-	if errs != nil {
-		log.Fatalf("failed to stage files: %v", errs)
-	}
-
-	dump, err := dumpJSON(cfg.ClangTblgen, tmpDir)
-	if err != nil {
-		log.Fatalf("failed to dump JSON: %v", err)
-	}
-
-	parsedDump, err := parseDump(dump)
+	dump, err := unmarshalDump(data)
 	if err != nil {
 		log.Fatalf("failed to parse dump: %v", err)
 	}
 
-	config := buildConfig(parsedDump)
+	cfg, err := buildConfig(dump)
+	if err != nil {
+		log.Fatalf("failed to build config: %v", err)
+	}
 
 	w := os.Stdout
 	if output != "" {
@@ -78,7 +60,7 @@ package config
 import "github.com/EthanKim8683/cpx/internal/cdb"
 
 var Clang = %#v
-`, &config); err != nil {
+`, cfg); err != nil {
 		log.Fatalf("failed to write config: %v", err)
 	}
 }

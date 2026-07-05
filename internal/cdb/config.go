@@ -12,9 +12,6 @@
 // Clang's InputArgList) using accessors like getLastArg or hasFlag to dynamically resolve the final compiler state.
 package cdb
 
-// //go:generate go run ./cmd/gccconfiggen -o config/gcc.go
-//go:generate go run ./cmd/clangconfiggen -o config/clang.go
-
 // OptionKind defines the parsing behavior for a compiler option pattern,
 // determining how subsequent command-line arguments are consumed.
 type OptionKind string
@@ -53,11 +50,19 @@ type Config struct {
 }
 
 // NewConfig constructs a Config by indexing the provided option patterns by their spelling prefix.
-func NewConfig(patterns []OptionPattern) Config {
+func NewConfig(patterns []OptionPattern) *Config {
 	byPrefix := make(map[string][]OptionPattern, len(patterns))
 	for _, pattern := range patterns {
 		prefix := pattern.Spelling
 		byPrefix[prefix] = append(byPrefix[prefix], pattern)
 	}
-	return Config{ByPrefix: byPrefix}
+	return &Config{ByPrefix: byPrefix}
+}
+
+// Option represents a parsed option and its arguments.
+type Option struct {
+	// Pattern is the option pattern that matched the option.
+	Pattern OptionPattern
+	// Args are the arguments that were consumed by the option.
+	Args []string
 }

@@ -1,46 +1,71 @@
-// build.go compiles parsed option records into compiler-agnostic config patterns
-// declared in internal/cdb/config.go.
-
 package main
 
 import (
 	"regexp"
+	"strconv"
+	"strings"
 
 	"github.com/EthanKim8683/cpx/internal/cdb"
 )
 
-// negateRE matches negatable flags. Options containing "=" (e.g. "-std=") are excluded
-// because they require value parameters and do not have an implicit negative form.
+var parenRE = regexp.MustCompile(`\([^)]+\)`)
+
+// negateRE matches flags with implicit negative forms.
 var negateRE = regexp.MustCompile(`^[fgWm][^=]+$`)
 
-// negative returns the negated spelling variant of a flag name (e.g. fcommon -> fno-common).
+// hasProp emulates the behavior of flag_set_p:
+// https://github.com/gcc-mirror/gcc/blob/releases/gcc-16/gcc/opt-functions.awk
+func hasProp(prop, props string) bool {
+	props = parenRE.ReplaceAllString(props, "")
+	return strings.Contains(" "+props+" ", " "+prop+" ")
+}
+
+// propArgs emulates the behavior of opt_args:
+// https://github.com/gcc-mirror/gcc/blob/releases/gcc-16/gcc/opt-functions.awk
+func propArgs(name, props string) string {
+	_, s, found := strings.Cut(" "+props, " "+name+"(")
+	if !found {
+		return ""
+	}
+	s, found = strings.CutPrefix(s, "{")
+	if found {
+		s, _, _ = strings.Cut(s, "})")
+	} else {
+		s, _, _ = strings.Cut(s, ")")
+	}
+	return s
+}
+
+// negative returns the negated unprefixed spelling of a flag name.
 func negative(name string) string {
 	return name[0:1] + "no-" + name[1:]
 }
 
-// buildOptionPatterns translates a parsed GCC option record into its compile-time spelling patterns.
-func buildOptionPatterns(record parsedOptRecord) []cdb.OptionPattern {
-	if record.rejectDriver {
+// buildOptionPatterns decomposes a parsed option record into option patterns.
+func buildPatterns(record optRecord) []cdb.OptionPattern {
+	if hasProp("RejectDriver", record.props) {
 		return nil
 	}
 
 	var partials []cdb.OptionPattern
-	if record.joined {
+	if hasProp("Joined", record.props) {
 		partials = append(partials, cdb.OptionPattern{
 			Kind: cdb.OptionKindJoined,
 		})
 	}
-	if record.separate {
+	if hasProp("Separate", record.props) {
 		switch {
-		case record.noDriverArg:
-			// NoDriverArg makes the option behave like a flag to the driver.
+		case hasProp("NoDriverArg", record.props):
+			// NoDriverArg induces Flag behavior on driver.
 			partials = append(partials, cdb.OptionPattern{
 				Kind: cdb.OptionKindFlag,
 			})
-		case record.args != 0:
+		case hasProp("Args", record.props):
+			// n should already be validated prior to parsing.
+			n, _ := strconv.Atoi(propArgs("Args", record.props))
 			partials = append(partials, cdb.OptionPattern{
 				Kind:    cdb.OptionKindMultiArg,
-				NumArgs: record.args,
+				NumArgs: n,
 			})
 		default:
 			partials = append(partials, cdb.OptionPattern{
@@ -48,7 +73,7 @@ func buildOptionPatterns(record parsedOptRecord) []cdb.OptionPattern {
 			})
 		}
 	}
-	if record.joinedOrMissing {
+	if hasProp("JoinedOrMissing", record.props) {
 		// JoinedOrMissing can be decomposed into Joined and Flag.
 		partials = append(partials, cdb.OptionPattern{
 			Kind: cdb.OptionKindFlag,
@@ -69,7 +94,7 @@ func buildOptionPatterns(record parsedOptRecord) []cdb.OptionPattern {
 		patterns = append(patterns, partial)
 	}
 
-	if negateRE.MatchString(record.name) && !record.rejectNegative {
+	if negateRE.MatchString(record.name) && !hasProp("RejectNegative", record.props) {
 		for _, partial := range partials {
 			partial.Spelling = "-" + negative(record.name)
 			patterns = append(patterns, partial)
@@ -78,11 +103,10 @@ func buildOptionPatterns(record parsedOptRecord) []cdb.OptionPattern {
 	return patterns
 }
 
-// buildConfig compiles a list of parsed option records into a unified cdb.Config registry.
-func buildConfig(records []parsedOptRecord) cdb.Config {
+func buildConfig(records []optRecord) *cdb.Config {
 	patterns := make([]cdb.OptionPattern, 0, 2*len(records))
 	for _, record := range records {
-		patterns = append(patterns, buildOptionPatterns(record)...)
+		patterns = append(patterns, buildPatterns(record)...)
 	}
 	return cdb.NewConfig(patterns)
 }
