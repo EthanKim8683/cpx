@@ -10,38 +10,34 @@ import (
 	"github.com/go-json-experiment/json"
 )
 
-// reference to a def object
-// see: https://llvm.org/docs/TableGen/BackEnds.html#json-reference
+// defRef is a reference to a def object in the JSON dump.
+// See https://llvm.org/docs/TableGen/BackEnds.html#json-reference.
 type defRef struct {
 	Def string `json:"def"`
 }
 
-// based on the Option class in OptParser.td: https://github.com/llvm/llvm-project/blob/release/22.x/llvm/include/llvm/Option/OptParser.td
-// follows translated JSON type from docs: https://llvm.org/docs/TableGen/BackEnds.html#json-reference
+// def represents a single TableGen def, following the Option class
+// defined in llvm/include/llvm/Option/OptParser.td.
 type def struct {
-	// general to all defs
 	Superclasses []string `json:"!superclasses"`
-
-	// Option class-specific fields
-	Prefixes []string `json:"Prefixes"`
-	Name     string   `json:"Name"`
-	Kind     defRef   `json:"Kind"` // Kind -> ref to Kind def
-	NumArgs  int      `json:"NumArgs"`
-	Flags    []defRef `json:"Flags"` // list<Flag> -> list of refs to Flag def
+	Prefixes     []string `json:"Prefixes"`
+	Name         string   `json:"Name"`
+	Kind         defRef   `json:"Kind"`
+	NumArgs      int      `json:"NumArgs"`
+	Flags        []defRef `json:"Flags"`
 }
 
-// full json dump type: https://llvm.org/docs/TableGen/BackEnds.html#json-reference
+// dump represents the full TableGen JSON dump.
+// See https://llvm.org/docs/TableGen/BackEnds.html#json-reference.
 type dump struct {
 	TablegenJSONVersion int                 `json:"!tablegen_json_version"`
-	Instanceof          map[string][]string `json:"!instanceof"` // to exclude from Defs
-
-	// all other fields are defs
-	// JSON embedding is supported by encoding/json/v2: github.com/go-json-experiment/json
-	Defs map[string]def `json:",embed"`
+	Instanceof          map[string][]string `json:"!instanceof"`
+	Defs                map[string]def      `json:",embed"` // all other fields are defs
 }
 
+// translateDef decomposes a single def into CDB option patterns.
+// Only defs inheriting from "Option" are considered.
 func translateDef(def def) []cdb.OptionPattern {
-	// def must inherit from Option to be considered an option
 	if !slices.Contains(def.Superclasses, "Option") {
 		return nil
 	}
@@ -51,7 +47,6 @@ func translateDef(def def) []cdb.OptionPattern {
 		}
 	}
 
-	// https://github.com/llvm/llvm-project/blob/release/22.x/llvm/include/llvm/Option/OptParser.td
 	var partials []cdb.OptionPattern
 	switch def.Kind.Def {
 	case "KIND_FLAG":
@@ -111,6 +106,7 @@ func translateDef(def def) []cdb.OptionPattern {
 	return patterns
 }
 
+// unmarshalDump parses a TableGen JSON dump into a dump struct.
 func unmarshalDump(data []byte) (*dump, error) {
 	var dump dump
 	if err := json.Unmarshal(data, &dump); err != nil {
@@ -119,6 +115,7 @@ func unmarshalDump(data []byte) (*dump, error) {
 	return &dump, nil
 }
 
+// translateDump translates an entire TableGen JSON dump into a CDB config.
 func translateDump(dump *dump) (*cdb.Config, error) {
 	if version := dump.TablegenJSONVersion; version != 1 {
 		return nil, fmt.Errorf("unexpected TableGen JSON version: %d", version)
