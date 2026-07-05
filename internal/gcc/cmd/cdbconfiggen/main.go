@@ -54,6 +54,8 @@ func main() {
 		records = append(records, parseOptRecords(content)...)
 	}
 
+	records = mergeOptRecords(records)
+
 	config := translateOptRecords(records)
 
 	w := os.Stdout

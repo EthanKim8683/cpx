@@ -133,7 +133,6 @@ func translateOptRecord(record optRecord) []cdb.OptionPattern {
 }
 
 func translateOptRecords(records []optRecord) *cdb.Config {
-	records = mergeOptRecords(records)
 	patterns := make([]cdb.OptionPattern, 0, 2*len(records))
 	for _, record := range records {
 		patterns = append(patterns, translateOptRecord(record)...)
