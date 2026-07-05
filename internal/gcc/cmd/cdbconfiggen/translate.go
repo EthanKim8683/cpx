@@ -1,5 +1,3 @@
-// translate.go translates parsed option records into CDB parser configs.
-
 package main
 
 import (
@@ -11,13 +9,10 @@ import (
 	"github.com/EthanKim8683/cpx/internal/cdb"
 )
 
-// parenRE matches parenthesized groups in property strings, which should be
-// ignored when checking for property presence.
+// parenRE matches parenthesized groups in property strings.
 var parenRE = regexp.MustCompile(`\([^)]+\)`)
 
-// negateRE matches GCC option names that have implicit negative forms.
-// Options starting with f, g, W, or m and not containing '=' can be negated
-// by inserting "no-" after the first character (e.g. -ffoo → -fno-foo).
+// negateRE matches GCC option names with implicit negative forms (e.g. -ffoo → -fno-foo).
 var negateRE = regexp.MustCompile(`^[fgWm][^=]+$`)
 
 // mergeOptRecords merges optRecords with the same name into a single record by
@@ -47,17 +42,18 @@ func mergeOptRecords(records []optRecord) []optRecord {
 	return merged
 }
 
-// hasProp reports whether prop is present in the space-separated property string.
-// Parenthesized groups are excluded from matching to avoid false positives on
-// properties that appear only inside macro arguments.
+// hasProp emulates flag_set_p from gcc/gcc/opt-functions.awk. It checks whether
+// a property like "Joined" or "Separate" appears in the space-separated property
+// string, excluding parenthesized groups to avoid matching macro arguments.
 func hasProp(prop, props string) bool {
 	props = parenRE.ReplaceAllString(props, "")
 	return strings.Contains(" "+props+" ", " "+prop+" ")
 }
 
-// propArgs extracts the argument value for a named property from the property
-// string. It handles both parenthesized forms (e.g. "Var({foo})") and
-// bare forms (e.g. "Args(2)"). Returns empty string if not found.
+// propArgs emulates opt_args from gcc/gcc/opt-functions.awk. It pulls out the
+// value for a named property, handling both parenthesized forms like
+// "Var({foo})" and bare forms like "Args(2)". Returns empty string if the
+// property isn't present.
 func propArgs(name, props string) string {
 	_, s, found := strings.Cut(" "+props, " "+name+"(")
 	if !found {
@@ -98,7 +94,6 @@ func translateOptRecord(record optRecord) []cdb.OptionPattern {
 				Kind: cdb.OptionKindFlag,
 			})
 		case hasProp("Args", record.props):
-			// n should already be validated prior to parsing.
 			n, _ := strconv.Atoi(propArgs("Args", record.props))
 			partials = append(partials, cdb.OptionPattern{
 				Kind:    cdb.OptionKindMultiArg,
@@ -111,7 +106,7 @@ func translateOptRecord(record optRecord) []cdb.OptionPattern {
 		}
 	}
 	if hasProp("JoinedOrMissing", record.props) {
-		// JoinedOrMissing can be decomposed into Joined and Flag.
+		// JoinedOrMissing decomposes into Flag and Joined.
 		partials = append(partials, cdb.OptionPattern{
 			Kind: cdb.OptionKindFlag,
 		})
@@ -119,6 +114,7 @@ func translateOptRecord(record optRecord) []cdb.OptionPattern {
 			Kind: cdb.OptionKindJoined,
 		})
 	}
+	// GCC options without any recognized property default to Flag.
 	if partials == nil {
 		partials = append(partials, cdb.OptionPattern{
 			Kind: cdb.OptionKindFlag,
@@ -131,6 +127,7 @@ func translateOptRecord(record optRecord) []cdb.OptionPattern {
 		patterns = append(patterns, partial)
 	}
 
+	// Add negated form for negatable names (e.g. -ffoo → -fno-foo).
 	if negateRE.MatchString(record.name) && !hasProp("RejectNegative", record.props) {
 		for _, partial := range partials {
 			partial.Spelling = "-" + negative(record.name)

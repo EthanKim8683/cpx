@@ -1,5 +1,3 @@
-// translate.go translates parsed TableGen JSON dumps into CDB parser configs.
-
 package main
 
 import (
@@ -10,16 +8,16 @@ import (
 	"github.com/go-json-experiment/json"
 )
 
-// defRef is a reference to a def object in the JSON dump.
-// See https://llvm.org/docs/TableGen/BackEnds.html#json-reference.
+// defRef wraps a JSON reference to a named def.
 type defRef struct {
-	Def string `json:"def"`
+	Def string `json:"def"` // name of the referenced def
 }
 
 // def represents a single TableGen def following the Option class defined in
-// llvm/include/llvm/Option/OptParser.td. It captures the spelling, kind, flags,
-// and prefix information needed to generate CDB option patterns.
+// llvm/include/llvm/Option/OptParser.td.
 type def struct {
+	// Superclasses is available on all defs; the remaining fields are only
+	// meaningful when Option appears in this list.
 	Superclasses []string `json:"!superclasses"`
 	Prefixes     []string `json:"Prefixes"`
 	Name         string   `json:"Name"`
@@ -28,20 +26,22 @@ type def struct {
 	Flags        []defRef `json:"Flags"`
 }
 
-// dump represents the full TableGen JSON dump.
-// See https://llvm.org/docs/TableGen/BackEnds.html#json-reference.
+// dump is the top-level structure of a TableGen JSON dump.
 type dump struct {
 	TablegenJSONVersion int                 `json:"!tablegen_json_version"`
 	Instanceof          map[string][]string `json:"!instanceof"`
-	Defs                map[string]def      `json:",embed"` // all other fields are defs
+	// Defs captures all non-reserved keys as defs. Requires json/v2 for embed support.
+	Defs map[string]def `json:",embed"`
 }
 
 // translateDef decomposes a single def into CDB option patterns.
 // Only defs inheriting from "Option" are considered.
 func translateDef(def def) []cdb.OptionPattern {
+	// Only Option defs are relevant to the driver.
 	if !slices.Contains(def.Superclasses, "Option") {
 		return nil
 	}
+	// NoDriverOption flags are internal and not exposed to the driver command line.
 	for _, flag := range def.Flags {
 		if flag.Def == "NoDriverOption" {
 			return nil
@@ -63,7 +63,7 @@ func translateDef(def def) []cdb.OptionPattern {
 			Kind: cdb.OptionKindSeparate,
 		})
 	case "KIND_COMMAJOINED":
-		// CommaJoined behaves like Joined with a comma-separated list argument.
+		// CommaJoined behaves as Joined for CDB prefix matching.
 		partials = append(partials, cdb.OptionPattern{
 			Kind: cdb.OptionKindJoined,
 		})
@@ -73,7 +73,7 @@ func translateDef(def def) []cdb.OptionPattern {
 			NumArgs: def.NumArgs,
 		})
 	case "KIND_JOINED_OR_SEPARATE":
-		// JoinedOrSeparate can be decomposed into Joined and Separate.
+		// JoinedOrSeparate decomposes into Joined and Separate.
 		partials = append(partials, cdb.OptionPattern{
 			Kind: cdb.OptionKindJoined,
 		})
@@ -94,6 +94,7 @@ func translateDef(def def) []cdb.OptionPattern {
 		})
 	}
 
+	// Expand each prefix × kind into a separate pattern.
 	var patterns []cdb.OptionPattern
 	for _, prefix := range def.Prefixes {
 		for _, partial := range partials {

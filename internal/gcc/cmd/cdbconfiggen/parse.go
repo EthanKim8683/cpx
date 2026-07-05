@@ -1,5 +1,3 @@
-// parse.go contains logic for parsing option records from GCC option files.
-
 package main
 
 import (
@@ -15,8 +13,7 @@ var (
 )
 
 // excludes contains record types to exclude when parsing option records.
-// Record types documentation:
-// https://gcc.gnu.org/onlinedocs/gccint/Option-file-format.html
+// See gcc/doc/internals.texi for record type documentation.
 var excludes = map[string]bool{
 	"Language":       true,
 	"Variable":       true,
