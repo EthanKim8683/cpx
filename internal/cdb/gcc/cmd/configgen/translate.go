@@ -1,7 +1,10 @@
+// translate.go translates parsed option records into CDB parser configs.
+
 package main
 
 import (
 	"regexp"
+	"slices"
 	"strconv"
 	"strings"
 
@@ -12,6 +15,32 @@ var parenRE = regexp.MustCompile(`\([^)]+\)`)
 
 // negateRE matches flags with implicit negative forms.
 var negateRE = regexp.MustCompile(`^[fgWm][^=]+$`)
+
+// mergeOptRecords merges optRecords with the same name into a single record by concatenating their props.
+func mergeOptRecords(records []optRecord) []optRecord {
+	slices.SortFunc(records, func(a, b optRecord) int {
+		return strings.Compare(a.name, b.name)
+	})
+
+	merged := make([]optRecord, 0, len(records))
+	for i := 0; i < len(records); {
+		name := records[i].name
+		var b strings.Builder
+		b.WriteString(records[i].props)
+		for i++; i < len(records); i++ {
+			if records[i].name != name {
+				break
+			}
+			b.WriteString(" ")
+			b.WriteString(records[i].props)
+		}
+		merged = append(merged, optRecord{
+			name:  name,
+			props: b.String(),
+		})
+	}
+	return merged
+}
 
 // hasProp emulates the behavior of flag_set_p:
 // https://github.com/gcc-mirror/gcc/blob/releases/gcc-16/gcc/opt-functions.awk
@@ -41,8 +70,8 @@ func negative(name string) string {
 	return name[0:1] + "no-" + name[1:]
 }
 
-// buildOptionPatterns decomposes a parsed option record into option patterns.
-func buildPatterns(record optRecord) []cdb.OptionPattern {
+// translateOptRecord decomposes a parsed option record into option patterns.
+func translateOptRecord(record optRecord) []cdb.OptionPattern {
 	if hasProp("RejectDriver", record.props) {
 		return nil
 	}
@@ -103,10 +132,10 @@ func buildPatterns(record optRecord) []cdb.OptionPattern {
 	return patterns
 }
 
-func buildConfig(records []optRecord) *cdb.Config {
+func translateOptRecords(records []optRecord) *cdb.Config {
 	patterns := make([]cdb.OptionPattern, 0, 2*len(records))
 	for _, record := range records {
-		patterns = append(patterns, buildPatterns(record)...)
+		patterns = append(patterns, translateOptRecord(record)...)
 	}
 	return cdb.NewConfig(patterns)
 }

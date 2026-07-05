@@ -1,4 +1,4 @@
-// extract.go contains logic for extracting option records from GCC option files.
+// parse.go contains logic for parsing option records from GCC option files.
 
 package main
 
@@ -12,7 +12,7 @@ var (
 	splitRE   = regexp.MustCompile(`(?:[ \t]*\n){2,}`)
 )
 
-// excludes contains record types to exclude when extracting option records.
+// excludes contains record types to exclude when parsing option records.
 // Record types documentation:
 // https://gcc.gnu.org/onlinedocs/gccint/Option-file-format.html
 var excludes = map[string]bool{
@@ -25,7 +25,7 @@ var excludes = map[string]bool{
 	"EnumValue":      true,
 }
 
-// optRecord represents an extracted option record.
+// optRecord represents a parsed option record.
 type optRecord struct {
 	name  string
 	props string
@@ -41,8 +41,8 @@ func isOptRecord(content string) bool {
 	return !excludes[name]
 }
 
-// extractOptRecord parses a record block into an optRecord.
-func extractOptRecord(content string) optRecord {
+// parseOptRecord parses a record block into an optRecord.
+func parseOptRecord(content string) optRecord {
 	lines := strings.SplitN(content, "\n", 3)
 	name := strings.TrimSpace(lines[0])
 	var props string
@@ -55,8 +55,8 @@ func extractOptRecord(content string) optRecord {
 	}
 }
 
-// extractOptRecords extracts option records from the content of a GCC .opt file.
-func extractOptRecords(content string) []optRecord {
+// parseOptRecords parses option records from the content of a GCC .opt file.
+func parseOptRecords(content string) []optRecord {
 	content = strings.ReplaceAll(content, "\r\n", "\n")
 	content = commentRE.ReplaceAllString(content, "")
 
@@ -65,7 +65,7 @@ func extractOptRecords(content string) []optRecord {
 	for _, c := range contents {
 		c = strings.TrimSpace(c)
 		if isOptRecord(c) {
-			records = append(records, extractOptRecord(c))
+			records = append(records, parseOptRecord(c))
 		}
 	}
 	return records

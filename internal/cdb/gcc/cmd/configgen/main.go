@@ -1,11 +1,14 @@
 package main
 
 import (
+	"errors"
 	"flag"
 	"fmt"
 	"log"
 	"os"
 	"path/filepath"
+
+	"github.com/spf13/afero"
 )
 
 func main() {
@@ -26,19 +29,34 @@ func main() {
 	}
 	dir := args[0]
 
-	contents, err := readOptFiles(dir)
+	fs := afero.NewBasePathFs(afero.NewOsFs(), dir)
+	files, err := afero.Glob(fs, "**/*.opt")
 	if err != nil {
-		log.Fatalf("failed to read opt files: %v", err)
+		log.Fatalf("failed to glob files in %s: %v", dir, err)
+	}
+
+	contents := make([]string, 0, len(files))
+	var errs error
+	for _, file := range files {
+		content, err := afero.ReadFile(fs, file)
+		if err != nil {
+			errs = errors.Join(errs, fmt.Errorf("failed to read file %s: %w", file, err))
+			continue
+		}
+		contents = append(contents, string(content))
+	}
+	if errs != nil {
+		log.Fatalf("failed to read files in %s: %v", dir, errs)
 	}
 
 	records := make([]optRecord, 0, len(contents))
 	for _, content := range contents {
-		records = append(records, extractOptRecords(content)...)
+		records = append(records, parseOptRecords(content)...)
 	}
 
-	records = mergeRecords(records)
+	records = mergeOptRecords(records)
 
-	config := buildConfig(records)
+	config := translateOptRecords(records)
 
 	w := os.Stdout
 	if output != "" {

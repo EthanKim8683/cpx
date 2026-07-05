@@ -33,12 +33,12 @@ func main() {
 
 	dump, err := unmarshalDump(data)
 	if err != nil {
-		log.Fatalf("failed to parse dump: %v", err)
+		log.Fatalf("failed to unmarshal dump: %v", err)
 	}
 
-	cfg, err := buildConfig(dump)
+	cfg, err := translateDump(dump)
 	if err != nil {
-		log.Fatalf("failed to build config: %v", err)
+		log.Fatalf("failed to translate dump: %v", err)
 	}
 
 	w := os.Stdout

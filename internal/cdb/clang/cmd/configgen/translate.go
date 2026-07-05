@@ -1,4 +1,4 @@
-// build.go builds CDB parser configs from parsed TableGen JSON dumps.
+// translate.go translates parsed TableGen JSON dumps into CDB parser configs.
 
 package main
 
@@ -40,7 +40,7 @@ type dump struct {
 	Defs map[string]def `json:",embed"`
 }
 
-func buildPatterns(def def) []cdb.OptionPattern {
+func translateDef(def def) []cdb.OptionPattern {
 	// def must inherit from Option to be considered an option
 	if !slices.Contains(def.Superclasses, "Option") {
 		return nil
@@ -119,14 +119,14 @@ func unmarshalDump(data []byte) (*dump, error) {
 	return &dump, nil
 }
 
-func buildConfig(dump *dump) (*cdb.Config, error) {
+func translateDump(dump *dump) (*cdb.Config, error) {
 	if version := dump.TablegenJSONVersion; version != 1 {
 		return nil, fmt.Errorf("unexpected TableGen JSON version: %d", version)
 	}
 
 	var patterns []cdb.OptionPattern
 	for _, def := range dump.Defs {
-		patterns = append(patterns, buildPatterns(def)...)
+		patterns = append(patterns, translateDef(def)...)
 	}
 	return cdb.NewConfig(patterns), nil
 }
