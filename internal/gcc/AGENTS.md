@@ -14,8 +14,6 @@ exist. It is gitignored.
 
 ## Steps
 
-
-
 ### 1. Detect the installed GCC
 
 Read the `GCC` environment variable to find the GCC executable path. Run:
@@ -43,11 +41,12 @@ GCC typically has a mirror at `https://github.com/gcc-mirror/gcc`. Find the
 branch or tag matching the detected version:
 
 - **Released versions** (e.g., 14.1.0): look for a tag like
-`releases/gcc-<major>`.
+  `releases/gcc-<major>`.
 - **Development versions** (e.g., 16.1.0 before release): use the `trunk`
-branch, which tracks the current development head.
+  branch, which tracks the current development head.
 
-
+Raw content base URL:
+`https://raw.githubusercontent.com/gcc-mirror/gcc/<branch-or-tag>/`
 
 ### 3. Discover which `.opt` files are required
 
@@ -55,30 +54,23 @@ Do not assume a fixed set of files. Reverse-engineer the required `.opt`
 sources from the upstream build system:
 
 1. **Find the Make variable.** Locate `gcc/gcc/Makefile.in` in the
-  repository. Within it, find the variable that aggregates `.opt` files
-   (typically `ALL_OPT_FILES` or similar) and trace the variables it
+   repository. Within it, find the variable that aggregates `.opt` files
+   (typically `ALL_OPT_FILES` or similar) and read the variables it
    references.
-2. **Parse the variable assignments.** Resolve the variable chain to
-  determine the full set of `.opt` files. Paths are relative to `gcc/gcc/`
-   in the repository.
+2. **Read the variable assignments.** The referenced variables expand to a
+   list of `.opt` file paths, relative to the Makefile's directory.
 3. **Skip configure substitutions.** Variable assignments containing
-  `@`-delimited configure substitutions (e.g., `@lang_opt_files@`) expand
+   `@`-delimited configure substitutions (e.g., `@lang_opt_files@`) expand
    at build time and are not available from the source alone. Only use the
    concrete file paths listed directly in `Makefile.in`.
 4. **Record what you find.** Note each required `.opt` file and its
-  repository path.
-
-
+   repository path.
 
 ### 4. Fetch the `.opt` source files
 
-Download the files discovered in step 3 into `internal/gcc/scratch/`,
-**preserving the directory structure from the repository**. This is critical
-for the code generator to correctly resolve relative paths within `.opt`
-files.
-
-Use the raw content base URL for the repository and branch/tag identified
-in step 2. Append each relative file path to fetch the content.
+Download the files discovered in step 3 into `internal/gcc/scratch/`. The
+base URL from step 2 combined with each repository path gives the full raw
+content URL.
 
 If network access is restricted, see step 5.
 
@@ -94,7 +86,7 @@ Do not install system packages or clone repositories without user permission.
 ```sh
 go run ./internal/gcc/cmd/cdbconfiggen \
   -o internal/gcc/generated_cdbconfig.go \
-  ./internal/gcc/scratch/gcc
+  ./internal/gcc/scratch
 ```
 
 This reads all `.opt` files from the directory, parses option records, and
