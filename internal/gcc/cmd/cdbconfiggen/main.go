@@ -11,6 +11,7 @@ import (
 	"os"
 	"path/filepath"
 
+	"github.com/EthanKim8683/cpx/internal/cdb"
 	"github.com/spf13/afero"
 )
 
@@ -84,7 +85,7 @@ package gcc
 import "github.com/EthanKim8683/cpx/internal/cdb"
 
 var CDBConfig = %#v
-`, config); err != nil {
+`, cdb.NewConfig(config)); err != nil {
 		log.Fatalf("failed to write config: %v", err)
 	}
 }

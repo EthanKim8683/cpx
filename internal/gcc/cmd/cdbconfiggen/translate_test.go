@@ -234,17 +234,15 @@ func TestTranslateOptRecords(t *testing.T) {
 			{name: "o", props: "Separate"},
 		}
 		got := translateOptRecords(records)
-		require.NotNil(t, got)
-		expected := cdb.NewConfig([]cdb.OptionPattern{
+		expected := []cdb.OptionPattern{
 			{Spelling: "-std=", Kind: cdb.OptionKindJoined},
 			{Spelling: "-o", Kind: cdb.OptionKindSeparate},
-		})
+		}
 		assert.Equal(t, expected, got)
 	})
 
 	t.Run("nil input", func(t *testing.T) {
 		got := translateOptRecords(nil)
-		require.NotNil(t, got)
-		require.Empty(t, got.ByPrefix)
+		require.Nil(t, got)
 	})
 }

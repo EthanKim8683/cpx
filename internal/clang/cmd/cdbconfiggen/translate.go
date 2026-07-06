@@ -135,8 +135,8 @@ func unmarshalDump(data []byte) (*dump, error) {
 	return &dump, nil
 }
 
-// translateDump translates an entire TableGen JSON dump into a CDB config.
-func translateDump(dump *dump) (*cdb.Config, error) {
+// translateDump translates an entire TableGen JSON dump into CDB option patterns.
+func translateDump(dump *dump) ([]cdb.OptionPattern, error) {
 	if version := dump.TablegenJSONVersion; version != 1 {
 		return nil, fmt.Errorf("unexpected TableGen JSON version: %d", version)
 	}
@@ -145,5 +145,5 @@ func translateDump(dump *dump) (*cdb.Config, error) {
 	for _, def := range dump.Defs {
 		patterns = append(patterns, translateDef(def)...)
 	}
-	return cdb.NewConfig(patterns), nil
+	return patterns, nil
 }
