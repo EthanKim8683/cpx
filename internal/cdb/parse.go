@@ -7,6 +7,8 @@ import (
 )
 
 // Option represents a parsed option and its arguments.
+// Args excludes the flag itself: for joined options it contains the suffix,
+// for separate/multi-arg options it contains the consumed arguments.
 type Option struct {
 	Pattern OptionPattern
 	Args    []string
@@ -54,7 +56,8 @@ func findPattern(cfg *Config, arg string) *OptionPattern {
 }
 
 // Parse parses argv into a Command. The first element is the command name.
-// Args for each option include the flag itself followed by any consumed arguments.
+// Args for each option exclude the flag: joined options contain the suffix,
+// separate/multi-arg options contain the consumed arguments.
 func Parse(cfg *Config, argv []string) (Command, error) {
 	if len(argv) == 0 {
 		return Command{}, fmt.Errorf("argv is empty")
@@ -70,12 +73,13 @@ func Parse(cfg *Config, argv []string) (Command, error) {
 			continue
 		}
 
-		var n int
+		var optArgs []string
+		if pattern.Kind.IsJoined() {
+			optArgs = append(optArgs, strings.TrimPrefix(argv[i], pattern.Spelling))
+		}
+
+		n := 0
 		switch pattern.Kind {
-		case OptionKindFlag:
-			n = 0
-		case OptionKindJoined:
-			n = 0
 		case OptionKindSeparate:
 			n = 1
 		case OptionKindMultiArg:
@@ -90,10 +94,11 @@ func Parse(cfg *Config, argv []string) (Command, error) {
 		if i+n+1 > len(argv) {
 			return Command{}, fmt.Errorf("option %s takes %d arguments, but only %d arguments are provided", pattern.Spelling, n, len(argv)-i)
 		}
+		optArgs = append(optArgs, argv[i+1:i+n+1]...)
 
 		options = append(options, Option{
 			Pattern: *pattern,
-			Args:    argv[i : i+n+1],
+			Args:    optArgs,
 		})
 		i += n
 	}

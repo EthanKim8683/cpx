@@ -137,7 +137,7 @@ func TestParse(t *testing.T) {
 			argv:     []string{"cc", "-c", "main.c"},
 			wantName: "cc",
 			wantOpts: []Option{
-				{Pattern: OptionPattern{Spelling: "-c", Kind: OptionKindFlag}, Args: []string{"-c"}},
+				{Pattern: OptionPattern{Spelling: "-c", Kind: OptionKindFlag}},
 			},
 			wantArgs: []string{"main.c"},
 		},
@@ -146,7 +146,7 @@ func TestParse(t *testing.T) {
 			argv:     []string{"cc", "-std=c++17", "main.c"},
 			wantName: "cc",
 			wantOpts: []Option{
-				{Pattern: OptionPattern{Spelling: "-std=", Kind: OptionKindJoined}, Args: []string{"-std=c++17"}},
+				{Pattern: OptionPattern{Spelling: "-std=", Kind: OptionKindJoined}, Args: []string{"c++17"}},
 			},
 			wantArgs: []string{"main.c"},
 		},
@@ -155,7 +155,7 @@ func TestParse(t *testing.T) {
 			argv:     []string{"cc", "-o", "out", "main.c"},
 			wantName: "cc",
 			wantOpts: []Option{
-				{Pattern: OptionPattern{Spelling: "-o", Kind: OptionKindSeparate}, Args: []string{"-o", "out"}},
+				{Pattern: OptionPattern{Spelling: "-o", Kind: OptionKindSeparate}, Args: []string{"out"}},
 			},
 			wantArgs: []string{"main.c"},
 		},
@@ -164,7 +164,7 @@ func TestParse(t *testing.T) {
 			argv:     []string{"cc", "-MF", "a", "b", "main.c"},
 			wantName: "cc",
 			wantOpts: []Option{
-				{Pattern: OptionPattern{Spelling: "-MF", Kind: OptionKindMultiArg, NumArgs: 2}, Args: []string{"-MF", "a", "b"}},
+				{Pattern: OptionPattern{Spelling: "-MF", Kind: OptionKindMultiArg, NumArgs: 2}, Args: []string{"a", "b"}},
 			},
 			wantArgs: []string{"main.c"},
 		},
@@ -173,7 +173,7 @@ func TestParse(t *testing.T) {
 			argv:     []string{"cc", "-", "a", "b", "c"},
 			wantName: "cc",
 			wantOpts: []Option{
-				{Pattern: OptionPattern{Spelling: "-", Kind: OptionKindRemainingArgs}, Args: []string{"-", "a", "b", "c"}},
+				{Pattern: OptionPattern{Spelling: "-", Kind: OptionKindRemainingArgs}, Args: []string{"a", "b", "c"}},
 			},
 		},
 		{
@@ -187,8 +187,8 @@ func TestParse(t *testing.T) {
 			argv:     []string{"cc", "-c", "-o", "out", "main.c", "-foo"},
 			wantName: "cc",
 			wantOpts: []Option{
-				{Pattern: OptionPattern{Spelling: "-c", Kind: OptionKindFlag}, Args: []string{"-c"}},
-				{Pattern: OptionPattern{Spelling: "-o", Kind: OptionKindSeparate}, Args: []string{"-o", "out"}},
+				{Pattern: OptionPattern{Spelling: "-c", Kind: OptionKindFlag}},
+				{Pattern: OptionPattern{Spelling: "-o", Kind: OptionKindSeparate}, Args: []string{"out"}},
 			},
 			wantArgs: []string{"main.c", "-foo"},
 		},
