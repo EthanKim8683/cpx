@@ -58,6 +58,10 @@ func findPattern(cfg *Config, arg string) *OptionPattern {
 // Parse parses argv into a Command. The first element is the command name.
 // Args for each option include the flag itself followed by any consumed arguments.
 func Parse(cfg *Config, argv []string) (Command, error) {
+	if len(argv) == 0 {
+		return Command{}, fmt.Errorf("argv is empty")
+	}
+
 	name := argv[0]
 	var options []Option
 	var args []string
