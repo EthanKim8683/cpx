@@ -14,6 +14,8 @@ exist. It is gitignored.
 
 ## Steps
 
+
+
 ### 1. Detect the installed GCC
 
 Read the `GCC` environment variable to find the GCC executable path. Run:
@@ -41,9 +43,11 @@ GCC typically has a mirror at `https://github.com/gcc-mirror/gcc`. Find the
 branch or tag matching the detected version:
 
 - **Released versions** (e.g., 14.1.0): look for a tag like
-  `releases/gcc-<major>`.
+`releases/gcc-<major>`.
 - **Development versions** (e.g., 16.1.0 before release): use the `trunk`
-  branch, which tracks the current development head.
+branch, which tracks the current development head.
+
+
 
 ### 3. Discover which `.opt` files are required
 
@@ -51,18 +55,20 @@ Do not assume a fixed set of files. Reverse-engineer the required `.opt`
 sources from the upstream build system:
 
 1. **Find the Make variable.** Locate `gcc/gcc/Makefile.in` in the
-   repository. Within it, find the variable that aggregates `.opt` files
+  repository. Within it, find the variable that aggregates `.opt` files
    (typically `ALL_OPT_FILES` or similar) and trace the variables it
    references.
 2. **Parse the variable assignments.** Resolve the variable chain to
-   determine the full set of `.opt` files. Paths are relative to `gcc/gcc/`
+  determine the full set of `.opt` files. Paths are relative to `gcc/gcc/`
    in the repository.
 3. **Skip configure substitutions.** Variable assignments containing
-   `@`-delimited configure substitutions (e.g., `@lang_opt_files@`) expand
+  `@`-delimited configure substitutions (e.g., `@lang_opt_files@`) expand
    at build time and are not available from the source alone. Only use the
    concrete file paths listed directly in `Makefile.in`.
-4. **Record what you find.** Note each required `.opt` file, its
-   repository path, and its role (driver options, language options, etc.).
+4. **Record what you find.** Note each required `.opt` file and its
+  repository path.
+
+
 
 ### 4. Fetch the `.opt` source files
 
