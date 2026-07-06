@@ -9,6 +9,8 @@ import (
 	"log"
 	"os"
 	"path/filepath"
+
+	"github.com/EthanKim8683/cpx/internal/cdb"
 )
 
 func main() {
@@ -41,7 +43,7 @@ Arguments:
 		log.Fatalf("failed to unmarshal dump: %v", err)
 	}
 
-	cfg, err := translateDump(dump)
+	patterns, err := translateDump(dump)
 	if err != nil {
 		log.Fatalf("failed to translate dump: %v", err)
 	}
@@ -67,7 +69,7 @@ package clang
 import "github.com/EthanKim8683/cpx/internal/cdb"
 
 var CDBConfig = %#v
-`, cfg); err != nil {
+`, cdb.NewConfig(patterns)); err != nil {
 		log.Fatalf("failed to write config: %v", err)
 	}
 }

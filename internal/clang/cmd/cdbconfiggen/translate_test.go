@@ -237,13 +237,12 @@ func TestTranslateDump(t *testing.T) {
 		}
 		got, err := translateDump(d)
 		require.NoError(t, err)
-		require.NotNil(t, got)
-		expected := cdb.NewConfig([]cdb.OptionPattern{
+		expected := []cdb.OptionPattern{
 			{Spelling: "-foo", Kind: cdb.OptionKindFlag},
 			{Spelling: "-bar", Kind: cdb.OptionKindJoined},
 			{Spelling: "-bar", Kind: cdb.OptionKindFlag},
-		})
-		assert.Equal(t, expected, got)
+		}
+		assert.ElementsMatch(t, expected, got)
 	})
 
 	t.Run("wrong version", func(t *testing.T) {

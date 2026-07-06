@@ -41,13 +41,15 @@ Capture tools may still record real invocations. cpx uses them as one input, the
 ### Compiler Option Configs
 Structured command parsing relies on generated Go source files containing compiled option prefix maps. This design eliminates runtime parsing overhead, dependencies, and file embedding.
 
-- **Stateless Prefix Registry**: Configs are structured as a flat registry of option patterns indexed directly by spelling prefix:
+- **Sorted Patterns with Back-Chain Links**: Configs are flat `[]OptionPattern` slices sorted by spelling. Each joined-kind pattern holds a back-chain pointer to the longest entry whose spelling is a strict prefix, enabling longest-prefix matching:
   ```go
   type Config struct {
-      ByPrefix map[string][]OptionPattern
+      Patterns   []OptionPattern
+      BackChains []*OptionPattern
   }
   ```
-  This maps option spellings (like `-std=` or `-o`) to their respective `OptionPattern` specs, allowing the parser to slice command-line arguments statelessly without managing alias tables or exclusion trees during parsing.
+  Both GCC and Clang match options by longest prefix. A binary search locates the candidate; back-chain traversal resolves the actual match. This mirrors GCC's `cl_option` array and `back_chain` links (built by `optc-gen.awk`), and achieves the same result as Clang's sorted forward iteration.
+- **Longest-Prefix Matching**: When parsing `--std=c++17`, the parser must match `--std=` (the longest prefix) rather than `--` or `-`. Binary search lands on the exact match or the insertion point. For exact hits on a joined kind, the back-chain returns the longest joined prefix (e.g., `-std=c++17` → `-std=`). If no joined prefix exists, the match is nil — the option is incomplete without a value. For misses, check `patterns[i-1]` directly if joined, then fall back to `BackChains[i-1]` to find the longest candidate whose spelling is a strict prefix of the argument.
 - **Query-Time Resolution (Clang Style)**: Dynamic option behaviors—including resolving overridden arguments, negation flags, and mutual exclusions—are deferred entirely to access/query time. Consumers query the resulting parsed argument list using accessors like `getLastArg` or `hasFlag` to dynamically resolve the final compiler state.
 - **Driver-Visible Options Only**: Filter at generation time; options not visible to the driver (e.g. those with `NoDriverOption` in Clang or `RejectDriver` in GCC) are omitted from the configuration.
 - **Per-Variant Shape**: Each variant (`OptionPattern`) has a spelling, kind, and optional argument count.

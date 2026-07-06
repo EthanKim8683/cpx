@@ -1,37 +1,35 @@
 // Package cdb provides compiler-agnostic configuration structures and types
 // for parsing command-line arguments into discrete options.
 //
-// Options are matched by spelling prefix using a flat, prefix-based pattern
-// matching pass. Dynamic behaviors — negation, overrides, mutual exclusions —
-// are deferred to access time via consumers like getLastArg or hasFlag.
+// Both GCC and Clang match options by longest prefix — e.g., --std=c++17
+// matches --std= (not --). NewConfig sorts patterns by spelling and links
+// back-chain pointers so that binary search plus back-chain traversal
+// achieves longest-prefix matching in O(log n).
 package cdb
+
+import (
+	"slices"
+	"strings"
+)
 
 // OptionKind defines the parsing behavior for a compiler option pattern.
 type OptionKind string
 
 const (
-	// OptionKindFlag matches the option spelling exactly with no suffix or arguments.
-	OptionKindFlag OptionKind = "Flag"
-	// OptionKindJoined matches a spelling prefix followed by a required non-empty
-	// suffix within the same argv entry (e.g. -std=c++17).
-	OptionKindJoined OptionKind = "Joined"
-	// OptionKindSeparate matches the option spelling exactly and consumes one
-	// subsequent argv entry as its argument (e.g. -o file).
-	OptionKindSeparate OptionKind = "Separate"
-	// OptionKindMultiArg matches the option spelling exactly and consumes
-	// NumArgs subsequent argv entries.
-	OptionKindMultiArg OptionKind = "MultiArg"
-	// OptionKindJoinedAndSeparate matches a spelling prefix followed by a
-	// required non-empty suffix and additionally consumes one subsequent argv
-	// entry (e.g. -MFfoo out.d).
-	OptionKindJoinedAndSeparate OptionKind = "JoinedAndSeparate"
-	// OptionKindRemainingArgs matches the option spelling exactly and consumes
-	// all remaining argv entries.
-	OptionKindRemainingArgs OptionKind = "RemainingArgs"
-	// OptionKindRemainingArgsJoined matches a spelling prefix followed by an
-	// optional non-empty suffix and consumes all remaining argv entries.
+	OptionKindFlag                OptionKind = "Flag"
+	OptionKindJoined              OptionKind = "Joined"
+	OptionKindSeparate            OptionKind = "Separate"
+	OptionKindMultiArg            OptionKind = "MultiArg"
+	OptionKindJoinedAndSeparate   OptionKind = "JoinedAndSeparate"
+	OptionKindRemainingArgs       OptionKind = "RemainingArgs"
 	OptionKindRemainingArgsJoined OptionKind = "RemainingArgsJoined"
 )
+
+func (k OptionKind) IsJoined() bool {
+	return k == OptionKindJoined ||
+		k == OptionKindJoinedAndSeparate ||
+		k == OptionKindRemainingArgsJoined
+}
 
 // OptionPattern represents a single command-line spelling variant of an option.
 type OptionPattern struct {
@@ -41,19 +39,40 @@ type OptionPattern struct {
 	NumArgs int
 }
 
-// Config maps spelling prefixes to their option patterns.
+// Config holds sorted option entries with back-chain links for prefix matching.
 type Config struct {
-	// ByPrefix maps each spelling string to its associated OptionPattern(s).
-	ByPrefix map[string][]OptionPattern
+	Patterns   []OptionPattern
+	BackChains []*OptionPattern
 }
 
-// NewConfig constructs a Config by indexing the provided option patterns by
-// their spelling prefix.
+// NewConfig sorts the provided option patterns by spelling and computes
+// back-chain links for prefix-based matching.
 func NewConfig(patterns []OptionPattern) *Config {
-	byPrefix := make(map[string][]OptionPattern, len(patterns))
-	for _, pattern := range patterns {
-		prefix := pattern.Spelling
-		byPrefix[prefix] = append(byPrefix[prefix], pattern)
+	patterns = slices.Clone(patterns)
+	slices.SortFunc(patterns, func(a, b OptionPattern) int {
+		return strings.Compare(a.Spelling, b.Spelling)
+	})
+
+	// Back-chain: for each joined kind, find the longest joined prefix
+	// by scanning backward. Used by findPattern on exact match to
+	// resolve to a joined option with a non-empty argument.
+	backChains := make([]*OptionPattern, len(patterns))
+	for i := range patterns {
+		if !patterns[i].Kind.IsJoined() {
+			continue
+		}
+		for j := i - 1; j >= 0; j-- {
+			if !strings.HasPrefix(patterns[i].Spelling, patterns[j].Spelling) {
+				continue
+			}
+			if patterns[j].Kind.IsJoined() {
+				backChains[i] = &patterns[j]
+				break
+			}
+		}
 	}
-	return &Config{ByPrefix: byPrefix}
+	return &Config{
+		Patterns:   patterns,
+		BackChains: backChains,
+	}
 }

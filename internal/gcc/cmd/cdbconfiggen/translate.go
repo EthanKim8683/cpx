@@ -139,11 +139,11 @@ func translateOptRecord(record optRecord) []cdb.OptionPattern {
 	return patterns
 }
 
-// translateOptRecords translates a slice of parsed option records into a CDB config.
-func translateOptRecords(records []optRecord) *cdb.Config {
+// translateOptRecords translates a slice of parsed option records into CDB option patterns.
+func translateOptRecords(records []optRecord) []cdb.OptionPattern {
 	var patterns []cdb.OptionPattern
 	for _, record := range records {
 		patterns = append(patterns, translateOptRecord(record)...)
 	}
-	return cdb.NewConfig(patterns)
+	return patterns
 }
