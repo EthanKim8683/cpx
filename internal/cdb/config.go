@@ -10,13 +10,13 @@ package cdb
 type OptionKind string
 
 const (
-	OptionKindFlag                OptionKind = "Flag"              // exact match
-	OptionKindJoined              OptionKind = "Joined"            // joined with non-empty suffix.
-	OptionKindSeparate            OptionKind = "Separate"          // exact match with one subsequent arg.
-	OptionKindMultiArg            OptionKind = "MultiArg"          // exact match with NumArgs subsequent args.
-	OptionKindJoinedAndSeparate   OptionKind = "JoinedAndSeparate" // joined with non-empty suffix and one subsequent arg.
-	OptionKindRemainingArgs       OptionKind = "RemainingArgs"
-	OptionKindRemainingArgsJoined OptionKind = "RemainingArgsJoined"
+	OptionKindFlag                OptionKind = "Flag"                // exact match
+	OptionKindJoined              OptionKind = "Joined"              // joined with non-empty suffix.
+	OptionKindSeparate            OptionKind = "Separate"            // exact match with one subsequent arg.
+	OptionKindMultiArg            OptionKind = "MultiArg"            // exact match with NumArgs subsequent args.
+	OptionKindJoinedAndSeparate   OptionKind = "JoinedAndSeparate"   // joined with non-empty suffix and one subsequent arg.
+	OptionKindRemainingArgs       OptionKind = "RemainingArgs"       // exact match with all remaining args.
+	OptionKindRemainingArgsJoined OptionKind = "RemainingArgsJoined" // joined with non-empty suffix and all remaining args.
 )
 
 // OptionPattern represents a single command-line spelling variant of an option.

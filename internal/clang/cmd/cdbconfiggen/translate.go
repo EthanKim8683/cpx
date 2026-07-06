@@ -88,7 +88,7 @@ func translateDef(def def) []cdb.OptionPattern {
 			Kind: cdb.OptionKindSeparate,
 		})
 	case "KIND_JOINED_AND_SEPARATE":
-		// KIND_JOINED part decomposes like KIND_JOINED.
+		// Joined part decomposes like KIND_JOINED.
 		partials = append(partials, cdb.OptionPattern{
 			Kind: cdb.OptionKindJoinedAndSeparate,
 		})
@@ -100,8 +100,12 @@ func translateDef(def def) []cdb.OptionPattern {
 			Kind: cdb.OptionKindRemainingArgs,
 		})
 	case "KIND_REMAINING_ARGS_JOINED":
+		// Joined part decomposes like KIND_JOINED.
 		partials = append(partials, cdb.OptionPattern{
 			Kind: cdb.OptionKindRemainingArgsJoined,
+		})
+		partials = append(partials, cdb.OptionPattern{
+			Kind: cdb.OptionKindRemainingArgs,
 		})
 	}
 
