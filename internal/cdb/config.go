@@ -42,9 +42,3 @@ func NewConfig(patterns []OptionPattern) *Config {
 	}
 	return &Config{ByPrefix: byPrefix}
 }
-
-// Option represents a parsed option and its arguments.
-type Option struct {
-	Pattern OptionPattern
-	Args    []string
-}
