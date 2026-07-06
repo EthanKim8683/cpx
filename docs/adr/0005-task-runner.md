@@ -20,18 +20,6 @@ Use [Task](https://taskfile.dev) (Taskfile.yml) as the project task runner.
 
 Task is a Go-based task runner with a YAML task definition format. It is installed via `go install`, `brew`, `scoop`, or direct binary download — no shell environment assumptions. Tasks are defined in `Taskfile.yml` at the project root.
 
-```yaml
-version: 3
-tasks:
-  default:
-    cmds:
-      - task: gen-env-example
-  gen-env-example:
-    desc: Generate .env.example file
-    cmds:
-      - npx -y @dotenvx/dotenvx ext genexample -f .env
-```
-
 Tasks use the same shell commands they would in a Makefile, but Task handles invocation cross-platform. Environment variables from direnv are inherited automatically.
 
 ---
