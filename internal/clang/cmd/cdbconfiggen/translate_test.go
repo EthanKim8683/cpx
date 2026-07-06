@@ -46,7 +46,7 @@ func TestTranslateDef(t *testing.T) {
 			},
 		},
 		{
-			name: "KIND_JOINED",
+			name: "KIND_JOINED decomposes into Joined and Flag",
 			def: def{
 				Superclasses: []string{"Option"},
 				Prefixes:     []string{"-"},
@@ -55,6 +55,7 @@ func TestTranslateDef(t *testing.T) {
 			},
 			want: []cdb.OptionPattern{
 				{Spelling: "-std=", Kind: cdb.OptionKindJoined},
+				{Spelling: "-std=", Kind: cdb.OptionKindFlag},
 			},
 		},
 		{
@@ -70,7 +71,7 @@ func TestTranslateDef(t *testing.T) {
 			},
 		},
 		{
-			name: "KIND_COMMAJOINED maps to Joined",
+			name: "KIND_COMMAJOINED decomposes into Joined and Flag",
 			def: def{
 				Superclasses: []string{"Option"},
 				Prefixes:     []string{"-"},
@@ -79,6 +80,7 @@ func TestTranslateDef(t *testing.T) {
 			},
 			want: []cdb.OptionPattern{
 				{Spelling: "-Wa,", Kind: cdb.OptionKindJoined},
+				{Spelling: "-Wa,", Kind: cdb.OptionKindFlag},
 			},
 		},
 		{
@@ -108,7 +110,7 @@ func TestTranslateDef(t *testing.T) {
 			},
 		},
 		{
-			name: "KIND_JOINED_AND_SEPARATE",
+			name: "KIND_JOINED_AND_SEPARATE decomposes into JoinedAndSeparate and Separate",
 			def: def{
 				Superclasses: []string{"Option"},
 				Prefixes:     []string{"-"},
@@ -117,6 +119,7 @@ func TestTranslateDef(t *testing.T) {
 			},
 			want: []cdb.OptionPattern{
 				{Spelling: "-MF", Kind: cdb.OptionKindJoinedAndSeparate},
+				{Spelling: "-MF", Kind: cdb.OptionKindSeparate},
 			},
 		},
 		{
@@ -132,7 +135,7 @@ func TestTranslateDef(t *testing.T) {
 			},
 		},
 		{
-			name: "KIND_REMAINING_ARGS_JOINED",
+			name: "KIND_REMAINING_ARGS_JOINED decomposes into RemainingArgsJoined and RemainingArgs",
 			def: def{
 				Superclasses: []string{"Option"},
 				Prefixes:     []string{"--"},
@@ -141,6 +144,7 @@ func TestTranslateDef(t *testing.T) {
 			},
 			want: []cdb.OptionPattern{
 				{Spelling: "--CLASSPATH=", Kind: cdb.OptionKindRemainingArgsJoined},
+				{Spelling: "--CLASSPATH=", Kind: cdb.OptionKindRemainingArgs},
 			},
 		},
 		{
@@ -234,11 +238,12 @@ func TestTranslateDump(t *testing.T) {
 		got, err := translateDump(d)
 		require.NoError(t, err)
 		require.NotNil(t, got)
-		require.Len(t, got.ByPrefix["-foo"], 1)
-		require.Equal(t, cdb.OptionKindFlag, got.ByPrefix["-foo"][0].Kind)
-		require.Len(t, got.ByPrefix["-bar"], 1)
-		require.Equal(t, cdb.OptionKindJoined, got.ByPrefix["-bar"][0].Kind)
-		require.Empty(t, got.ByPrefix["-baz"])
+		expected := cdb.NewConfig([]cdb.OptionPattern{
+			{Spelling: "-foo", Kind: cdb.OptionKindFlag},
+			{Spelling: "-bar", Kind: cdb.OptionKindJoined},
+			{Spelling: "-bar", Kind: cdb.OptionKindFlag},
+		})
+		assert.Equal(t, expected, got)
 	})
 
 	t.Run("wrong version", func(t *testing.T) {

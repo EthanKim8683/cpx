@@ -37,7 +37,6 @@ type dump struct {
 // translateDef decomposes a single def into CDB option patterns.
 // Only defs inheriting from "Option" are considered.
 func translateDef(def def) []cdb.OptionPattern {
-	// Only Option defs are relevant to the driver.
 	if !slices.Contains(def.Superclasses, "Option") {
 		return nil
 	}
@@ -48,6 +47,7 @@ func translateDef(def def) []cdb.OptionPattern {
 		}
 	}
 
+	// partials holds intermediate patterns before prefix expansion.
 	var partials []cdb.OptionPattern
 	switch def.Kind.Def {
 	case "KIND_FLAG":
@@ -55,7 +55,8 @@ func translateDef(def def) []cdb.OptionPattern {
 			Kind: cdb.OptionKindFlag,
 		})
 	case "KIND_JOINED":
-		// KIND_JOINED accepts empty suffix → KIND_JOINED decomposes into Joined and Flag.
+		// KIND_JOINED options accept an empty suffix (e.g. -std alone is valid),
+		// so we emit both Joined and Flag patterns.
 		partials = append(partials, cdb.OptionPattern{
 			Kind: cdb.OptionKindJoined,
 		})
@@ -67,7 +68,7 @@ func translateDef(def def) []cdb.OptionPattern {
 			Kind: cdb.OptionKindSeparate,
 		})
 	case "KIND_COMMAJOINED":
-		// KIND_COMMAJOINED behaves like KIND_JOINED and consequently decomposes like KIND_JOINED.
+		// Decompose like KIND_JOINED (see above).
 		partials = append(partials, cdb.OptionPattern{
 			Kind: cdb.OptionKindJoined,
 		})
@@ -88,7 +89,8 @@ func translateDef(def def) []cdb.OptionPattern {
 			Kind: cdb.OptionKindSeparate,
 		})
 	case "KIND_JOINED_AND_SEPARATE":
-		// Joined part decomposes like KIND_JOINED.
+		// JoinedAndSeparate retains its own kind plus a Separate pattern
+		// for the trailing argument.
 		partials = append(partials, cdb.OptionPattern{
 			Kind: cdb.OptionKindJoinedAndSeparate,
 		})
@@ -100,7 +102,8 @@ func translateDef(def def) []cdb.OptionPattern {
 			Kind: cdb.OptionKindRemainingArgs,
 		})
 	case "KIND_REMAINING_ARGS_JOINED":
-		// Joined part decomposes like KIND_JOINED.
+		// RemainingArgsJoined retains its own kind plus a RemainingArgs
+		// pattern for the unconsumed tail.
 		partials = append(partials, cdb.OptionPattern{
 			Kind: cdb.OptionKindRemainingArgsJoined,
 		})

@@ -10,19 +10,26 @@ package cdb
 type OptionKind string
 
 const (
-	// OptionKindFlag matches exactly.
+	// OptionKindFlag matches the option spelling exactly with no suffix or arguments.
 	OptionKindFlag OptionKind = "Flag"
-	// OptionKindJoined matches a prefix and a non-empty suffix.
+	// OptionKindJoined matches a spelling prefix followed by a required non-empty
+	// suffix within the same argv entry (e.g. -std=c++17).
 	OptionKindJoined OptionKind = "Joined"
-	// OptionKindSeparate matches exactly and consumes one subsequent arg.
+	// OptionKindSeparate matches the option spelling exactly and consumes one
+	// subsequent argv entry as its argument (e.g. -o file).
 	OptionKindSeparate OptionKind = "Separate"
-	// OptionKindMultiArg matches exactly and consumes NumArgs subsequent args.
+	// OptionKindMultiArg matches the option spelling exactly and consumes
+	// NumArgs subsequent argv entries.
 	OptionKindMultiArg OptionKind = "MultiArg"
-	// OptionKindJoinedAndSeparate matches a prefix and a non-empty suffix and consumes one subsequent arg.
+	// OptionKindJoinedAndSeparate matches a spelling prefix followed by a
+	// required non-empty suffix and additionally consumes one subsequent argv
+	// entry (e.g. -MFfoo out.d).
 	OptionKindJoinedAndSeparate OptionKind = "JoinedAndSeparate"
-	// OptionKindRemainingArgs matches exactly and consumes all remaining args.
+	// OptionKindRemainingArgs matches the option spelling exactly and consumes
+	// all remaining argv entries.
 	OptionKindRemainingArgs OptionKind = "RemainingArgs"
-	// OptionKindRemainingArgsJoined matches a prefix and a non-empty suffix and consumes all remaining args.
+	// OptionKindRemainingArgsJoined matches a spelling prefix followed by an
+	// optional non-empty suffix and consumes all remaining argv entries.
 	OptionKindRemainingArgsJoined OptionKind = "RemainingArgsJoined"
 )
 
@@ -36,6 +43,7 @@ type OptionPattern struct {
 
 // Config maps spelling prefixes to their option patterns.
 type Config struct {
+	// ByPrefix maps each spelling string to its associated OptionPattern(s).
 	ByPrefix map[string][]OptionPattern
 }
 

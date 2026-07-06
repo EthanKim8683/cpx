@@ -230,15 +230,16 @@ func TestTranslateOptRecord(t *testing.T) {
 func TestTranslateOptRecords(t *testing.T) {
 	t.Run("normal input", func(t *testing.T) {
 		records := []optRecord{
-			{name: "foo", props: "Joined"},
-			{name: "bar", props: "Separate"},
+			{name: "std=", props: "Joined"},
+			{name: "o", props: "Separate"},
 		}
 		got := translateOptRecords(records)
 		require.NotNil(t, got)
-		require.Len(t, got.ByPrefix["-foo"], 1)
-		require.Equal(t, cdb.OptionKindJoined, got.ByPrefix["-foo"][0].Kind)
-		require.Len(t, got.ByPrefix["-bar"], 1)
-		require.Equal(t, cdb.OptionKindSeparate, got.ByPrefix["-bar"][0].Kind)
+		expected := cdb.NewConfig([]cdb.OptionPattern{
+			{Spelling: "-std=", Kind: cdb.OptionKindJoined},
+			{Spelling: "-o", Kind: cdb.OptionKindSeparate},
+		})
+		assert.Equal(t, expected, got)
 	})
 
 	t.Run("nil input", func(t *testing.T) {
