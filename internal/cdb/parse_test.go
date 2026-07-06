@@ -67,6 +67,9 @@ func TestFindPattern(t *testing.T) {
 			wantKind: OptionKindJoined,
 		},
 		{
+			// -std=c++20 misses on binary search (past -std=c++17).
+			// Miss loop: -std=c++17 is not a prefix, follow back-chain
+			// to -std= which is. Multi-step back-chain traversal.
 			name:     "prefix match for longer joined arg",
 			arg:      "-std=c++20",
 			wantSp:   "-std=",

@@ -29,27 +29,24 @@ func findPattern(cfg *Config, arg string) *OptionPattern {
 		return strings.Compare(e.Spelling, s)
 	})
 
-	// Exact match: for joined kinds (which require a non-empty suffix),
-	// follow the back-chain to the longer joined prefix.
-	// For non-joined kinds, return the pattern directly.
+	// Exact match: for non-joined kinds, return the pattern directly.
+	// For joined kinds, follow the back-chain once to find a proper prefix.
+	// One step is sufficient because the exact match is itself a prefix of
+	// the argument, so the back-chain target is a proper prefix.
 	if ok {
-		if cfg.Patterns[i].Kind.IsJoined() {
-			if cfg.BackChains[i] != -1 {
-				return &cfg.Patterns[cfg.BackChains[i]]
-			}
-			return nil
+		pattern := cfg.Patterns[i]
+		if !pattern.Kind.IsJoined() {
+			return &pattern
 		}
-		return &cfg.Patterns[i]
-	}
-
-	if i == 0 {
+		if j := cfg.BackChains[i]; j != -1 {
+			return &cfg.Patterns[j]
+		}
 		return nil
 	}
-	if pattern := cfg.Patterns[i-1]; pattern.Kind.IsJoined() && strings.HasPrefix(arg, pattern.Spelling) {
-		return &pattern
-	}
-	if j := cfg.BackChains[i-1]; j != -1 {
-		if pattern := cfg.Patterns[j]; strings.HasPrefix(arg, pattern.Spelling) {
+
+	for j := i - 1; j != -1; j = cfg.BackChains[j] {
+		pattern := cfg.Patterns[j]
+		if pattern.Kind.IsJoined() && strings.HasPrefix(arg, pattern.Spelling) {
 			return &pattern
 		}
 	}
