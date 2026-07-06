@@ -54,18 +54,19 @@ func translateDef(def def) []cdb.OptionPattern {
 		partials = append(partials, cdb.OptionPattern{
 			Kind: cdb.OptionKindFlag,
 		})
-	case "KIND_JOINED":
+	case "KIND_JOINED",
+		// CommaJoined is Joined.
+		"KIND_COMMAJOINED":
+		// Joined accepts empty suffix in Clang.
 		partials = append(partials, cdb.OptionPattern{
 			Kind: cdb.OptionKindJoined,
+		})
+		partials = append(partials, cdb.OptionPattern{
+			Kind: cdb.OptionKindFlag,
 		})
 	case "KIND_SEPARATE":
 		partials = append(partials, cdb.OptionPattern{
 			Kind: cdb.OptionKindSeparate,
-		})
-	case "KIND_COMMAJOINED":
-		// CommaJoined behaves as Joined for CDB prefix matching.
-		partials = append(partials, cdb.OptionPattern{
-			Kind: cdb.OptionKindJoined,
 		})
 	case "KIND_MULTIARG":
 		partials = append(partials, cdb.OptionPattern{
