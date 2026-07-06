@@ -42,7 +42,7 @@ type OptionPattern struct {
 // Config holds sorted option entries with back-chain links for prefix matching.
 type Config struct {
 	Patterns   []OptionPattern
-	BackChains []*OptionPattern
+	BackChains []int
 }
 
 // NewConfig sorts the provided option patterns by spelling and computes
@@ -56,19 +56,19 @@ func NewConfig(patterns []OptionPattern) *Config {
 	// Back-chain: for each joined kind, find the longest joined prefix
 	// by scanning backward. Used by findPattern on exact match to
 	// resolve to a joined option with a non-empty argument.
-	backChains := make([]*OptionPattern, len(patterns))
+	backChains := make([]int, len(patterns))
+	for i := range backChains {
+		backChains[i] = -1
+	}
 	for i := range patterns {
 		if !patterns[i].Kind.IsJoined() {
 			continue
 		}
-		for j := i - 1; j >= 0; j-- {
-			if !strings.HasPrefix(patterns[i].Spelling, patterns[j].Spelling) {
-				continue
-			}
-			if patterns[j].Kind.IsJoined() {
-				backChains[i] = &patterns[j]
+		for j := i + 1; j < len(patterns); j++ {
+			if !strings.HasPrefix(patterns[j].Spelling, patterns[i].Spelling) {
 				break
 			}
+			backChains[j] = i
 		}
 	}
 	return &Config{

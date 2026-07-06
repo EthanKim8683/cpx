@@ -34,7 +34,10 @@ func findPattern(cfg *Config, arg string) *OptionPattern {
 	// For non-joined kinds, return the pattern directly.
 	if ok {
 		if cfg.Patterns[i].Kind.IsJoined() {
-			return cfg.BackChains[i]
+			if cfg.BackChains[i] != -1 {
+				return &cfg.Patterns[cfg.BackChains[i]]
+			}
+			return nil
 		}
 		return &cfg.Patterns[i]
 	}
@@ -42,14 +45,12 @@ func findPattern(cfg *Config, arg string) *OptionPattern {
 	if i == 0 {
 		return nil
 	}
-	if pattern := cfg.Patterns[i-1]; pattern.Kind.IsJoined() {
-		if strings.HasPrefix(arg, pattern.Spelling) {
-			return &pattern
-		}
+	if pattern := cfg.Patterns[i-1]; pattern.Kind.IsJoined() && strings.HasPrefix(arg, pattern.Spelling) {
+		return &pattern
 	}
-	if pattern := cfg.BackChains[i-1]; pattern != nil {
-		if strings.HasPrefix(arg, pattern.Spelling) {
-			return pattern
+	if j := cfg.BackChains[i-1]; j != -1 {
+		if pattern := cfg.Patterns[j]; strings.HasPrefix(arg, pattern.Spelling) {
+			return &pattern
 		}
 	}
 	return nil

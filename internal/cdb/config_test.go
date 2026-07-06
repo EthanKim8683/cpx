@@ -12,7 +12,7 @@ func TestNewConfig(t *testing.T) {
 		name     string
 		input    []OptionPattern
 		wantSort []string
-		wantBC   map[int]string // index → back-chain spelling (omitted = nil)
+		wantBC   map[int]int // index → back-chain index (-1 = none, omitted = -1)
 	}{
 		{
 			name: "sorts patterns by spelling",
@@ -22,38 +22,38 @@ func TestNewConfig(t *testing.T) {
 				{Spelling: "-c", Kind: OptionKindFlag},
 			},
 			wantSort: []string{"-c", "-o", "-std="},
-			wantBC:   map[int]string{},
+			wantBC:   map[int]int{},
 		},
 		{
-			name: "back-chain points to longest joined prefix",
+			name: "back-chain points to shorter joined prefix",
 			input: []OptionPattern{
 				{Spelling: "-std=", Kind: OptionKindJoined},
 				{Spelling: "-std=c++", Kind: OptionKindJoined},
 				{Spelling: "-std=c++17", Kind: OptionKindJoined},
 			},
 			wantSort: []string{"-std=", "-std=c++", "-std=c++17"},
-			wantBC: map[int]string{
-				1: "-std=",
-				2: "-std=c++",
+			wantBC: map[int]int{
+				1: 0,
+				2: 1,
 			},
 		},
 		{
-			name: "no joined prefix means nil back-chain",
+			name: "no joined prefix means -1 back-chain",
 			input: []OptionPattern{
 				{Spelling: "-std=", Kind: OptionKindJoined},
 				{Spelling: "-x", Kind: OptionKindJoinedAndSeparate},
 			},
 			wantSort: []string{"-std=", "-x"},
-			wantBC:   map[int]string{},
+			wantBC:   map[int]int{},
 		},
 		{
-			name: "non-joined kinds have no back-chain",
+			name: "non-joined kinds have -1 back-chain",
 			input: []OptionPattern{
 				{Spelling: "-c", Kind: OptionKindFlag},
 				{Spelling: "-o", Kind: OptionKindSeparate},
 			},
 			wantSort: []string{"-c", "-o"},
-			wantBC:   map[int]string{},
+			wantBC:   map[int]int{},
 		},
 		{
 			name: "skips non-joined patterns when scanning for joined prefix",
@@ -63,15 +63,15 @@ func TestNewConfig(t *testing.T) {
 				{Spelling: "-std=c++17", Kind: OptionKindJoined},
 			},
 			wantSort: []string{"-std", "-std=", "-std=c++17"},
-			wantBC: map[int]string{
-				2: "-std=",
+			wantBC: map[int]int{
+				2: 1,
 			},
 		},
 		{
 			name:     "empty input",
 			input:    []OptionPattern{},
 			wantSort: []string{},
-			wantBC:   map[int]string{},
+			wantBC:   map[int]int{},
 		},
 		{
 			name: "single non-joined pattern",
@@ -79,7 +79,7 @@ func TestNewConfig(t *testing.T) {
 				{Spelling: "-c", Kind: OptionKindFlag},
 			},
 			wantSort: []string{"-c"},
-			wantBC:   map[int]string{},
+			wantBC:   map[int]int{},
 		},
 		{
 			name: "single joined pattern",
@@ -87,7 +87,7 @@ func TestNewConfig(t *testing.T) {
 				{Spelling: "-std=", Kind: OptionKindJoined},
 			},
 			wantSort: []string{"-std="},
-			wantBC:   map[int]string{},
+			wantBC:   map[int]int{},
 		},
 		{
 			name: "already sorted input",
@@ -97,10 +97,10 @@ func TestNewConfig(t *testing.T) {
 				{Spelling: "-std=", Kind: OptionKindJoined},
 			},
 			wantSort: []string{"-c", "-o", "-std="},
-			wantBC:   map[int]string{},
+			wantBC:   map[int]int{},
 		},
 		{
-			name: "back-chain chains through intermediate joined prefixes",
+			name: "back-chain skips non-prefix joined patterns",
 			input: []OptionPattern{
 				{Spelling: "-std=", Kind: OptionKindJoined},
 				{Spelling: "-std=c++", Kind: OptionKindJoined},
@@ -108,10 +108,10 @@ func TestNewConfig(t *testing.T) {
 				{Spelling: "-std=c++20", Kind: OptionKindJoined},
 			},
 			wantSort: []string{"-std=", "-std=c++", "-std=c++17", "-std=c++20"},
-			wantBC: map[int]string{
-				1: "-std=",
-				2: "-std=c++",
-				3: "-std=c++",
+			wantBC: map[int]int{
+				1: 0,
+				2: 1,
+				3: 1,
 			},
 		},
 		{
@@ -123,8 +123,8 @@ func TestNewConfig(t *testing.T) {
 				{Spelling: "-Werror=foo", Kind: OptionKindJoined},
 			},
 			wantSort: []string{"-W", "-Werror", "-Werror=", "-Werror=foo"},
-			wantBC: map[int]string{
-				3: "-Werror=",
+			wantBC: map[int]int{
+				3: 2,
 			},
 		},
 	}
@@ -147,10 +147,9 @@ func TestNewConfig(t *testing.T) {
 			for i := range cfg.Patterns {
 				want, ok := tt.wantBC[i]
 				if !ok {
-					assert.Nil(t, cfg.BackChains[i])
+					assert.Equal(t, -1, cfg.BackChains[i])
 				} else {
-					require.NotNil(t, cfg.BackChains[i])
-					assert.Equal(t, want, cfg.BackChains[i].Spelling)
+					assert.Equal(t, want, cfg.BackChains[i])
 				}
 			}
 		})
