@@ -54,10 +54,8 @@ func translateDef(def def) []cdb.OptionPattern {
 		partials = append(partials, cdb.OptionPattern{
 			Kind: cdb.OptionKindFlag,
 		})
-	case "KIND_JOINED",
-		// CommaJoined is Joined.
-		"KIND_COMMAJOINED":
-		// Joined accepts empty suffix in Clang.
+	case "KIND_JOINED":
+		// Joined accepts empty suffix in Clang, so Joined decomposes into Joined and Flag.
 		partials = append(partials, cdb.OptionPattern{
 			Kind: cdb.OptionKindJoined,
 		})
@@ -67,6 +65,14 @@ func translateDef(def def) []cdb.OptionPattern {
 	case "KIND_SEPARATE":
 		partials = append(partials, cdb.OptionPattern{
 			Kind: cdb.OptionKindSeparate,
+		})
+	case "KIND_COMMAJOINED":
+		// CommaJoined behaves like Joined and subsequently decomposes like Joined.
+		partials = append(partials, cdb.OptionPattern{
+			Kind: cdb.OptionKindJoined,
+		})
+		partials = append(partials, cdb.OptionPattern{
+			Kind: cdb.OptionKindFlag,
 		})
 	case "KIND_MULTIARG":
 		partials = append(partials, cdb.OptionPattern{
@@ -82,8 +88,12 @@ func translateDef(def def) []cdb.OptionPattern {
 			Kind: cdb.OptionKindSeparate,
 		})
 	case "KIND_JOINED_AND_SEPARATE":
+		// Joined part decomposes like Joined.
 		partials = append(partials, cdb.OptionPattern{
 			Kind: cdb.OptionKindJoinedAndSeparate,
+		})
+		partials = append(partials, cdb.OptionPattern{
+			Kind: cdb.OptionKindSeparate,
 		})
 	case "KIND_REMAINING_ARGS":
 		partials = append(partials, cdb.OptionPattern{
