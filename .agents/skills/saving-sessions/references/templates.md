@@ -3,18 +3,16 @@
 ## Session Issue Body
 
 ```markdown
-# Session: {{TITLE}}
-
 ## Summary
-{{LIVING_SUMMARY — always thorough, representing the current complete state of the workspace and decisions}}
+{{LIVING_SUMMARY — a synthesized overview representing the current state of the workspace, configurations, and decisions}}
 
 ## Sub-Issues
-- [ ] #{{SUB_ISSUE_NUMBER}} — {{SUB_ISSUE_TITLE}}
+- #{{SUB_ISSUE_NUMBER}} — {{SUB_ISSUE_TITLE}}
 ```
 
 ## Log Comment
 
 ```
-{{EVENT_DESCRIPTION}}
+{{EVENT_DESCRIPTION — a detailed log containing context, findings, error traces, or logic for decisions}}
 ```
-No timestamps. Just the event description.
+No timestamps. Just the detailed event description.
