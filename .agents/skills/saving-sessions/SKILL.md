@@ -17,7 +17,7 @@ All conversation sessions must be persisted in a tracking issue (e.g., GitHub is
 At the very start of the conversation, initialize the session tracker:
 1. **Identify Username**: Retrieve your username (`gh api user -q .login`). If authentication fails, notify the user.
 2. **Context Gathering**: Review the last 3-5 open or closed session issues to build an up-to-date knowledge base of recent project activities, blockers, or configurations.
-3. **Create**: Create the session issue using labels `session` and `user:{username}` (prefix title with `Session: `). If creation fails because the labels do not exist, create them first (see [github.md](file:///Users/ethankim8683/Competitive%20Programming/Utilities/cpx/.agents/skills/saving-sessions/references/github.md)). Do this before modifying any code.
+3. **Create**: Create the session issue using labels `session` and `user:{username}` (prefix title with `Session: `). If creation fails because the labels do not exist, create them first (see [github.md](references/github.md)). Do this before modifying any code.
 
 ## Defining "Significant" Events
 A significant event is when **something new or unexpected occurs** (especially anything contrary to the initial plan). Examples (non-exhaustive):
@@ -36,8 +36,8 @@ Immediately upon encountering a significant event, execute these two steps:
 Sub-issues are regular issues created during the session to track independent work. This skill does not dictate their internal motivation, content, or scope. The only requirement is to list and link them inside the parent session issue's `## Sub-Issues` checklist.
 
 ## Quick Reference
-- **GitHub CLI Commands**: See [github.md](file:///Users/ethankim8683/Competitive%20Programming/Utilities/cpx/.agents/skills/saving-sessions/references/github.md)
-- **Formatting Templates**: See [templates.md](file:///Users/ethankim8683/Competitive%20Programming/Utilities/cpx/.agents/skills/saving-sessions/references/templates.md)
+- **GitHub CLI Commands**: See [github.md](references/github.md)
+- **Formatting Templates**: See [templates.md](references/templates.md)
 
 ## Common Mistakes
 - **Mistake**: Making workspace changes before initializing the session tracker.
