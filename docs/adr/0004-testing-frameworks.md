@@ -1,8 +1,6 @@
 # ADR-0004: Testing Frameworks
 
-- **Status**: Accepted
-- **Date**: 2026-06-29
-- **Related**: [CP-10](https://linear.app/ethankim8683/issue/CP-10/testing-framework-adr), [GitHub #14](https://github.com/EthanKim8683/cpx/issues/14)
+**Status:** Accepted
 
 ## Context
 
@@ -34,5 +32,4 @@ Use `testify` with `assert` and `require`:
 
 ## References
 
-- [GitHub #55](https://github.com/EthanKim8683/cpx/issues/55) — Testify vs stdlib assertion debate
-
+- [GitHub #55](https://github.com/EthanKim8683/cpx/issues/55)

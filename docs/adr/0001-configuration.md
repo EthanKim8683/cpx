@@ -1,8 +1,6 @@
 # ADR-0001: Configuration
 
-- **Status**: Accepted
-- **Date**: 2026-06-28
-- **Related**: [CP-9](https://linear.app/ethankim8683/issue/CP-9/configuration-adr), [GitHub #6](https://github.com/EthanKim8683/cpx/issues/6)
+**Status:** Accepted
 
 ## Context
 
@@ -29,4 +27,4 @@ cpx integrates Go, Make, AWK, and other tooling. The original implementation had
 
 ## References
 
-- [GitHub #6](https://github.com/EthanKim8683/cpx/issues/6) — Configuration ADR discussion
+- [GitHub #6](https://github.com/EthanKim8683/cpx/issues/6)

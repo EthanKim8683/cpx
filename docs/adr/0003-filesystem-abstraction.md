@@ -1,8 +1,6 @@
 # ADR-0003: Filesystem Abstraction
 
-- **Status**: Accepted
-- **Date**: 2026-06-28
-- **Related**: [CP-6](https://linear.app/ethankim8683/issue/CP-6/filesystem-abstraction-adr)
+**Status:** Accepted
 
 ## Context
 
@@ -35,4 +33,3 @@ The requirement is an abstraction layer over disk and in-memory filesystems. cpx
 ## References
 
 - [CP-6](https://linear.app/ethankim8683/issue/CP-6/filesystem-abstraction-adr)
-

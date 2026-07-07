@@ -1,8 +1,6 @@
 # ADR-0005: Task Runner
 
-- **Status**: Accepted
-- **Date**: 2026-06-28
-- **Related**: [CP-7](https://linear.app/ethankim8683/issue/CP-7/task-runner-adr), [GitHub #4](https://github.com/EthanKim8683/cpx/issues/4)
+**Status:** Accepted
 
 ## Context
 
@@ -33,5 +31,4 @@ cpx integrates Go, Make, AWK, and other tools. Without a central task runner, ea
 
 ## References
 
-- [GitHub #4](https://github.com/EthanKim8683/cpx/issues/4) — Architecture Pattern ADR discussion
-
+- [GitHub #4](https://github.com/EthanKim8683/cpx/issues/4)

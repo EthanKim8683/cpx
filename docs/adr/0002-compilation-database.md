@@ -1,8 +1,6 @@
 # ADR-0002: Compilation Database
 
-- **Status**: Accepted
-- **Date**: 2026-06-28
-- **Related**: [CP-8](https://linear.app/ethankim8683/issue/CP-8/compilation-database-adr), [GitHub #5](https://github.com/EthanKim8683/cpx/issues/5), [GitHub #24](https://github.com/EthanKim8683/cpx/issues/24)
+**Status:** Accepted
 
 ## Context
 
@@ -29,13 +27,13 @@ Hand-maintaining parsers for compiler-specific flags (~4000 options per compiler
 - **Sorted patterns with back-chain links**: Flat `[]OptionPattern` slices sorted by spelling. Mirrors GCC's `cl_option` array — `optc-gen.awk` builds a sorted table where each entry has a `back_chain` index pointing to the longest entry whose spelling is a strict prefix. Binary search locates the candidate; back-chain traversal resolves the longest match. Clang achieves the same result via sorted forward iteration.
 - **Driver-visible options only**: Filtered at generation time — options with `NoDriverOption` (Clang) or `RejectDriver` (GCC) are omitted.
 - **Per-variant shape**: Each `OptionPattern` has a spelling, kind, and optional argument count.
-- **Option kinds**: `Flag`, `Joined`, `Separate`, `MultiArg`, `JoinedAndSeparate`, `RemainingArgs`, `RemainingArgsJoined`. In cpx, `Joined` options must have a non-empty argument (e.g. `-std=c++20`, not `-std`).
-- **Kinds decomposed at generation time**:
+- **Option kinds**: `Flag`, `Joined`, `Separate`, `MultiArg`, `JoinedAndSeparate`, `RemainingArgs`, `RemainingArgsJoined`. This set is atomic — these are the smallest building blocks that compose the behavior of every kind supported by GCC and Clang. In cpx, `Joined` options must have a non-empty argument (e.g. `-std=c++20`, not `-std`).
+- **Kinds decomposed at generation time**: Upstream kinds that don't map 1:1 to our atomic set are decomposed:
   - `CommaJoined` (Clang) → `Joined`
   - `JoinedOrSeparate` (Clang) → `Joined` + `Separate`
   - `JoinedOrMissing` (GCC) → `Flag` + `Joined`
   - `NoDriverArg` + `Separate` (GCC) → `Flag`
-- **Query-time resolution**: Dynamic behaviors (overridden args, negation, mutual exclusion) resolved at access time, not baked into the config.
+- **Query-time resolution (Clang-inspired)**: Dynamic behaviors — overridden args, negation, mutual exclusion — are deferred to access time, not baked into the config. This follows Clang's pattern where `InputArgList` collects all options flat, and `getLastArg`/`hasFlag` resolve the final state at query time.
 
 **Config generation** — two-step pipeline:
 
@@ -64,6 +62,5 @@ Clang generator reads a JSON dump from `clang-tblgen --dump-json` or `llvm-tblge
 
 ## References
 
-- [GitHub #5](https://github.com/EthanKim8683/cpx/issues/5) — Compilation Database ADR discussion
-- [GitHub #24](https://github.com/EthanKim8683/cpx/issues/24) — Compilation Database package implementation
-
+- [GitHub #5](https://github.com/EthanKim8683/cpx/issues/5)
+- [GitHub #24](https://github.com/EthanKim8683/cpx/issues/24)
