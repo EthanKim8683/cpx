@@ -1,0 +1,2424 @@
+- generic [active] [ref=f3e1]:
+  - text: 
+  - generic [ref=f3e2]:
+    - generic [ref=f3e3]:
+      - link "Codeforces" [ref=f3e5] [cursor=pointer]:
+        - /url: /
+        - img "Codeforces" [ref=f3e6]
+      - generic [ref=f3e7]:
+        - generic [ref=f3e8]:
+          - text: "|"
+          - link "In English" [ref=f3e11] [cursor=pointer]:
+            - /url: "?locale=en"
+            - img "In English" [ref=f3e12]
+          - link "По-русски" [ref=f3e13] [cursor=pointer]:
+            - /url: "?locale=ru"
+            - img "По-русски" [ref=f3e14]
+        - generic [ref=f3e15]:
+          - link "EthanKim8683" [ref=f3e16] [cursor=pointer]:
+            - /url: /profile/EthanKim8683
+          - text: "|"
+          - link "Logout" [ref=f3e17] [cursor=pointer]:
+            - /url: /cefeeff8a8b7fe73295c79e5c031afcd/logout
+        - generic [ref=f3e19]:
+          - text: You have
+          - link "+133! Wow!" [ref=f3e21] [cursor=pointer]:
+            - /url: /bestRatingChanges/17119797
+    - generic [ref=f3e23]:
+      - list:
+        - listitem [ref=f3e24]:
+          - link "Home" [ref=f3e25] [cursor=pointer]:
+            - /url: /
+        - listitem [ref=f3e26]:
+          - link "Top" [ref=f3e27] [cursor=pointer]:
+            - /url: /top
+        - listitem [ref=f3e28]:
+          - link "Catalog" [ref=f3e29] [cursor=pointer]:
+            - /url: /catalog
+        - listitem [ref=f3e30]:
+          - link "Contests" [ref=f3e31] [cursor=pointer]:
+            - /url: /contests
+        - listitem [ref=f3e32]:
+          - link "Gym" [ref=f3e33] [cursor=pointer]:
+            - /url: /gyms
+        - listitem [ref=f3e34]:
+          - link "Problemset" [ref=f3e35] [cursor=pointer]:
+            - /url: /problemset
+        - listitem [ref=f3e36]:
+          - link "Groups" [ref=f3e37] [cursor=pointer]:
+            - /url: /groups/my
+        - listitem [ref=f3e38]:
+          - link "Rating" [ref=f3e39] [cursor=pointer]:
+            - /url: /ratings
+        - listitem [ref=f3e40]:
+          - link "Edu" [ref=f3e41] [cursor=pointer]:
+            - /url: /edu/courses
+        - listitem [ref=f3e42]:
+          - link "API" [ref=f3e43] [cursor=pointer]:
+            - /url: /apiHelp
+        - listitem [ref=f3e44]:
+          - link "Calendar" [ref=f3e45] [cursor=pointer]:
+            - /url: /calendar
+        - listitem [ref=f3e46]:
+          - link "Help" [ref=f3e47] [cursor=pointer]:
+            - /url: /help
+      - textbox [ref=f3e48]
+    - generic [ref=f3e49]:
+      - generic [ref=f3e50]:
+        - generic [ref=f3e51]:
+          - generic [ref=f3e52]: → Pay attention
+          - generic [ref=f3e54]:
+            - text: Before contest
+            - link "Codeforces Round (Div. 2)" [ref=f3e55] [cursor=pointer]:
+              - /url: /contests/2246
+            - generic [ref=f3e56]: 5 days
+        - generic [ref=f3e57]:
+          - generic [ref=f3e58]: → EthanKim8683
+          - generic [ref=f3e59]:
+            - generic [ref=f3e61]:
+              - link [ref=f3e62] [cursor=pointer]:
+                - /url: /profile/EthanKim8683
+                - img [ref=f3e63]
+              - link "EthanKim8683" [ref=f3e65] [cursor=pointer]:
+                - /url: /profile/EthanKim8683
+            - generic [ref=f3e66]:
+              - list [ref=f3e67]:
+                - listitem [ref=f3e68]:
+                  - img "User''s contest rating in Codeforces community" [ref=f3e69]
+                  - text: "Rating: 2273"
+                - listitem [ref=f3e70]:
+                  - img "User''s contribution into Codeforces community" [ref=f3e71]
+                  - text: "Contribution: +1"
+              - list [ref=f3e72]:
+                - listitem [ref=f3e73]:
+                  - link "Settings" [ref=f3e74] [cursor=pointer]:
+                    - /url: /settings/general
+                - listitem [ref=f3e75]:
+                  - link "Blog" [ref=f3e76] [cursor=pointer]:
+                    - /url: /blog/EthanKim8683
+                - listitem [ref=f3e77]:
+                  - link "Favourites" [ref=f3e78] [cursor=pointer]:
+                    - /url: /favourite/blogEntries
+                - listitem [ref=f3e79]:
+                  - link "Teams" [ref=f3e80] [cursor=pointer]:
+                    - /url: /teams
+                - listitem [ref=f3e81]:
+                  - link "Submissions" [ref=f3e82] [cursor=pointer]:
+                    - /url: /submissions/EthanKim8683
+                - listitem [ref=f3e83]:
+                  - link "Groups" [ref=f3e84] [cursor=pointer]:
+                    - /url: /groups/with/EthanKim8683
+                - listitem [ref=f3e85]:
+                  - link "Propose a contest/problems" [ref=f3e86] [cursor=pointer]:
+                    - /url: /proposals/contests
+                - listitem [ref=f3e87]:
+                  - link "Talks" [ref=f3e88] [cursor=pointer]:
+                    - /url: /usertalk
+                - listitem [ref=f3e89]:
+                  - link "Contests" [ref=f3e90] [cursor=pointer]:
+                    - /url: /contests/with/EthanKim8683
+        - generic [ref=f3e91]:
+          - generic [ref=f3e92]: → Top rated
+          - table [ref=f3e93]:
+            - rowgroup [ref=f3e94]:
+              - row "# User Rating" [ref=f3e95]:
+                - columnheader "#" [ref=f3e96]
+                - columnheader "User" [ref=f3e97]
+                - columnheader "Rating" [ref=f3e98]
+              - row "1 jiangly 3728" [ref=f3e99]:
+                - cell "1" [ref=f3e100]
+                - cell "jiangly" [ref=f3e101]:
+                  - link "jiangly" [ref=f3e102] [cursor=pointer]:
+                    - /url: /profile/jiangly
+                - cell "3728" [ref=f3e103]
+              - row "2 VivaciousAubergine 3647" [ref=f3e104]:
+                - cell "2" [ref=f3e105]
+                - cell "VivaciousAubergine" [ref=f3e106]:
+                  - link "VivaciousAubergine" [ref=f3e107] [cursor=pointer]:
+                    - /url: /profile/VivaciousAubergine
+                - cell "3647" [ref=f3e108]
+              - row "3 Kevin114514 3625" [ref=f3e109]:
+                - cell "3" [ref=f3e110]
+                - cell "Kevin114514" [ref=f3e111]:
+                  - link "Kevin114514" [ref=f3e112] [cursor=pointer]:
+                    - /url: /profile/Kevin114514
+                - cell "3625" [ref=f3e113]
+              - row "4 maroonrk 3555" [ref=f3e114]:
+                - cell "4" [ref=f3e115]
+                - cell "maroonrk" [ref=f3e116]:
+                  - link "maroonrk" [ref=f3e117] [cursor=pointer]:
+                    - /url: /profile/maroonrk
+                - cell "3555" [ref=f3e118]
+              - row "5 strapple 3515" [ref=f3e119]:
+                - cell "5" [ref=f3e120]
+                - cell "strapple" [ref=f3e121]:
+                  - link "strapple" [ref=f3e122] [cursor=pointer]:
+                    - /url: /profile/strapple
+                - cell "3515" [ref=f3e123]
+              - row "6 tourist 3439" [ref=f3e124]:
+                - cell "6" [ref=f3e125]
+                - cell "tourist" [ref=f3e126]:
+                  - link "tourist" [ref=f3e127] [cursor=pointer]:
+                    - /url: /profile/tourist
+                - cell "3439" [ref=f3e128]
+              - row "7 Um_nik 3376" [ref=f3e129]:
+                - cell "7" [ref=f3e130]
+                - cell "Um_nik" [ref=f3e131]:
+                  - link "Um_nik" [ref=f3e132] [cursor=pointer]:
+                    - /url: /profile/Um_nik
+                - cell "3376" [ref=f3e133]
+              - row "7 turmax 3376" [ref=f3e134]:
+                - cell "7" [ref=f3e135]
+                - cell "turmax" [ref=f3e136]:
+                  - link "turmax" [ref=f3e137] [cursor=pointer]:
+                    - /url: /profile/turmax
+                - cell "3376" [ref=f3e138]
+              - row "9 Radewoosh 3367" [ref=f3e139]:
+                - cell "9" [ref=f3e140]
+                - cell "Radewoosh" [ref=f3e141]:
+                  - link "Radewoosh" [ref=f3e142] [cursor=pointer]:
+                    - /url: /profile/Radewoosh
+                - cell "3367" [ref=f3e143]
+              - row "10 qiuzx 3343" [ref=f3e144]:
+                - cell "10" [ref=f3e145]
+                - cell "qiuzx" [ref=f3e146]:
+                  - link "qiuzx" [ref=f3e147] [cursor=pointer]:
+                    - /url: /profile/qiuzx
+                - cell "3343" [ref=f3e148]
+          - table [ref=f3e150]:
+            - rowgroup [ref=f3e151]:
+              - row "Countries | Cities | Organizations View all →" [ref=f3e152]:
+                - cell "Countries | Cities | Organizations" [ref=f3e153]:
+                  - link "Countries" [ref=f3e154] [cursor=pointer]:
+                    - /url: /ratings/countries
+                  - text: "|"
+                  - link "Cities" [ref=f3e155] [cursor=pointer]:
+                    - /url: /ratings/cities
+                  - text: "|"
+                  - link "Organizations" [ref=f3e156] [cursor=pointer]:
+                    - /url: /ratings/organizations
+                - cell "View all →" [ref=f3e157]:
+                  - link "View all →" [ref=f3e158] [cursor=pointer]:
+                    - /url: /ratings
+        - generic [ref=f3e159]:
+          - generic [ref=f3e160]: → Top contributors
+          - table [ref=f3e161]:
+            - rowgroup [ref=f3e162]:
+              - row "# User Contrib." [ref=f3e163]:
+                - columnheader "#" [ref=f3e164]
+                - columnheader "User" [ref=f3e165]
+                - columnheader "Contrib." [ref=f3e166]
+              - row "1 Qingyu 163" [ref=f3e167]:
+                - cell "1" [ref=f3e168]
+                - cell "Qingyu" [ref=f3e169]:
+                  - link "Qingyu" [ref=f3e170] [cursor=pointer]:
+                    - /url: /profile/Qingyu
+                - cell "163" [ref=f3e171]
+              - row "2 Um_nik 145" [ref=f3e172]:
+                - cell "2" [ref=f3e173]
+                - cell "Um_nik" [ref=f3e174]:
+                  - link "Um_nik" [ref=f3e175] [cursor=pointer]:
+                    - /url: /profile/Um_nik
+                - cell "145" [ref=f3e176]
+              - row "3 adamant 142" [ref=f3e177]:
+                - cell "3" [ref=f3e178]
+                - cell "adamant" [ref=f3e179]:
+                  - link "adamant" [ref=f3e180] [cursor=pointer]:
+                    - /url: /profile/adamant
+                - cell "142" [ref=f3e181]
+              - row "4 Dominater069 137" [ref=f3e182]:
+                - cell "4" [ref=f3e183]
+                - cell "Dominater069" [ref=f3e184]:
+                  - link "Dominater069" [ref=f3e185] [cursor=pointer]:
+                    - /url: /profile/Dominater069
+                - cell "137" [ref=f3e186]
+              - row "5 chromate00 133" [ref=f3e187]:
+                - cell "5" [ref=f3e188]
+                - cell "chromate00" [ref=f3e189]:
+                  - link "chromate00" [ref=f3e190] [cursor=pointer]:
+                    - /url: /profile/chromate00
+                - cell "133" [ref=f3e191]
+              - row "5 DNR 133" [ref=f3e192]:
+                - cell "5" [ref=f3e193]
+                - cell "DNR" [ref=f3e194]:
+                  - link "DNR" [ref=f3e195] [cursor=pointer]:
+                    - /url: /profile/DNR
+                - cell "133" [ref=f3e196]
+              - row "7 cry 132" [ref=f3e197]:
+                - cell "7" [ref=f3e198]
+                - cell "cry" [ref=f3e199]:
+                  - link "cry" [ref=f3e200] [cursor=pointer]:
+                    - /url: /profile/cry
+                - cell "132" [ref=f3e201]
+              - row "7 maspy 132" [ref=f3e202]:
+                - cell "7" [ref=f3e203]
+                - cell "maspy" [ref=f3e204]:
+                  - link "maspy" [ref=f3e205] [cursor=pointer]:
+                    - /url: /profile/maspy
+                - cell "132" [ref=f3e206]
+              - row "9 maroonrk 131" [ref=f3e207]:
+                - cell "9" [ref=f3e208]
+                - cell "maroonrk" [ref=f3e209]:
+                  - link "maroonrk" [ref=f3e210] [cursor=pointer]:
+                    - /url: /profile/maroonrk
+                - cell "131" [ref=f3e211]
+              - row "9 Proof_by_QED 131" [ref=f3e212]:
+                - cell "9" [ref=f3e213]
+                - cell "Proof_by_QED" [ref=f3e214]:
+                  - link "Proof_by_QED" [ref=f3e215] [cursor=pointer]:
+                    - /url: /profile/Proof_by_QED
+                - cell "131" [ref=f3e216]
+          - table [ref=f3e218]:
+            - rowgroup [ref=f3e219]:
+              - row "View all →" [ref=f3e220]:
+                - cell
+                - cell "View all →" [ref=f3e221]:
+                  - link "View all →" [ref=f3e222] [cursor=pointer]:
+                    - /url: /top-contributed
+        - generic [ref=f3e223]:
+          - generic [ref=f3e224]: → Find user
+          - generic [ref=f3e225]:
+            - generic [ref=f3e227]:
+              - text: "Handle:"
+              - textbox "Handle:" [ref=f3e228]
+            - button "Find" [ref=f3e230]
+        - generic [ref=f3e231]:
+          - generic [ref=f3e232]: → Recent actions
+          - list [ref=f3e234]:
+            - listitem [ref=f3e235]:
+              - generic [ref=f3e236]:
+                - link "MIRZAPURI" [ref=f3e237] [cursor=pointer]:
+                  - /url: /profile/MIRZAPURI
+                - text: →
+                - link "Are we necromancers for enjoying a dead thing?" [ref=f3e238] [cursor=pointer]:
+                  - /url: /blog/entry/154928
+                - img "New comment(s)" [ref=f3e239]
+            - listitem [ref=f3e240]:
+              - generic [ref=f3e241]:
+                - link "ShulkerBox" [ref=f3e242] [cursor=pointer]:
+                  - /url: /profile/ShulkerBox
+                - text: →
+                - link "It's so unfair..." [ref=f3e243] [cursor=pointer]:
+                  - /url: /blog/entry/155044
+                - img "New comment(s)" [ref=f3e244]
+            - listitem [ref=f3e245]:
+              - generic [ref=f3e246]:
+                - link "BledDest" [ref=f3e247] [cursor=pointer]:
+                  - /url: /profile/BledDest
+                - text: →
+                - link "Educational Codeforces Round 192 (rated for Div. 2)" [ref=f3e248] [cursor=pointer]:
+                  - /url: /blog/entry/154971
+                - img "New comment(s)" [ref=f3e249]
+            - listitem [ref=f3e250]:
+              - generic [ref=f3e251]:
+                - link "vaultdmn" [ref=f3e252] [cursor=pointer]:
+                  - /url: /profile/vaultdmn
+                - text: →
+                - link "need some help from this community before I build something" [ref=f3e253] [cursor=pointer]:
+                  - /url: /blog/entry/155043
+                - img "Text created or updated" [ref=f3e254]
+            - listitem [ref=f3e255]:
+              - generic [ref=f3e256]:
+                - link "ShulkerBox" [ref=f3e257] [cursor=pointer]:
+                  - /url: /profile/ShulkerBox
+                - text: →
+                - link "Does C++17 execution time different from C++23?" [ref=f3e258] [cursor=pointer]:
+                  - /url: /blog/entry/155042
+                - img "New comment(s)" [ref=f3e259]
+            - listitem [ref=f3e260]:
+              - generic [ref=f3e261]:
+                - link "harshitj183" [ref=f3e262] [cursor=pointer]:
+                  - /url: /profile/harshitj183
+                - text: →
+                - link "difficulty ( reading question >>> actual solving" [ref=f3e263] [cursor=pointer]:
+                  - /url: /blog/entry/155037
+                - img "New comment(s)" [ref=f3e264]
+            - listitem [ref=f3e265]:
+              - generic [ref=f3e266]:
+                - link "farmersrice" [ref=f3e267] [cursor=pointer]:
+                  - /url: /profile/farmersrice
+                - text: →
+                - link "Why do programmers love the summer?" [ref=f3e268] [cursor=pointer]:
+                  - /url: /blog/entry/154990
+                - img "New comment(s)" [ref=f3e269]
+            - listitem [ref=f3e270]:
+              - generic [ref=f3e271]:
+                - link "ShulkerBox" [ref=f3e272] [cursor=pointer]:
+                  - /url: /profile/ShulkerBox
+                - text: →
+                - link "C++ integer limit solved with BigInt class!" [ref=f3e273] [cursor=pointer]:
+                  - /url: /blog/entry/155001
+                - img "New comment(s)" [ref=f3e274]
+            - listitem [ref=f3e275]:
+              - generic [ref=f3e276]:
+                - link "idkwhy23" [ref=f3e277] [cursor=pointer]:
+                  - /url: /profile/idkwhy23
+                - text: →
+                - link "Appeal Regarding Disabled Account - Plagiarism Violation" [ref=f3e278] [cursor=pointer]:
+                  - /url: /blog/entry/155041
+                - img "Text created or updated" [ref=f3e279]
+            - listitem [ref=f3e280]:
+              - generic [ref=f3e281]:
+                - link "patilc125" [ref=f3e282] [cursor=pointer]:
+                  - /url: /profile/patilc125
+                - text: →
+                - link "Need Your Support" [ref=f3e283] [cursor=pointer]:
+                  - /url: /blog/entry/155032
+                - img "New comment(s)" [ref=f3e284]
+            - listitem [ref=f3e285]:
+              - generic [ref=f3e286]:
+                - link "greateric" [ref=f3e287] [cursor=pointer]:
+                  - /url: /profile/greateric
+                - text: →
+                - 'link "Possibly Useful CP Information #3: Min/Max Abuse" [ref=f3e288] [cursor=pointer]':
+                  - /url: /blog/entry/154442
+                - img "New comment(s)" [ref=f3e289]
+            - listitem [ref=f3e290]:
+              - generic [ref=f3e291]:
+                - link "FiniteMoves" [ref=f3e292] [cursor=pointer]:
+                  - /url: /profile/FiniteMoves
+                - text: →
+                - link "I am just Tired of Lectures by Grays and Greens" [ref=f3e293] [cursor=pointer]:
+                  - /url: /blog/entry/154984
+                - img "New comment(s)" [ref=f3e294]
+            - listitem [ref=f3e295]:
+              - generic [ref=f3e296]:
+                - link "AdhamAfterMidnight" [ref=f3e297] [cursor=pointer]:
+                  - /url: /profile/AdhamAfterMidnight
+                - text: →
+                - 'link "VoidHub Update: Custom Rooms and Shareable Match Results" [ref=f3e298] [cursor=pointer]':
+                  - /url: /blog/entry/155019
+                - img "New comment(s)" [ref=f3e299]
+            - listitem [ref=f3e300]:
+              - generic [ref=f3e301]:
+                - link "awoo" [ref=f3e302] [cursor=pointer]:
+                  - /url: /profile/awoo
+                - text: →
+                - link "Educational Codeforces Round 184 Editorial" [ref=f3e303] [cursor=pointer]:
+                  - /url: /blog/entry/148390
+                - img "New comment(s)" [ref=f3e304]
+            - listitem [ref=f3e305]:
+              - generic [ref=f3e306]:
+                - link "TanjilLazim" [ref=f3e307] [cursor=pointer]:
+                  - /url: /profile/TanjilLazim
+                - text: →
+                - link "CPIDE — free online compiler and judge for competitive programming" [ref=f3e308] [cursor=pointer]:
+                  - /url: /blog/entry/155018
+                - img "New comment(s)" [ref=f3e309]
+            - listitem [ref=f3e310]:
+              - generic [ref=f3e311]:
+                - link "employed" [ref=f3e312] [cursor=pointer]:
+                  - /url: /profile/employed
+                - text: →
+                - link "The only ARABIC content" [ref=f3e313] [cursor=pointer]:
+                  - /url: /blog/entry/155024
+                - img "New comment(s)" [ref=f3e314]
+            - listitem [ref=f3e315]:
+              - generic [ref=f3e316]:
+                - link "yse" [ref=f3e317] [cursor=pointer]:
+                  - /url: /profile/yse
+                - text: →
+                - link "Codeforces Round 1096 (Div. 3) — Editorial" [ref=f3e318] [cursor=pointer]:
+                  - /url: /blog/entry/153099
+                - img "New comment(s)" [ref=f3e319]
+            - listitem [ref=f3e320]:
+              - generic [ref=f3e321]:
+                - link "AmShZ" [ref=f3e322] [cursor=pointer]:
+                  - /url: /profile/AmShZ
+                - text: →
+                - 'link "Repovive Weekly Challenge 1: Approximation" [ref=f3e323] [cursor=pointer]':
+                  - /url: /blog/entry/155031
+                - img "New comment(s)" [ref=f3e324]
+            - listitem [ref=f3e325]:
+              - generic [ref=f3e326]:
+                - link "Equilibrium" [ref=f3e327] [cursor=pointer]:
+                  - /url: /profile/Equilibrium
+                - text: →
+                - link "Remembering Childhood dream !" [ref=f3e328] [cursor=pointer]:
+                  - /url: /blog/entry/72750
+                - img "New comment(s)" [ref=f3e329]
+                - img "Necropost" [ref=f3e330]
+            - listitem [ref=f3e331]:
+              - generic [ref=f3e332]:
+                - link "N29" [ref=f3e333] [cursor=pointer]:
+                  - /url: /profile/N29
+                - text: →
+                - link "Codeforces Round 1054 (Div. 3)" [ref=f3e334] [cursor=pointer]:
+                  - /url: /blog/entry/146694
+                - img "New comment(s)" [ref=f3e335]
+            - listitem [ref=f3e336]:
+              - generic [ref=f3e337]:
+                - link "Jajceslav" [ref=f3e338] [cursor=pointer]:
+                  - /url: /profile/Jajceslav
+                - text: →
+                - link "Dynamic Programming Video pt. 2" [ref=f3e339] [cursor=pointer]:
+                  - /url: /blog/entry/152849
+                - img "Text created or updated" [ref=f3e340]
+            - listitem [ref=f3e341]:
+              - generic [ref=f3e342]:
+                - link "Faro7a206" [ref=f3e343] [cursor=pointer]:
+                  - /url: /profile/Faro7a206
+                - text: →
+                - link "My Codeforces Account Was Blocked by Administrators – Need Help" [ref=f3e344] [cursor=pointer]:
+                  - /url: /blog/entry/155030
+                - img "Text created or updated" [ref=f3e345]
+            - listitem [ref=f3e346]:
+              - generic [ref=f3e347]:
+                - link "IterumSurgo" [ref=f3e348] [cursor=pointer]:
+                  - /url: /profile/IterumSurgo
+                - text: →
+                - link "Big Leetcode BUG!!" [ref=f3e349] [cursor=pointer]:
+                  - /url: /blog/entry/155026
+                - img "Text created or updated" [ref=f3e350]
+            - listitem [ref=f3e351]:
+              - generic [ref=f3e352]:
+                - link "AB22" [ref=f3e353] [cursor=pointer]:
+                  - /url: /profile/AB22
+                - text: →
+                - link "I rewrote my CP desktop app into a terminal TUI (cocom)" [ref=f3e354] [cursor=pointer]:
+                  - /url: /blog/entry/154959
+                - img "Text created or updated" [ref=f3e355]
+            - listitem [ref=f3e356]:
+              - generic [ref=f3e357]:
+                - link "cry" [ref=f3e358] [cursor=pointer]:
+                  - /url: /profile/cry
+                - text: →
+                - link "Codeforces Round 887 (Div 1, Div 2) Tutorial" [ref=f3e359] [cursor=pointer]:
+                  - /url: /blog/entry/116940
+                - img "New comment(s)" [ref=f3e360]
+                - img "Necropost" [ref=f3e361]
+          - table [ref=f3e363]:
+            - rowgroup [ref=f3e364]:
+              - row "Detailed →" [ref=f3e365]:
+                - cell
+                - cell "Detailed →" [ref=f3e366]:
+                  - link "Detailed →" [ref=f3e367] [cursor=pointer]:
+                    - /url: /recent-actions
+      - generic [ref=f3e368]:
+        - generic [ref=f3e370]:
+          - link "Educational Codeforces Round 192 (rated for Div. 2)" [ref=f3e372] [cursor=pointer]:
+            - /url: /blog/entry/154971
+            - paragraph [ref=f3e373]: Educational Codeforces Round 192 (rated for Div. 2)
+          - generic [ref=f3e374]:
+            - text: By
+            - link "BledDest" [ref=f3e375] [cursor=pointer]:
+              - /url: /profile/BledDest
+            - text: ", 3 days ago, translation,"
+            - img "In English" [ref=f3e376]
+            - generic:
+              - list
+          - generic [ref=f3e377]:
+            - generic [ref=f3e378]:
+              - paragraph:
+                - img "Neapolis University Pafos" [ref=f3e379]
+              - paragraph [ref=f3e380]: Hello Codeforces!
+              - paragraph [ref=f3e381]:
+                - text: The series of Educational Rounds continues thanks to the support of the
+                - link "Neapolis University Pafos" [ref=f3e382] [cursor=pointer]:
+                  - /url: https://www.nup.ac.cy/
+                - text: . They offer a BSc in Computer Science and AI with
+                - link "JetBrains Scholarships" [ref=f3e383] [cursor=pointer]:
+                  - /url: https://lp.jetbrains.com/academy/csai-program/
+                - text: . Gain cutting-edge skills in AI and machine learning, preparing you for high-demand tech careers. Limited scholarships available — don't miss your chance to study in Europe for free!
+              - paragraph [ref=f3e384]:
+                - link "Educational Codeforces Round 192 (Rated for Div. 2)" [ref=f3e385] [cursor=pointer]:
+                  - /url: /contest/2242
+                - text: will start on
+                - link "Monday, July 6, 2026 at 07:35UTC-7" [ref=f3e386] [cursor=pointer]:
+                  - /url: https://www.timeanddate.com/worldclock/fixedtime.html?day=6&month=7&year=2026&hour=17&min=35&sec=0&p1=166
+                  - text: Monday, July 6, 2026 at 07:35
+                  - superscript [ref=f3e387]: UTC-7
+                - text: .
+              - paragraph [ref=f3e388]:
+                - text: This round will be
+                - strong [ref=f3e389]: rated for the participants with rating lower than 2100
+                - text: . It will be held on extended ICPC rules. The penalty for each incorrect submission until the submission with a full solution is 10 minutes. After the end of the contest, you will have 12 hours to hack any solution you want. You will have access to copy any solution and test it locally.
+              - paragraph [ref=f3e390]:
+                - text: You will be given
+                - strong [ref=f3e391]: 6 problems
+                - text: and
+                - strong [ref=f3e392]: 2 hours
+                - text: to solve them.
+              - paragraph [ref=f3e393]:
+                - text: The problems were proposed and prepared by Maxim
+                - link "FelixArg" [ref=f3e394] [cursor=pointer]:
+                  - /url: /profile/FelixArg
+                - text: Novotochinov, Adilbek
+                - link "adedalic" [ref=f3e395] [cursor=pointer]:
+                  - /url: /profile/adedalic
+                - text: Dalabaev, Roman
+                - link "Roms" [ref=f3e396] [cursor=pointer]:
+                  - /url: /profile/Roms
+                - text: Glazov and me. We would like to express our gratitude to
+                - link "MikeMirzayanov" [ref=f3e397] [cursor=pointer]:
+                  - /url: /profile/MikeMirzayanov
+                - text: for creating Codeforces and Polygon — without them, these rounds would not be possible.
+              - paragraph [ref=f3e398]:
+                - text: "Also, big shoutout to the round testers:"
+                - link "shnirelman" [ref=f3e399] [cursor=pointer]:
+                  - /url: /profile/shnirelman
+                - text: ","
+                - link "Brovko" [ref=f3e400] [cursor=pointer]:
+                  - /url: /profile/Brovko
+                - text: ","
+                - link "awoo" [ref=f3e401] [cursor=pointer]:
+                  - /url: /profile/awoo
+                - text: ","
+                - link "Alenochka" [ref=f3e402] [cursor=pointer]:
+                  - /url: /profile/Alenochka
+                - text: ","
+                - link "paomur" [ref=f3e403] [cursor=pointer]:
+                  - /url: /profile/paomur
+                - text: . Thank you for helping us prepare the contest!
+              - paragraph [ref=f3e404]: We wish you good luck in the contest!
+            - paragraph [ref=f3e405]:
+              - link "Full text and comments »" [ref=f3e406] [cursor=pointer]:
+                - /url: /blog/entry/154971
+          - generic [ref=f3e407]:
+            - img [ref=f3e408]
+            - generic [ref=f3e409]:
+              - text: Announcement of
+              - link "Educational Codeforces Round 192 (Rated for Div. 2)" [ref=f3e410] [cursor=pointer]:
+                - /url: /contest/2242
+          - generic [ref=f3e411]:
+            - generic [ref=f3e412]:
+              - list:
+                - listitem [ref=f3e413]:
+                  - 'link "Vote: I like it" [ref=f3e414] [cursor=pointer]':
+                    - /url: "#"
+                    - 'img "Vote: I like it" [ref=f3e415]'
+                - listitem [ref=f3e416]: "+95"
+                - listitem [ref=f3e417]:
+                  - 'link "Vote: I do not like it" [ref=f3e418] [cursor=pointer]':
+                    - /url: "#"
+                    - 'img "Vote: I do not like it" [ref=f3e419]'
+            - generic: 
+            - generic [ref=f3e420]:
+              - list:
+                - listitem [ref=f3e421]:
+                  - link "Author" [ref=f3e422] [cursor=pointer]:
+                    - /url: /profile/BledDest
+                    - img "Author" [ref=f3e423]
+                  - link "BledDest" [ref=f3e424] [cursor=pointer]:
+                    - /url: /profile/BledDest
+                - listitem [ref=f3e425]:
+                  - img "Publication date" [ref=f3e426]
+                  - text: 3 days ago
+                - listitem [ref=f3e427]:
+                  - link "Comments" [ref=f3e428] [cursor=pointer]:
+                    - /url: /blog/entry/154971#comments
+                    - img "Comments" [ref=f3e429]
+                  - link "103" [ref=f3e430] [cursor=pointer]:
+                    - /url: /blog/entry/154971#comments
+        - generic [ref=f3e432]:
+          - link "Midnight Code Cup Finals" [ref=f3e434] [cursor=pointer]:
+            - /url: /blog/entry/154849
+            - paragraph [ref=f3e435]: Midnight Code Cup Finals
+          - generic [ref=f3e436]:
+            - text: By
+            - link "MidnightCodeCup" [ref=f3e437] [cursor=pointer]:
+              - /url: /profile/MidnightCodeCup
+            - text: ", 8 days ago,"
+            - img "In English" [ref=f3e438]
+            - generic:
+              - list
+          - generic [ref=f3e439]:
+            - generic [ref=f3e440]:
+              - paragraph [ref=f3e441]: The Midnight Code Cup final round is happening this weekend, 4-5 of July in Belgrade, Serbia.
+              - paragraph [ref=f3e442]:
+                - text: Over 500 teams from all over the world
+                - link "competed for the spot on the finals" [ref=f3e443] [cursor=pointer]:
+                  - /url: https://codeforces.com/blog/entry/152874
+                - text: . Top 25 + wildcards will meet in less then a week to determine the Midnight Champion. The contest will last for 24 hours, starting at noon on 4 July, local time. Unlike traditional programming contests, participants are encouraged to use any tools available, including AI assistants, to solve a diverse set of algorithmic, optimization, and engineering problems designed by an international jury that includes ICPC World Champions.
+              - link "Watch Awards Ceremony" [ref=f3e445] [cursor=pointer]:
+                - /url: https://www.youtube.com/live/Xtihk3_E_Zo
+              - link "Watch Opening Ceremony" [ref=f3e447] [cursor=pointer]:
+                - /url: https://www.youtube.com/live/DGocnZ25wxA
+              - link "Standings" [ref=f3e449] [cursor=pointer]:
+                - /url: "https://standings.midnightcodecup.org "
+              - link "Nepo chess stream" [ref=f3e451] [cursor=pointer]:
+                - /url: "https://www.twitch.tv/videos/2812107552 "
+              - paragraph [ref=f3e452]:
+                - text: "Follow the finals on socials:"
+                - link "X" [ref=f3e453] [cursor=pointer]:
+                  - /url: https://x.com/midnightcodecup
+                - link "Instagram" [ref=f3e454] [cursor=pointer]:
+                  - /url: https://www.instagram.com/midnightcodecup/
+                - text: "Surprise stream:"
+                - text: Chess Grandmaster an Nepomniachtchi ("Nepo") has played against 10 MCC finalists.
+              - generic [ref=f3e455]: Good luck to the finalists!
+              - paragraph [ref=f3e456]:
+                - img [ref=f3e457]
+            - paragraph [ref=f3e458]:
+              - link "Full text and comments »" [ref=f3e459] [cursor=pointer]:
+                - /url: /blog/entry/154849
+          - generic [ref=f3e460]:
+            - generic [ref=f3e461]:
+              - list:
+                - listitem [ref=f3e462]:
+                  - 'link "Vote: I like it" [ref=f3e463] [cursor=pointer]':
+                    - /url: "#"
+                    - 'img "Vote: I like it" [ref=f3e464]'
+                - listitem [ref=f3e465]: "+151"
+                - listitem [ref=f3e466]:
+                  - 'link "Vote: I do not like it" [ref=f3e467] [cursor=pointer]':
+                    - /url: "#"
+                    - 'img "Vote: I do not like it" [ref=f3e468]'
+            - generic [ref=f3e469]:
+              - list:
+                - listitem [ref=f3e470]:
+                  - link "Author" [ref=f3e471] [cursor=pointer]:
+                    - /url: /profile/MidnightCodeCup
+                    - img "Author" [ref=f3e472]
+                  - link "MidnightCodeCup" [ref=f3e473] [cursor=pointer]:
+                    - /url: /profile/MidnightCodeCup
+                - listitem [ref=f3e474]:
+                  - img "Publication date" [ref=f3e475]
+                  - text: 8 days ago
+                - listitem [ref=f3e476]:
+                  - link "Comments" [ref=f3e477] [cursor=pointer]:
+                    - /url: /blog/entry/154849#comments
+                    - img "Comments" [ref=f3e478]
+                  - link "3" [ref=f3e479] [cursor=pointer]:
+                    - /url: /blog/entry/154849#comments
+        - generic [ref=f3e481]:
+          - link "Codeforces Round 1107 (Div. 3)" [ref=f3e483] [cursor=pointer]:
+            - /url: /blog/entry/154766
+            - paragraph [ref=f3e484]: Codeforces Round 1107 (Div. 3)
+          - generic [ref=f3e485]:
+            - text: By
+            - link "wakanda-forever" [ref=f3e486] [cursor=pointer]:
+              - /url: /profile/wakanda-forever
+            - text: ", 11 days ago,"
+            - img "In English" [ref=f3e487]
+            - generic:
+              - list
+          - generic [ref=f3e488]:
+            - generic [ref=f3e489]:
+              - heading "Hello Codeforces!!!" [level=4] [ref=f3e490]
+              - paragraph [ref=f3e491]:
+                - text: I am more than happy to invite you to my first solo round
+                - link "Codeforces Round 1107 (Div. 3)" [ref=f3e492] [cursor=pointer]:
+                  - /url: https://codeforces.com/contest/2241
+                - text: ", which starts on"
+                - link "Tuesday, June 30, 2026 at 07:35UTC-7" [ref=f3e493] [cursor=pointer]:
+                  - /url: https://www.timeanddate.com/worldclock/fixedtime.html?day=30&month=6&year=2026&hour=17&min=35&sec=0&p1=166
+                  - text: Tuesday, June 30, 2026 at 07:35
+                  - superscript [ref=f3e494]: UTC-7
+                - text: . You will be given
+                - generic [ref=f3e497]: "7"
+                - text: problems and
+                - generic [ref=f3e500]: "2"
+                - text: hours
+                - generic [ref=f3e503]: "15"
+                - text: minutes to solve them.
+              - paragraph [ref=f3e504]: All the problems were authored and prepared by me.
+              - paragraph [ref=f3e505]: The round will be hosted by the rules of educational rounds (extended ICPC). Thus, all solutions will be judged on preliminary tests during the round, and after the round, there will be a 12-hour phase of open hacks. After the open hack phase, all accepted solutions will be rejudged on successful hacks. Also, note that there is no score distribution — rank will be determined by the number of problems solved, followed by penalty; wrong submissions will incur the usual penalty of 10 minutes, following the rules of educational rounds.
+              - paragraph [ref=f3e506]:
+                - link "Remember" [ref=f3e507] [cursor=pointer]:
+                  - /url: https://codeforces.com/blog/entry/59228
+                - text: "that only the trusted participants of the third division will be included in the official standings table. As it is written in the link, this is a compulsory measure for combating unsporting behavior. To qualify as a trusted participant of the third division, you must:"
+              - list [ref=f3e508]:
+                - listitem [ref=f3e509]: take part in at least five rated rounds (and solve at least one problem in each of them)
+                - listitem [ref=f3e510]: do not have a point of 1900 or higher in the rating.
+              - paragraph [ref=f3e511]: Regardless of whether you are a trusted participant of the third division or not, if your rating is less than 1600, then the round will be rated for you.
+              - paragraph [ref=f3e512]: "I would like to thank the following people for making this round possible:"
+              - list [ref=f3e513]:
+                - listitem [ref=f3e514]:
+                  - link "cry" [ref=f3e515] [cursor=pointer]:
+                    - /url: /profile/cry
+                  - text: for his careful coordination.
+                - listitem [ref=f3e516]:
+                  - link "Vladosiya" [ref=f3e517] [cursor=pointer]:
+                    - /url: /profile/Vladosiya
+                  - text: for providing Russian translations.
+                - listitem [ref=f3e518]:
+                  - link "_istil" [ref=f3e519] [cursor=pointer]:
+                    - /url: /profile/_istil
+                  - text: ","
+                  - link "Proof_by_QED" [ref=f3e520] [cursor=pointer]:
+                    - /url: /profile/Proof_by_QED
+                  - text: ","
+                  - link "simplelife" [ref=f3e521] [cursor=pointer]:
+                    - /url: /profile/simplelife
+                  - text: ","
+                  - link "kevinxiehk" [ref=f3e522] [cursor=pointer]:
+                    - /url: /profile/kevinxiehk
+                  - text: ","
+                  - link "temporary1" [ref=f3e523] [cursor=pointer]:
+                    - /url: /profile/temporary1
+                  - text: ","
+                  - link "reirugan" [ref=f3e524] [cursor=pointer]:
+                    - /url: /profile/reirugan
+                  - text: ","
+                  - link "Jrke" [ref=f3e525] [cursor=pointer]:
+                    - /url: /profile/Jrke
+                  - text: ","
+                  - link "Forge" [ref=f3e526] [cursor=pointer]:
+                    - /url: /profile/Forge
+                  - text: ","
+                  - link "Intellegent" [ref=f3e527] [cursor=pointer]:
+                    - /url: /profile/Intellegent
+                  - text: ","
+                  - link "Argentum47" [ref=f3e528] [cursor=pointer]:
+                    - /url: /profile/Argentum47
+                  - text: ","
+                  - link "__baozii__" [ref=f3e529] [cursor=pointer]:
+                    - /url: /profile/__baozii__
+                  - text: ","
+                  - link "awesomeguy856" [ref=f3e530] [cursor=pointer]:
+                    - /url: /profile/awesomeguy856
+                  - text: ","
+                  - link "SpyrosAliv" [ref=f3e531] [cursor=pointer]:
+                    - /url: /profile/SpyrosAliv
+                  - text: ","
+                  - link "omsincoconut" [ref=f3e532] [cursor=pointer]:
+                    - /url: /profile/omsincoconut
+                  - text: ","
+                  - link "expertaq" [ref=f3e533] [cursor=pointer]:
+                    - /url: /profile/expertaq
+                  - text: ","
+                  - link "skellyboi05" [ref=f3e534] [cursor=pointer]:
+                    - /url: /profile/skellyboi05
+                  - text: ","
+                  - link "yse" [ref=f3e535] [cursor=pointer]:
+                    - /url: /profile/yse
+                  - text: ","
+                  - link "M.Y." [ref=f3e536] [cursor=pointer]:
+                    - /url: /profile/M.Y.
+                  - text: ","
+                  - link "Edeeva" [ref=f3e537] [cursor=pointer]:
+                    - /url: /profile/Edeeva
+                  - text: ","
+                  - link "nik_exists" [ref=f3e538] [cursor=pointer]:
+                    - /url: /profile/nik_exists
+                  - text: ","
+                  - link "fishy15" [ref=f3e539] [cursor=pointer]:
+                    - /url: /profile/fishy15
+                  - text: ","
+                  - link "madlogic" [ref=f3e540] [cursor=pointer]:
+                    - /url: /profile/madlogic
+                  - text: ","
+                  - link "chromate00" [ref=f3e541] [cursor=pointer]:
+                    - /url: /profile/chromate00
+                  - text: ","
+                  - link "singharpit2492" [ref=f3e542] [cursor=pointer]:
+                    - /url: /profile/singharpit2492
+                  - text: ","
+                  - link "Arpa" [ref=f3e543] [cursor=pointer]:
+                    - /url: /profile/Arpa
+                  - text: ","
+                  - link "DivinePunishment" [ref=f3e544] [cursor=pointer]:
+                    - /url: /profile/DivinePunishment
+                  - text: ","
+                  - link "Lilypad" [ref=f3e545] [cursor=pointer]:
+                    - /url: /profile/Lilypad
+                  - text: for testing the round and providing valuable feedback.
+                - listitem [ref=f3e546]:
+                  - link "MikeMirzayanov" [ref=f3e547] [cursor=pointer]:
+                    - /url: /profile/MikeMirzayanov
+                  - text: and
+                  - link "KAN" [ref=f3e548] [cursor=pointer]:
+                    - /url: /profile/KAN
+                  - text: for the legendary platforms.
+              - paragraph [ref=f3e549]:
+                - text: Additionally, if you are a
+                - strong [ref=f3e550]: tester
+                - text: of
+                - link "Codeforces Round 1095 (Div. 2)" [ref=f3e551] [cursor=pointer]:
+                  - /url: /contest/2226
+                - text: and you are rated for Division 3, I would request you not participate in the round, as it is possible you have seen some tasks before.
+              - paragraph [ref=f3e552]: I would be looking forward to your participation, and I hope you love the problems.
+              - paragraph [ref=f3e553]: GLHF.
+              - heading "Editorial" [level=4] [ref=f3e554]:
+                - link "Editorial" [ref=f3e555] [cursor=pointer]:
+                  - /url: https://codeforces.com/blog/entry/154698
+            - paragraph [ref=f3e556]:
+              - link "Full text and comments »" [ref=f3e557] [cursor=pointer]:
+                - /url: /blog/entry/154766
+          - generic [ref=f3e558]:
+            - img [ref=f3e559]
+            - generic [ref=f3e560]:
+              - text: Announcement of
+              - link "Codeforces Round 1107 (Div. 3)" [ref=f3e561] [cursor=pointer]:
+                - /url: /contest/2241
+          - generic [ref=f3e562]:
+            - img "Tags" [ref=f3e563]
+            - generic [ref=f3e564]:
+              - link "codeforces round 1107" [ref=f3e565] [cursor=pointer]:
+                - /url: /search?query=codeforces+round+1107
+              - text: ","
+            - link "announcement" [ref=f3e567] [cursor=pointer]:
+              - /url: /search?query=announcement
+          - generic [ref=f3e568]:
+            - generic [ref=f3e569]:
+              - list:
+                - listitem [ref=f3e570]:
+                  - 'link "Vote: I like it" [ref=f3e571] [cursor=pointer]':
+                    - /url: "#"
+                    - 'img "Vote: I like it" [ref=f3e572]'
+                - listitem [ref=f3e573]: "+254"
+                - listitem [ref=f3e574]:
+                  - 'link "Vote: I do not like it" [ref=f3e575] [cursor=pointer]':
+                    - /url: "#"
+                    - 'img "Vote: I do not like it" [ref=f3e576]'
+            - generic [ref=f3e577]:
+              - list:
+                - listitem [ref=f3e578]:
+                  - link "Author" [ref=f3e579] [cursor=pointer]:
+                    - /url: /profile/wakanda-forever
+                    - img "Author" [ref=f3e580]
+                  - link "wakanda-forever" [ref=f3e581] [cursor=pointer]:
+                    - /url: /profile/wakanda-forever
+                - listitem [ref=f3e582]:
+                  - img "Publication date" [ref=f3e583]
+                  - text: 11 days ago
+                - listitem [ref=f3e584]:
+                  - link "Comments" [ref=f3e585] [cursor=pointer]:
+                    - /url: /blog/entry/154766#comments
+                    - img "Comments" [ref=f3e586]
+                  - link "156" [ref=f3e587] [cursor=pointer]:
+                    - /url: /blog/entry/154766#comments
+        - generic [ref=f3e589]:
+          - link "Codeforces Round 1106 (Div. 2)" [ref=f3e591] [cursor=pointer]:
+            - /url: /blog/entry/154732
+            - paragraph [ref=f3e592]: Codeforces Round 1106 (Div. 2)
+          - generic [ref=f3e593]:
+            - text: By
+            - link "Friendiks" [ref=f3e594] [cursor=pointer]:
+              - /url: /profile/Friendiks
+            - text: ", 13 days ago, translation,"
+            - img "In English" [ref=f3e595]
+            - generic:
+              - list
+          - generic [ref=f3e596]:
+            - generic [ref=f3e597]:
+              - heading "Hello, Codeforces!" [level=3] [ref=f3e598]
+              - paragraph [ref=f3e599]:
+                - text: We are glad to announce that
+                - link "Codeforces Round 1106 (Div. 2)" [ref=f3e600] [cursor=pointer]:
+                  - /url: /contest/2238
+                - text: will take place at
+                - link "Sunday, June 28, 2026 at 07:35UTC-7" [ref=f3e601] [cursor=pointer]:
+                  - /url: https://www.timeanddate.com/worldclock/fixedtime.html?day=28&month=6&year=2026&hour=17&min=35&sec=0&p1=166
+                  - text: Sunday, June 28, 2026 at 07:35
+                  - superscript [ref=f3e602]: UTC-7
+                - text: . The round will be rated for participants with rating below
+                - generic [ref=f3e605]: "2100"
+                - text: . You will be offered
+                - generic [ref=f3e608]: "6"
+                - text: problems, with
+                - generic [ref=f3e611]: "2"
+                - text: hours to solve them.
+              - paragraph [ref=f3e612]:
+                - text: All problems were created and prepared by
+                - link "lewc" [ref=f3e613] [cursor=pointer]:
+                  - /url: /profile/lewc
+                - text: ","
+                - link "KotlechkovEgor" [ref=f3e614] [cursor=pointer]:
+                  - /url: /profile/KotlechkovEgor
+                - text: and me.
+              - paragraph [ref=f3e615]: "We express our HUGE gratitude to the following people, without whom the round could not have taken place:"
+              - list [ref=f3e616]:
+                - listitem [ref=f3e617]:
+                  - link "74TrAkToR" [ref=f3e618] [cursor=pointer]:
+                    - /url: /profile/74TrAkToR
+                  - text: for incredible coordination.
+                - listitem [ref=f3e619]:
+                  - link "Um_nik" [ref=f3e620] [cursor=pointer]:
+                    - /url: /profile/Um_nik
+                  - text: and
+                  - link "244mhq" [ref=f3e621] [cursor=pointer]:
+                    - /url: /profile/244mhq
+                  - text: for preliminary review of the round.
+                - listitem [ref=f3e622]:
+                  - link "zhiganov_v" [ref=f3e623] [cursor=pointer]:
+                    - /url: /profile/zhiganov_v
+                  - text: ","
+                  - link "wxhtzdy" [ref=f3e624] [cursor=pointer]:
+                    - /url: /profile/wxhtzdy
+                  - text: ","
+                  - link "JYJin" [ref=f3e625] [cursor=pointer]:
+                    - /url: /profile/JYJin
+                  - text: ","
+                  - link "abc864197532" [ref=f3e626] [cursor=pointer]:
+                    - /url: /profile/abc864197532
+                  - text: and
+                  - link "OG_Matveychick1" [ref=f3e627] [cursor=pointer]:
+                    - /url: /profile/OG_Matveychick1
+                  - text: for red testing of the round.
+                - listitem [ref=f3e628]:
+                  - link "XaRDKoDblCH" [ref=f3e629] [cursor=pointer]:
+                    - /url: /profile/XaRDKoDblCH
+                  - text: ","
+                  - link "pskobx" [ref=f3e630] [cursor=pointer]:
+                    - /url: /profile/pskobx
+                  - text: ","
+                  - link "Mark_Pr" [ref=f3e631] [cursor=pointer]:
+                    - /url: /profile/Mark_Pr
+                  - text: and
+                  - link "_LeMur_" [ref=f3e632] [cursor=pointer]:
+                    - /url: /profile/_LeMur_
+                  - text: for orange testing of the round.
+                - listitem [ref=f3e633]:
+                  - link "_liravel_" [ref=f3e634] [cursor=pointer]:
+                    - /url: /profile/_liravel_
+                  - text: ","
+                  - link "mirach0ck" [ref=f3e635] [cursor=pointer]:
+                    - /url: /profile/mirach0ck
+                  - text: ","
+                  - link "MaksimXD" [ref=f3e636] [cursor=pointer]:
+                    - /url: /profile/MaksimXD
+                  - text: ","
+                  - link "AmirGG" [ref=f3e637] [cursor=pointer]:
+                    - /url: /profile/AmirGG
+                  - text: ","
+                  - link "VitaliiV" [ref=f3e638] [cursor=pointer]:
+                    - /url: /profile/VitaliiV
+                  - text: ","
+                  - link "KluydQ" [ref=f3e639] [cursor=pointer]:
+                    - /url: /profile/KluydQ
+                  - text: and
+                  - link "EduardoBrito" [ref=f3e640] [cursor=pointer]:
+                    - /url: /profile/EduardoBrito
+                  - text: for purple testing of the round.
+                - listitem [ref=f3e641]:
+                  - link "Yassia" [ref=f3e642] [cursor=pointer]:
+                    - /url: /profile/Yassia
+                  - text: ","
+                  - link "FLYDEB" [ref=f3e643] [cursor=pointer]:
+                    - /url: /profile/FLYDEB
+                  - text: ","
+                  - link "semwin2008" [ref=f3e644] [cursor=pointer]:
+                    - /url: /profile/semwin2008
+                  - text: ","
+                  - link "itz_pabloo" [ref=f3e645] [cursor=pointer]:
+                    - /url: /profile/itz_pabloo
+                  - text: ","
+                  - link "YF_YUSUF" [ref=f3e646] [cursor=pointer]:
+                    - /url: /profile/YF_YUSUF
+                  - text: and
+                  - link "kinoud" [ref=f3e647] [cursor=pointer]:
+                    - /url: /profile/kinoud
+                  - text: for blue testing of the round.
+                - listitem [ref=f3e648]:
+                  - link "BoberVitalya228" [ref=f3e649] [cursor=pointer]:
+                    - /url: /profile/BoberVitalya228
+                  - text: ","
+                  - link "grigalex40" [ref=f3e650] [cursor=pointer]:
+                    - /url: /profile/grigalex40
+                  - text: ","
+                  - link "Redk1tli" [ref=f3e651] [cursor=pointer]:
+                    - /url: /profile/Redk1tli
+                  - text: and
+                  - link "AdunAdunov" [ref=f3e652] [cursor=pointer]:
+                    - /url: /profile/AdunAdunov
+                  - text: for cyan testing of the round.
+                - listitem [ref=f3e653]:
+                  - link "Ghuiko" [ref=f3e654] [cursor=pointer]:
+                    - /url: /profile/Ghuiko
+                  - text: for green testing of the round.
+                - listitem [ref=f3e655]:
+                  - link "awrt_xz" [ref=f3e656] [cursor=pointer]:
+                    - /url: /profile/awrt_xz
+                  - text: for gray testing of the round.
+                - listitem [ref=f3e657]:
+                  - link "MikeMirzayanov" [ref=f3e658] [cursor=pointer]:
+                    - /url: /profile/MikeMirzayanov
+                  - text: and
+                  - link "KAN" [ref=f3e659] [cursor=pointer]:
+                    - /url: /profile/KAN
+                  - text: for the wonderful platforms Codeforces and Polygon.
+                - listitem [ref=f3e660]:
+                  - link "You" [ref=f3e661] [cursor=pointer]:
+                    - /url: /profile/
+                  - text: for participating!
+              - paragraph [ref=f3e662]: "The scoring distribution is as follows:"
+              - table [ref=f3e663]:
+                - rowgroup [ref=f3e664]:
+                  - row "A B C D E F" [ref=f3e665]:
+                    - columnheader "A" [ref=f3e666]
+                    - columnheader "B" [ref=f3e667]
+                    - columnheader "C" [ref=f3e668]
+                    - columnheader "D" [ref=f3e669]
+                    - columnheader "E" [ref=f3e670]
+                    - columnheader "F" [ref=f3e671]
+                - rowgroup [ref=f3e672]:
+                  - row "500 750 1250 1500 2250 2750" [ref=f3e673]:
+                    - cell "500" [ref=f3e674]:
+                      - generic [ref=f3e677]: "500"
+                    - cell "750" [ref=f3e678]:
+                      - generic [ref=f3e681]: "750"
+                    - cell "1250" [ref=f3e682]:
+                      - generic [ref=f3e685]: "1250"
+                    - cell "1500" [ref=f3e686]:
+                      - generic [ref=f3e689]: "1500"
+                    - cell "2250" [ref=f3e690]:
+                      - generic [ref=f3e693]: "2250"
+                    - cell "2750" [ref=f3e694]:
+                      - generic [ref=f3e697]: "2750"
+              - paragraph [ref=f3e698]:
+                - text: "UPD:"
+                - link "Editorial" [ref=f3e699] [cursor=pointer]:
+                  - /url: https://codeforces.com/blog/entry/154829
+                - text: has been posted
+              - paragraph [ref=f3e700]: "UPD2: Congratulations to the winners!"
+              - paragraph [ref=f3e701]:
+                - strong [ref=f3e702]: Official participants
+              - list [ref=f3e703]:
+                - listitem [ref=f3e704]:
+                  - paragraph [ref=f3e705]:
+                    - link "zddtuus" [ref=f3e706] [cursor=pointer]:
+                      - /url: /profile/zddtuus
+                - listitem [ref=f3e707]:
+                  - paragraph [ref=f3e708]:
+                    - link "IzhitskiyTimofey" [ref=f3e709] [cursor=pointer]:
+                      - /url: /profile/IzhitskiyTimofey
+                - listitem [ref=f3e710]:
+                  - paragraph [ref=f3e711]:
+                    - link "sahilsingh177" [ref=f3e712] [cursor=pointer]:
+                      - /url: /profile/sahilsingh177
+                - listitem [ref=f3e713]:
+                  - paragraph [ref=f3e714]:
+                    - link "modongtao" [ref=f3e715] [cursor=pointer]:
+                      - /url: /profile/modongtao
+                - listitem [ref=f3e716]:
+                  - paragraph [ref=f3e717]:
+                    - link "nbufe2422510022" [ref=f3e718] [cursor=pointer]:
+                      - /url: /profile/nbufe2422510022
+              - paragraph [ref=f3e719]:
+                - strong [ref=f3e720]: Unofficial participants
+              - list [ref=f3e721]:
+                - listitem [ref=f3e722]:
+                  - paragraph [ref=f3e723]:
+                    - link "Otomachi_Una" [ref=f3e724] [cursor=pointer]:
+                      - /url: /profile/Otomachi_Una
+                - listitem [ref=f3e725]:
+                  - paragraph [ref=f3e726]:
+                    - link "Hamed_Ghaffari" [ref=f3e727] [cursor=pointer]:
+                      - /url: /profile/Hamed_Ghaffari
+                - listitem [ref=f3e728]:
+                  - paragraph [ref=f3e729]:
+                    - link "AksLolCoding" [ref=f3e730] [cursor=pointer]:
+                      - /url: /profile/AksLolCoding
+                - listitem [ref=f3e731]:
+                  - paragraph [ref=f3e732]:
+                    - link "paracompact" [ref=f3e733] [cursor=pointer]:
+                      - /url: /profile/paracompact
+                - listitem [ref=f3e734]:
+                  - paragraph [ref=f3e735]:
+                    - link "Rubikun" [ref=f3e736] [cursor=pointer]:
+                      - /url: /profile/Rubikun
+            - paragraph [ref=f3e737]:
+              - link "Full text and comments »" [ref=f3e738] [cursor=pointer]:
+                - /url: /blog/entry/154732
+          - generic [ref=f3e739]:
+            - img [ref=f3e740]
+            - generic [ref=f3e741]:
+              - text: Announcement of
+              - link "Codeforces Round 1106 (Div. 2)" [ref=f3e742] [cursor=pointer]:
+                - /url: /contest/2238
+          - generic [ref=f3e743]:
+            - generic [ref=f3e744]:
+              - list:
+                - listitem [ref=f3e745]:
+                  - 'link "Vote: I like it" [ref=f3e746] [cursor=pointer]':
+                    - /url: "#"
+                    - 'img "Vote: I like it" [ref=f3e747]'
+                - listitem [ref=f3e748]: "+316"
+                - listitem [ref=f3e749]:
+                  - 'link "Vote: I do not like it" [ref=f3e750] [cursor=pointer]':
+                    - /url: "#"
+                    - 'img "Vote: I do not like it" [ref=f3e751]'
+            - generic [ref=f3e752]:
+              - list:
+                - listitem [ref=f3e753]:
+                  - link "Author" [ref=f3e754] [cursor=pointer]:
+                    - /url: /profile/Friendiks
+                    - img "Author" [ref=f3e755]
+                  - link "Friendiks" [ref=f3e756] [cursor=pointer]:
+                    - /url: /profile/Friendiks
+                - listitem [ref=f3e757]:
+                  - img "Publication date" [ref=f3e758]
+                  - text: 13 days ago
+                - listitem [ref=f3e759]:
+                  - link "Comments" [ref=f3e760] [cursor=pointer]:
+                    - /url: /blog/entry/154732#comments
+                    - img "Comments" [ref=f3e761]
+                  - link "96" [ref=f3e762] [cursor=pointer]:
+                    - /url: /blog/entry/154732#comments
+        - generic [ref=f3e764]:
+          - link "Codeforces Round 1105 (Div. 1, Div. 2)" [ref=f3e766] [cursor=pointer]:
+            - /url: /blog/entry/154670
+            - paragraph [ref=f3e767]: Codeforces Round 1105 (Div. 1, Div. 2)
+          - generic [ref=f3e768]:
+            - text: By
+            - link "Gold14526" [ref=f3e769] [cursor=pointer]:
+              - /url: /profile/Gold14526
+            - text: ","
+            - link "history" [ref=f3e770] [cursor=pointer]:
+              - /url: /topic/155312/en20
+            - text: ", 2 weeks ago,"
+            - img "In English" [ref=f3e771]
+            - generic:
+              - list
+          - generic [ref=f3e772]:
+            - generic [ref=f3e773]:
+              - heading "你好，Codeforces!" [level=4] [ref=f3e774]
+              - paragraph [ref=f3e775]:
+                - text: We are delighted to invite you to participate in
+                - link "Codeforces Round 1105 (Div. 1)" [ref=f3e776] [cursor=pointer]:
+                  - /url: /contest/2239
+                - text: or
+                - link "Codeforces Round 1105 (Div. 2)" [ref=f3e777] [cursor=pointer]:
+                  - /url: /contest/2240
+                - text: ", both of which will be held on"
+                - link "Saturday, June 27, 2026 at 07:35UTC-7" [ref=f3e778] [cursor=pointer]:
+                  - /url: https://www.timeanddate.com/worldclock/fixedtime.html?day=27&month=6&year=2026&hour=17&min=35&sec=0&p1=166
+                  - text: Saturday, June 27, 2026 at 07:35
+                  - superscript [ref=f3e779]: UTC-7
+                - text: .
+              - paragraph [ref=f3e780]:
+                - text: For both division 1 and division 2, you will be given
+                - strong [ref=f3e781]:
+                  - generic [ref=f3e784]: "2.5"
+                  - text: hours
+                - text: to solve
+                - strong [ref=f3e785]:
+                  - generic [ref=f3e788]: "6"
+                  - text: problems
+                - text: in each division.
+              - paragraph [ref=f3e789]:
+                - text: The problems were authored and prepared by
+                - link "Gold14526" [ref=f3e790] [cursor=pointer]:
+                  - /url: /profile/Gold14526
+                - text: ","
+                - link "Milkcat2009" [ref=f3e791] [cursor=pointer]:
+                  - /url: /profile/Milkcat2009
+                - text: and
+                - link "wangmarui" [ref=f3e792] [cursor=pointer]:
+                  - /url: /profile/wangmarui
+                - text: .
+              - paragraph [ref=f3e793]: "We would really like to thank the following people for making this round possible:"
+              - list [ref=f3e794]:
+                - listitem [ref=f3e795]:
+                  - link "Um_nik" [ref=f3e796] [cursor=pointer]:
+                    - /url: /profile/Um_nik
+                  - text: for the preliminary review of the round
+                - listitem [ref=f3e797]:
+                  - link "cadmiumky" [ref=f3e798] [cursor=pointer]:
+                    - /url: /profile/cadmiumky
+                  - text: for the great coordination.
+                - listitem [ref=f3e799]:
+                  - link "Alexdat2000" [ref=f3e800] [cursor=pointer]:
+                    - /url: /profile/Alexdat2000
+                  - text: for providing Russian translations.
+                - listitem [ref=f3e801]:
+                  - link "hcywoi" [ref=f3e802] [cursor=pointer]:
+                    - /url: /profile/hcywoi
+                  - text: and
+                  - link "Network_Error" [ref=f3e803] [cursor=pointer]:
+                    - /url: /profile/Network_Error
+                  - text: who also prepared problems that were ultimately not used in this round.
+                - listitem [ref=f3e804]:
+                  - link "lkrqwq" [ref=f3e805] [cursor=pointer]:
+                    - /url: /profile/lkrqwq
+                  - text: for optimizing many details of problems.
+                - listitem [ref=f3e806]:
+                  - link "StarSilk" [ref=f3e807] [cursor=pointer]:
+                    - /url: /profile/StarSilk
+                  - text: and
+                  - link "errorgorn" [ref=f3e808] [cursor=pointer]:
+                    - /url: /profile/errorgorn
+                  - text: for black red testing.
+                - listitem [ref=f3e809]:
+                  - link "Network_Error" [ref=f3e810] [cursor=pointer]:
+                    - /url: /profile/Network_Error
+                  - text: ","
+                  - link "StelIawinD" [ref=f3e811] [cursor=pointer]:
+                    - /url: /profile/StelIawinD
+                  - text: ","
+                  - link "_istil" [ref=f3e812] [cursor=pointer]:
+                    - /url: /profile/_istil
+                  - text: ","
+                  - link "jiazhichen844" [ref=f3e813] [cursor=pointer]:
+                    - /url: /profile/jiazhichen844
+                  - text: ","
+                  - link "ETO_leader" [ref=f3e814] [cursor=pointer]:
+                    - /url: /profile/ETO_leader
+                  - text: ","
+                  - link "Dragos" [ref=f3e815] [cursor=pointer]:
+                    - /url: /profile/Dragos
+                  - text: ","
+                  - link "MtSaka" [ref=f3e816] [cursor=pointer]:
+                    - /url: /profile/MtSaka
+                  - text: ","
+                  - link "Caylex" [ref=f3e817] [cursor=pointer]:
+                    - /url: /profile/Caylex
+                  - text: ","
+                  - link "nifeshe" [ref=f3e818] [cursor=pointer]:
+                    - /url: /profile/nifeshe
+                  - text: ","
+                  - link "rolandpetrean" [ref=f3e819] [cursor=pointer]:
+                    - /url: /profile/rolandpetrean
+                  - text: for red testing.
+                - listitem [ref=f3e820]:
+                  - link "Proof_by_QED" [ref=f3e821] [cursor=pointer]:
+                    - /url: /profile/Proof_by_QED
+                  - text: ","
+                  - link "lkrqwq" [ref=f3e822] [cursor=pointer]:
+                    - /url: /profile/lkrqwq
+                  - text: ","
+                  - link "Watersphere" [ref=f3e823] [cursor=pointer]:
+                    - /url: /profile/Watersphere
+                  - text: ","
+                  - link "Timosh" [ref=f3e824] [cursor=pointer]:
+                    - /url: /profile/Timosh
+                  - text: ","
+                  - link "tzl_Dedicatus545" [ref=f3e825] [cursor=pointer]:
+                    - /url: /profile/tzl_Dedicatus545
+                  - text: ","
+                  - link "0x0002" [ref=f3e826] [cursor=pointer]:
+                    - /url: /profile/0x0002
+                  - text: ","
+                  - link "a_little_cute" [ref=f3e827] [cursor=pointer]:
+                    - /url: /profile/a_little_cute
+                  - text: ","
+                  - link "morandyg" [ref=f3e828] [cursor=pointer]:
+                    - /url: /profile/morandyg
+                  - text: ","
+                  - link "abruce" [ref=f3e829] [cursor=pointer]:
+                    - /url: /profile/abruce
+                  - text: ","
+                  - link "programpiggy" [ref=f3e830] [cursor=pointer]:
+                    - /url: /profile/programpiggy
+                  - text: for yellow testing.
+                - listitem [ref=f3e831]:
+                  - link "MornStar" [ref=f3e832] [cursor=pointer]:
+                    - /url: /profile/MornStar
+                  - text: ","
+                  - link "Ns6Juruo" [ref=f3e833] [cursor=pointer]:
+                    - /url: /profile/Ns6Juruo
+                  - text: for purple testing.
+                - listitem [ref=f3e834]:
+                  - link "cybher" [ref=f3e835] [cursor=pointer]:
+                    - /url: /profile/cybher
+                  - text: ","
+                  - link "zhouyitao123" [ref=f3e836] [cursor=pointer]:
+                    - /url: /profile/zhouyitao123
+                  - text: ","
+                  - link "Nyemot" [ref=f3e837] [cursor=pointer]:
+                    - /url: /profile/Nyemot
+                  - text: ","
+                  - link "Pie_TealCompressorDragon" [ref=f3e838] [cursor=pointer]:
+                    - /url: /profile/Pie_TealCompressorDragon
+                  - text: for blue testing.
+                - listitem [ref=f3e839]:
+                  - link "xiaohaoaibiancheng666" [ref=f3e840] [cursor=pointer]:
+                    - /url: /profile/xiaohaoaibiancheng666
+                  - text: for cyan testing.
+                - listitem [ref=f3e841]:
+                  - link "NSZBD_dklmq_12" [ref=f3e842] [cursor=pointer]:
+                    - /url: /profile/NSZBD_dklmq_12
+                  - text: for green testing.
+                - listitem [ref=f3e843]:
+                  - link "NanguX" [ref=f3e844] [cursor=pointer]:
+                    - /url: /profile/NanguX
+                  - text: for gray testing.
+                - listitem [ref=f3e845]:
+                  - link "MikeMirzayanov" [ref=f3e846] [cursor=pointer]:
+                    - /url: /profile/MikeMirzayanov
+                  - text: and
+                  - link "KAN" [ref=f3e847] [cursor=pointer]:
+                    - /url: /profile/KAN
+                  - text: for the great Codeforces and Polygon platforms.
+                - listitem [ref=f3e848]:
+                  - link "You" [ref=f3e849] [cursor=pointer]:
+                    - /url: https://codeforces.com/profile/
+                  - text: for participating in this round.
+              - paragraph [ref=f3e850]: "Scoring Distribution:"
+              - table [ref=f3e851]:
+                - rowgroup [ref=f3e852]:
+                  - row "Division A B C D E F" [ref=f3e853]:
+                    - columnheader "Division" [ref=f3e854]
+                    - columnheader "A" [ref=f3e855]
+                    - columnheader "B" [ref=f3e856]
+                    - columnheader "C" [ref=f3e857]
+                    - columnheader "D" [ref=f3e858]
+                    - columnheader "E" [ref=f3e859]
+                    - columnheader "F" [ref=f3e860]
+                  - row "Div. 2 500 1250 2000 2250 2750 3500" [ref=f3e861]:
+                    - cell "Div. 2" [ref=f3e862]
+                    - cell "500" [ref=f3e863]
+                    - cell "1250" [ref=f3e864]
+                    - cell "2000" [ref=f3e865]
+                    - cell "2250" [ref=f3e866]
+                    - cell "2750" [ref=f3e867]
+                    - cell "3500" [ref=f3e868]
+                  - row "Div. 1 750 1000 1500 2000 2750 3500" [ref=f3e869]:
+                    - cell "Div. 1" [ref=f3e870]
+                    - cell "750" [ref=f3e871]
+                    - cell "1000" [ref=f3e872]
+                    - cell "1500" [ref=f3e873]
+                    - cell "2000" [ref=f3e874]
+                    - cell "2750" [ref=f3e875]
+                    - cell "3500" [ref=f3e876]
+              - paragraph
+              - paragraph [ref=f3e877]: Good Luck & Have Fun!
+              - paragraph [ref=f3e878]:
+                - text: "UPD:"
+                - link "Editorial" [ref=f3e879] [cursor=pointer]:
+                  - /url: https://codeforces.com/blog/entry/154788
+                - text: has been posted
+            - paragraph [ref=f3e880]:
+              - link "Full text and comments »" [ref=f3e881] [cursor=pointer]:
+                - /url: /blog/entry/154670
+          - generic [ref=f3e882]:
+            - img [ref=f3e883]
+            - generic [ref=f3e884]:
+              - text: Announcement of
+              - link "Codeforces Round 1105 (Div. 1)" [ref=f3e885] [cursor=pointer]:
+                - /url: /contest/2239
+          - generic [ref=f3e886]:
+            - img [ref=f3e887]
+            - generic [ref=f3e888]:
+              - text: Announcement of
+              - link "Codeforces Round 1105 (Div. 2)" [ref=f3e889] [cursor=pointer]:
+                - /url: /contest/2240
+          - generic [ref=f3e890]:
+            - generic [ref=f3e891]:
+              - list:
+                - listitem [ref=f3e892]:
+                  - 'link "Vote: I like it" [ref=f3e893] [cursor=pointer]':
+                    - /url: "#"
+                    - 'img "Vote: I like it" [ref=f3e894]'
+                - listitem [ref=f3e895]: "+347"
+                - listitem [ref=f3e896]:
+                  - 'link "Vote: I do not like it" [ref=f3e897] [cursor=pointer]':
+                    - /url: "#"
+                    - 'img "Vote: I do not like it" [ref=f3e898]'
+            - generic [ref=f3e899]:
+              - list:
+                - listitem [ref=f3e900]:
+                  - link "Author" [ref=f3e901] [cursor=pointer]:
+                    - /url: /profile/Gold14526
+                    - img "Author" [ref=f3e902]
+                  - link "Gold14526" [ref=f3e903] [cursor=pointer]:
+                    - /url: /profile/Gold14526
+                - listitem [ref=f3e904]:
+                  - img "Publication date" [ref=f3e905]
+                  - text: 2 weeks ago
+                - listitem [ref=f3e906]:
+                  - link "Comments" [ref=f3e907] [cursor=pointer]:
+                    - /url: /blog/entry/154670#comments
+                    - img "Comments" [ref=f3e908]
+                  - link "108" [ref=f3e909] [cursor=pointer]:
+                    - /url: /blog/entry/154670#comments
+        - generic [ref=f3e911]:
+          - link "OCPC 2026 Summer" [ref=f3e913] [cursor=pointer]:
+            - /url: /blog/entry/154739
+            - paragraph [ref=f3e914]: OCPC 2026 Summer
+          - generic [ref=f3e915]:
+            - text: By
+            - link "adamant" [ref=f3e916] [cursor=pointer]:
+              - /url: /profile/adamant
+            - text: ", 12 days ago,"
+            - img "In English" [ref=f3e917]
+            - generic:
+              - list
+          - generic [ref=f3e918]:
+            - generic [ref=f3e919]:
+              - paragraph [ref=f3e920]: Hi everyone!
+              - generic [ref=f3e921]:
+                - link [ref=f3e922] [cursor=pointer]:
+                  - /url: https://ocpc.camp
+                  - img [ref=f3e923]
+                - link [ref=f3e924] [cursor=pointer]:
+                  - /url: https://icpc.foundation/
+                  - img [ref=f3e925]
+              - paragraph [ref=f3e926]:
+                - text: The
+                - link "OCPC" [ref=f3e927] [cursor=pointer]:
+                  - /url: https://ocpc.camp/
+                - text: (Osijek Competitive Programming Camp), an
+                - link "award-winning" [ref=f3e928] [cursor=pointer]:
+                  - /url: https://www.linkedin.com/feed/update/urn:li:activity:7368330111089131522/
+                - text: camp for university students preparing for ICPC and other coding competitions, is back this
+                - strong [ref=f3e929]: Summer 2026
+                - text: — this time with
+                - strong [ref=f3e930]: two onsite editions
+                - text: ":"
+              - list [ref=f3e931]:
+                - listitem [ref=f3e932]:
+                  - strong [ref=f3e933]: Hong Kong
+                  - text: —
+                  - strong [ref=f3e934]: 8–16 August 2026
+                  - text: ", hosted at the City University of Hong Kong."
+                - listitem [ref=f3e935]:
+                  - strong [ref=f3e936]: Iași, Romania
+                  - text: —
+                  - strong [ref=f3e937]: 12–20 September 2026
+                  - text: ", hosted at Alexandru Ioan Cuza University of Iași."
+              - paragraph [ref=f3e938]:
+                - text: Both editions are organized by us together with local hosts at each site, and use the
+                - strong [ref=f3e939]: same contest set
+                - text: — so you take part in
+                - strong [ref=f3e940]: one
+                - text: of them. As a rough guide, the
+                - strong [ref=f3e941]: Iași
+                - text: edition is most convenient for teams based in Europe, and
+                - strong [ref=f3e942]: Hong Kong
+                - text: "for teams in APAC and East Asia — but you are welcome at whichever you prefer. The camp is inspired by the competitive programming camps we attended during our active ICPC years:"
+                - strong [ref=f3e943]: 7 ICPC-style contests
+                - text: (5 hours, 9–12 problems each), with analysis sessions and days off in between.
+              - paragraph [ref=f3e944]:
+                - text: Please use
+                - strong [ref=f3e945]:
+                  - link "this form" [ref=f3e946] [cursor=pointer]:
+                    - /url: https://forms.gle/FGPh3uivqHwcqhiN7
+                - text: to register for the camp!
+              - heading "Hong Kong — August 2026" [level=3] [ref=f3e947]
+              - generic [ref=f3e948]:
+                - link [ref=f3e949] [cursor=pointer]:
+                  - /url: https://www.janestreet.com/join-jane-street/open-roles/?type=students-and-new-grads&location=all-locations
+                  - img [ref=f3e950]
+                - link [ref=f3e951] [cursor=pointer]:
+                  - /url: https://www.cityu.edu.hk/
+                  - img [ref=f3e952]
+              - list [ref=f3e953]:
+                - listitem [ref=f3e954]:
+                  - strong [ref=f3e955]: "Venue:"
+                  - text: City University of Hong Kong, Kowloon Tong, Hong Kong.
+                - listitem [ref=f3e956]:
+                  - strong [ref=f3e957]: "Onsite hosts:"
+                  - text: Minming Li and
+                  - link "Yixiong" [ref=f3e958] [cursor=pointer]:
+                    - /url: /profile/Yixiong
+                  - text: (City University of Hong Kong).
+                - listitem [ref=f3e959]:
+                  - strong [ref=f3e960]: "Exact dates:"
+                  - strong [ref=f3e961]: 8–16 August 2026
+                  - text: . Expected start time
+                  - strong [ref=f3e962]: 10:00 HKT
+                  - text: .
+                - listitem [ref=f3e963]:
+                  - strong [ref=f3e964]: "Accommodation:"
+                  - text: We recommend using on-campus
+                  - link "CityUHK Lodge" [ref=f3e965] [cursor=pointer]:
+                    - /url: https://www.lodge.cityu.edu.hk/accommodation
+                  - text: (you can request reservation in the registration form).
+              - paragraph [ref=f3e966]:
+                - text: Participation free is completely waived for
+                - strong [ref=f3e967]: in-person
+                - text: teams of this site!
+              - heading "Iași, Romania — September 2026" [level=3] [ref=f3e968]
+              - generic [ref=f3e969]:
+                - link [ref=f3e970] [cursor=pointer]:
+                  - /url: https://www.janestreet.com/join-jane-street/open-roles/?type=students-and-new-grads&location=all-locations
+                  - img [ref=f3e971]
+                - link [ref=f3e972] [cursor=pointer]:
+                  - /url: https://pinely.com/
+                  - img [ref=f3e973]
+                - link [ref=f3e974] [cursor=pointer]:
+                  - /url: https://ordercapital.com/
+                  - img [ref=f3e975]
+                - link [ref=f3e976] [cursor=pointer]:
+                  - /url: https://www.uaic.ro/en/
+                  - img [ref=f3e977]
+              - list [ref=f3e978]:
+                - listitem [ref=f3e979]:
+                  - strong [ref=f3e980]: "Venue:"
+                  - text: Faculty of Computer Science, Alexandru Ioan Cuza University of Iași.
+                - listitem [ref=f3e981]:
+                  - strong [ref=f3e982]: "Onsite host:"
+                  - link "Juve45" [ref=f3e983] [cursor=pointer]:
+                    - /url: /profile/Juve45
+                  - text: (Alexandru Ioniță, UAIC Iași).
+                - listitem [ref=f3e984]:
+                  - strong [ref=f3e985]: "Exact dates:"
+                  - strong [ref=f3e986]: 12–20 September 2026
+                  - text: . Expected start time
+                  - strong [ref=f3e987]: 10:00 EEST
+                  - text: .
+            - paragraph [ref=f3e988]:
+              - link "Full text and comments »" [ref=f3e989] [cursor=pointer]:
+                - /url: /blog/entry/154739
+          - generic [ref=f3e990]:
+            - img "Tags" [ref=f3e991]
+            - generic [ref=f3e992]:
+              - link "ocpc" [ref=f3e993] [cursor=pointer]:
+                - /url: /search?query=ocpc
+              - text: ","
+            - generic [ref=f3e994]:
+              - link "iasi" [ref=f3e995] [cursor=pointer]:
+                - /url: /search?query=iasi
+              - text: ","
+            - generic [ref=f3e996]:
+              - link "hong kong" [ref=f3e997] [cursor=pointer]:
+                - /url: /search?query=hong+kong
+              - text: ","
+            - link "training camp" [ref=f3e999] [cursor=pointer]:
+              - /url: /search?query=training+camp
+          - generic [ref=f3e1000]:
+            - generic [ref=f3e1001]:
+              - list:
+                - listitem [ref=f3e1002]:
+                  - 'link "Vote: I like it" [ref=f3e1003] [cursor=pointer]':
+                    - /url: "#"
+                    - 'img "Vote: I like it" [ref=f3e1004]'
+                - listitem [ref=f3e1005]: "+222"
+                - listitem [ref=f3e1006]:
+                  - 'link "Vote: I do not like it" [ref=f3e1007] [cursor=pointer]':
+                    - /url: "#"
+                    - 'img "Vote: I do not like it" [ref=f3e1008]'
+            - generic [ref=f3e1009]:
+              - list:
+                - listitem [ref=f3e1010]:
+                  - link "Author" [ref=f3e1011] [cursor=pointer]:
+                    - /url: /profile/adamant
+                    - img "Author" [ref=f3e1012]
+                  - link "adamant" [ref=f3e1013] [cursor=pointer]:
+                    - /url: /profile/adamant
+                - listitem [ref=f3e1014]:
+                  - img "Publication date" [ref=f3e1015]
+                  - text: 12 days ago
+                - listitem [ref=f3e1016]:
+                  - link "Comments" [ref=f3e1017] [cursor=pointer]:
+                    - /url: /blog/entry/154739#comments
+                    - img "Comments" [ref=f3e1018]
+                  - link "11" [ref=f3e1019] [cursor=pointer]:
+                    - /url: /blog/entry/154739#comments
+        - generic [ref=f3e1021]:
+          - link "Order Capital Round 2 (Codeforces Round 1104, Div. 1 + Div. 2)" [ref=f3e1023] [cursor=pointer]:
+            - /url: /blog/entry/154537
+            - paragraph [ref=f3e1024]: Order Capital Round 2 (Codeforces Round 1104, Div. 1 + Div. 2)
+          - generic [ref=f3e1025]:
+            - text: By
+            - link "_ja" [ref=f3e1026] [cursor=pointer]:
+              - /url: /profile/_ja
+            - text: ", 3 weeks ago,"
+            - img "In English" [ref=f3e1027]
+            - generic:
+              - list
+          - generic [ref=f3e1028]:
+            - generic [ref=f3e1029]:
+              - heading "Hello / Selamat sejahtera / 你好 Codeforces!" [level=1] [ref=f3e1030]
+              - generic [ref=f3e1031]:
+                - img [ref=f3e1032]
+                - generic [ref=f3e1033]:
+                  - text: Crochet penguin plushie,
+                  - text: credits to
+                  - link "gry3125" [ref=f3e1034] [cursor=pointer]:
+                    - /url: /profile/gry3125
+              - paragraph [ref=f3e1035]:
+                - text: We,
+                - link "quacksaysduck" [ref=f3e1036] [cursor=pointer]:
+                  - /url: /profile/quacksaysduck
+                - text: and
+                - link "_ja" [ref=f3e1037] [cursor=pointer]:
+                  - /url: /profile/_ja
+                - text: are excited to invite you to
+                - link "Order Capital Round 2 (Codeforces Round 1104, Div. 1 + Div. 2)" [ref=f3e1038] [cursor=pointer]:
+                  - /url: /contest/2237
+                - text: ", which will start on"
+                - link "Thursday, June 18, 2026 at 07:35UTC-7" [ref=f3e1039] [cursor=pointer]:
+                  - /url: https://www.timeanddate.com/worldclock/fixedtime.html?day=18&month=6&year=2026&hour=17&min=35&sec=0&p1=166
+                  - text: Thursday, June 18, 2026 at 07:35
+                  - superscript [ref=f3e1040]: UTC-7
+                - text: "! In this round, you will help Ja the Ghost and Quack the Duck on their daily shenanigans."
+              - paragraph [ref=f3e1041]:
+                - text: This round will be in the format of an IMO mock. There will be
+                - generic [ref=f3e1044]: "9"
+                - text: problems which you will have to solve in
+                - generic [ref=f3e1047]: "3"
+                - text: hours. This round will be combined for Division 1 and Division 2 and will be rated for everyone. Please note that this contest contains
+                - strong [ref=f3e1048]: at least one run-twice problem,
+                - text: so please read the guide for
+                - link "run-twice problems" [ref=f3e1049] [cursor=pointer]:
+                  - /url: https://codeforces.com/blog/entry/147996
+                - text: if you are unfamiliar with them.
+              - paragraph [ref=f3e1050]:
+                - text: All problems in this round were authored by
+                - link "quacksaysduck" [ref=f3e1051] [cursor=pointer]:
+                  - /url: /profile/quacksaysduck
+                - text: ","
+                - link "_ja" [ref=f3e1052] [cursor=pointer]:
+                  - /url: /profile/_ja
+                - text: ","
+                - link "StarSilk" [ref=f3e1053] [cursor=pointer]:
+                  - /url: /profile/StarSilk
+                - text: and
+                - link "zeemanz" [ref=f3e1054] [cursor=pointer]:
+                  - /url: /profile/zeemanz
+                - text: .
+              - paragraph [ref=f3e1055]: "We would like to thank the following people for their contributions:"
+              - list [ref=f3e1056]:
+                - listitem [ref=f3e1057]:
+                  - link "Sugar_fan" [ref=f3e1058] [cursor=pointer]:
+                    - /url: /profile/Sugar_fan
+                  - text: for his coordination and advice,
+                - listitem [ref=f3e1059]:
+                  - link "Um_nik" [ref=f3e1060] [cursor=pointer]:
+                    - /url: /profile/Um_nik
+                  - text: for preliminary review,
+                - listitem [ref=f3e1061]:
+                  - link "Boboge" [ref=f3e1062] [cursor=pointer]:
+                    - /url: /profile/Boboge
+                  - text: for carrying the problem preparations,
+                - listitem [ref=f3e1063]:
+                  - link "StarSilk" [ref=f3e1064] [cursor=pointer]:
+                    - /url: /profile/StarSilk
+                  - text: and
+                  - link "__baozii__" [ref=f3e1065] [cursor=pointer]:
+                    - /url: /profile/__baozii__
+                  - text: for providing some cool problems,
+                - listitem [ref=f3e1066]:
+                  - link "Alexdat2000" [ref=f3e1067] [cursor=pointer]:
+                    - /url: /profile/Alexdat2000
+                  - text: for translating statements into Russian,
+                - listitem [ref=f3e1068]:
+                  - link "_ja" [ref=f3e1069] [cursor=pointer]:
+                    - /url: /profile/_ja
+                  - text: ","
+                  - link "Mitsukasa_Ayase" [ref=f3e1070] [cursor=pointer]:
+                    - /url: /profile/Mitsukasa_Ayase
+                  - text: ","
+                  - link "geospiza" [ref=f3e1071] [cursor=pointer]:
+                    - /url: /profile/geospiza
+                  - text: ","
+                  - link "leg" [ref=f3e1072] [cursor=pointer]:
+                    - /url: /profile/leg
+                  - text: ","
+                  - link "EvenImage" [ref=f3e1073] [cursor=pointer]:
+                    - /url: /profile/EvenImage
+                  - text: ","
+                  - link "fallleaves01" [ref=f3e1074] [cursor=pointer]:
+                    - /url: /profile/fallleaves01
+                  - text: ","
+                  - link "Tobo" [ref=f3e1075] [cursor=pointer]:
+                    - /url: /profile/Tobo
+                  - text: ","
+                  - link "Code937" [ref=f3e1076] [cursor=pointer]:
+                    - /url: /profile/Code937
+                  - text: ","
+                  - link "Boboge" [ref=f3e1077] [cursor=pointer]:
+                    - /url: /profile/Boboge
+                  - text: ","
+                  - link "Erica_aaa" [ref=f3e1078] [cursor=pointer]:
+                    - /url: /profile/Erica_aaa
+                  - text: ","
+                  - link "andreumat" [ref=f3e1079] [cursor=pointer]:
+                    - /url: /profile/andreumat
+                  - text: ","
+                  - link "SSerxhs" [ref=f3e1080] [cursor=pointer]:
+                    - /url: /profile/SSerxhs
+                  - text: ","
+                  - link "Timmyliuyunxi" [ref=f3e1081] [cursor=pointer]:
+                    - /url: /profile/Timmyliuyunxi
+                  - text: ","
+                  - link "gongkoufadongji" [ref=f3e1082] [cursor=pointer]:
+                    - /url: /profile/gongkoufadongji
+                  - text: ","
+                  - link "chyragym" [ref=f3e1083] [cursor=pointer]:
+                    - /url: /profile/chyragym
+                  - text: ","
+                  - link "Misumi_Ichika" [ref=f3e1084] [cursor=pointer]:
+                    - /url: /profile/Misumi_Ichika
+                  - text: ","
+                  - link "Syuzi777" [ref=f3e1085] [cursor=pointer]:
+                    - /url: /profile/Syuzi777
+                  - text: ","
+                  - link "__baozii__" [ref=f3e1086] [cursor=pointer]:
+                    - /url: /profile/__baozii__
+                  - text: ","
+                  - link "_LeMur_" [ref=f3e1087] [cursor=pointer]:
+                    - /url: /profile/_LeMur_
+                  - text: ","
+                  - link "turkhuu622" [ref=f3e1088] [cursor=pointer]:
+                    - /url: /profile/turkhuu622
+                  - text: ","
+                  - link "oToToT" [ref=f3e1089] [cursor=pointer]:
+                    - /url: /profile/oToToT
+                  - text: ","
+                  - link "vito1036" [ref=f3e1090] [cursor=pointer]:
+                    - /url: /profile/vito1036
+                  - text: ","
+                  - link "FelixArg" [ref=f3e1091] [cursor=pointer]:
+                    - /url: /profile/FelixArg
+                  - text: ","
+                  - link "SUL" [ref=f3e1092] [cursor=pointer]:
+                    - /url: /profile/SUL
+                  - text: ","
+                  - link "marianoferesin" [ref=f3e1093] [cursor=pointer]:
+                    - /url: /profile/marianoferesin
+                  - text: ","
+                  - link "GILGAMESH" [ref=f3e1094] [cursor=pointer]:
+                    - /url: /profile/GILGAMESH
+                  - text: ","
+                  - link "The_Lion_King_777" [ref=f3e1095] [cursor=pointer]:
+                    - /url: /profile/The_Lion_King_777
+                  - text: ","
+                  - link "Hile_Meow" [ref=f3e1096] [cursor=pointer]:
+                    - /url: /profile/Hile_Meow
+                  - text: ","
+                  - link "Sakuya_maid" [ref=f3e1097] [cursor=pointer]:
+                    - /url: /profile/Sakuya_maid
+                  - text: ","
+                  - link "edogawa_something" [ref=f3e1098] [cursor=pointer]:
+                    - /url: /profile/edogawa_something
+                  - text: ","
+                  - link "tiger2005" [ref=f3e1099] [cursor=pointer]:
+                    - /url: /profile/tiger2005
+                  - text: ","
+                  - link "shendeliliang" [ref=f3e1100] [cursor=pointer]:
+                    - /url: /profile/shendeliliang
+                  - text: ","
+                  - link "Arpa" [ref=f3e1101] [cursor=pointer]:
+                    - /url: /profile/Arpa
+                  - text: ","
+                  - link "SergeiFedorov" [ref=f3e1102] [cursor=pointer]:
+                    - /url: /profile/SergeiFedorov
+                  - text: ","
+                  - link "-XraY-" [ref=f3e1103] [cursor=pointer]:
+                    - /url: /profile/-XraY-
+                  - text: ","
+                  - link "VadymKa" [ref=f3e1104] [cursor=pointer]:
+                    - /url: /profile/VadymKa
+                  - text: ","
+                  - link "scorpion" [ref=f3e1105] [cursor=pointer]:
+                    - /url: /profile/scorpion
+                  - text: ","
+                  - link "surokpro" [ref=f3e1106] [cursor=pointer]:
+                    - /url: /profile/surokpro
+                  - text: ","
+                  - link "lIlIlIlIIll" [ref=f3e1107] [cursor=pointer]:
+                    - /url: /profile/lIlIlIlIIll
+                  - text: ","
+                  - link "Buek" [ref=f3e1108] [cursor=pointer]:
+                    - /url: /profile/Buek
+                  - text: for testing and providing valuable suggestions,
+                - listitem [ref=f3e1109]:
+                  - link "MikeMirzayanov" [ref=f3e1110] [cursor=pointer]:
+                    - /url: /profile/MikeMirzayanov
+                  - text: and
+                  - link "KAN" [ref=f3e1111] [cursor=pointer]:
+                    - /url: /profile/KAN
+                  - text: for the amazing Codeforces and Polygon platforms,
+                - listitem [ref=f3e1112]:
+                  - text: and lastly,
+                  - link "You" [ref=f3e1113] [cursor=pointer]:
+                    - /url: https://codeforces.com/profile/
+                  - text: for participating.
+              - paragraph [ref=f3e1114]: "The score distribution:"
+              - generic [ref=f3e1117]:
+                - generic [ref=f3e1118]: "500"
+                - generic [ref=f3e1119]: −
+                - generic [ref=f3e1120]: "1000"
+                - generic [ref=f3e1121]: −
+                - generic [ref=f3e1122]: "1250"
+                - generic [ref=f3e1123]: −
+                - generic [ref=f3e1124]: "1750"
+                - generic [ref=f3e1125]: −
+                - generic [ref=f3e1126]: "2250"
+                - generic [ref=f3e1127]: −
+                - generic [ref=f3e1128]: "2500"
+                - generic [ref=f3e1129]: −
+                - generic [ref=f3e1130]: "2750"
+                - generic [ref=f3e1131]: −
+                - generic [ref=f3e1132]: "3500"
+                - generic [ref=f3e1133]: −
+                - generic [ref=f3e1134]: (
+                - generic [ref=f3e1135]: "3500"
+                - generic [ref=f3e1136]: +
+                - generic [ref=f3e1137]: "4500"
+                - generic [ref=f3e1138]: )
+                - generic [ref=f3e1139]: .
+              - paragraph [ref=f3e1140]:
+                - text: "Fun fact: As far as"
+                - link "Evirir" [ref=f3e1141] [cursor=pointer]:
+                  - /url: /profile/Evirir
+                - text: knows, this is the second round by Malaysians since 2020!
+              - paragraph [ref=f3e1142]: And now, a few words from today's sponsor!
+              - paragraph:
+                - img "Order Capital" [ref=f3e1143]
+              - paragraph [ref=f3e1144]:
+                - emphasis [ref=f3e1145]: 👋Hello Codeforces!
+              - paragraph [ref=f3e1146]:
+                - emphasis [ref=f3e1147]:
+                  - text: I’m Igor
+                  - link "-XraY-" [ref=f3e1148] [cursor=pointer]:
+                    - /url: /profile/-XraY-
+                  - text: ", CEO at Order Capital. Last year we ran our first Codeforces round and were genuinely impressed by the community response! So we’re happy to be back with"
+                  - strong [ref=f3e1149]: Order Capital Round 2
+                  - text: 🚀.
+              - paragraph [ref=f3e1150]:
+                - emphasis [ref=f3e1151]: We’ve prepared a fresh set of problems with interesting ideas and a few surprises along the way. Whether you’re here to push ratings, enjoy a good contest, or just vibe with interesting problems, jump in.
+              - paragraph [ref=f3e1152]:
+                - emphasis [ref=f3e1153]: 💸Just like last year, we’ll have prizes and some awesome merch for top performers as well as a few randomly selected participants.
+              - paragraph [ref=f3e1154]:
+                - strong [ref=f3e1155]: Prizes
+              - list [ref=f3e1156]:
+                - listitem [ref=f3e1157]: 🥇 🥈 🥉 🎖 1–4 — 1000 USDT
+                - listitem [ref=f3e1158]: 5 — 800 USDT
+                - listitem [ref=f3e1159]: 6 — 700 USDT
+                - listitem [ref=f3e1160]: 7 — 600 USDT
+                - listitem [ref=f3e1161]: 8 — 400 USDT
+                - listitem [ref=f3e1162]: 9 — 300 USDT
+                - listitem [ref=f3e1163]: 10 — 200 USDT
+              - paragraph [ref=f3e1164]:
+                - text: 🎁
+                - strong [ref=f3e1165]: "PLUS:"
+              - paragraph [ref=f3e1166]:
+                - emphasis [ref=f3e1167]: Top 10 + 20 randomly selected participants ranked between 11 and 200 will get our secret Order Capital merch boxes 🎁
+              - paragraph [ref=f3e1168]:
+                - emphasis [ref=f3e1169]:
+                  - text: At
+                  - link "Order Capital" [ref=f3e1170] [cursor=pointer]:
+                    - /url: https://ordercapital.com/
+                  - text: we are constantly developing and looking for talented ambitious people to join our team. Hit the button below to check out the career opportunities in Order Capital.
+              - link "Fill Form →" [ref=f3e1172] [cursor=pointer]:
+                - /url: https://codeforces.com/userForm/6248764a2954be2f
+              - paragraph [ref=f3e1173]:
+                - emphasis [ref=f3e1174]: Enjoy the contest, have fun solving, and we hope to see your name near the top of the standings!
+              - paragraph [ref=f3e1175]:
+                - emphasis [ref=f3e1176]: PS We reserve the right to apply strict compliance checks when finalizing the results in order to prevent unfair participation and rule violations.
+              - paragraph [ref=f3e1177]:
+                - strong [ref=f3e1178]: UPD
+                - text: ":"
+                - link "Editorial" [ref=f3e1179] [cursor=pointer]:
+                  - /url: https://codeforces.com/blog/entry/154603
+                - text: is up.
+            - paragraph [ref=f3e1180]:
+              - link "Full text and comments »" [ref=f3e1181] [cursor=pointer]:
+                - /url: /blog/entry/154537
+          - generic [ref=f3e1182]:
+            - img [ref=f3e1183]
+            - generic [ref=f3e1184]:
+              - text: Announcement of
+              - link "Order Capital Round 2 (Codeforces Round 1104, Div. 1 + Div. 2)" [ref=f3e1185] [cursor=pointer]:
+                - /url: /contest/2237
+          - generic [ref=f3e1186]:
+            - generic [ref=f3e1187]:
+              - list:
+                - listitem [ref=f3e1188]:
+                  - 'link "Vote: I like it" [ref=f3e1189] [cursor=pointer]':
+                    - /url: "#"
+                    - 'img "Vote: I like it" [ref=f3e1190]'
+                - listitem [ref=f3e1191]: "+324"
+                - listitem [ref=f3e1192]:
+                  - 'link "Vote: I do not like it" [ref=f3e1193] [cursor=pointer]':
+                    - /url: "#"
+                    - 'img "Vote: I do not like it" [ref=f3e1194]'
+            - generic [ref=f3e1195]:
+              - list:
+                - listitem [ref=f3e1196]:
+                  - link "Author" [ref=f3e1197] [cursor=pointer]:
+                    - /url: /profile/_ja
+                    - img "Author" [ref=f3e1198]
+                  - link "_ja" [ref=f3e1199] [cursor=pointer]:
+                    - /url: /profile/_ja
+                - listitem [ref=f3e1200]:
+                  - img "Publication date" [ref=f3e1201]
+                  - text: 3 weeks ago
+                - listitem [ref=f3e1202]:
+                  - link "Comments" [ref=f3e1203] [cursor=pointer]:
+                    - /url: /blog/entry/154537#comments
+                    - img "Comments" [ref=f3e1204]
+                  - link "126" [ref=f3e1205] [cursor=pointer]:
+                    - /url: /blog/entry/154537#comments
+        - generic [ref=f3e1207]:
+          - link "Europe Women's Programming Contest 2026" [ref=f3e1209] [cursor=pointer]:
+            - /url: /blog/entry/154531
+            - paragraph [ref=f3e1210]: Europe Women's Programming Contest 2026
+          - generic [ref=f3e1211]:
+            - text: By
+            - link "prvocislo" [ref=f3e1212] [cursor=pointer]:
+              - /url: /profile/prvocislo
+            - text: ","
+            - link "history" [ref=f3e1213] [cursor=pointer]:
+              - /url: /topic/155173/en2
+            - text: ", 3 weeks ago,"
+            - img "In English" [ref=f3e1214]
+            - generic:
+              - list
+          - generic [ref=f3e1215]:
+            - generic [ref=f3e1216]:
+              - paragraph [ref=f3e1217]: Hello CodeForces!
+              - paragraph [ref=f3e1218]:
+                - text: ICPC just announced
+                - link "Europe Women's Programming Contest 2026" [ref=f3e1219] [cursor=pointer]:
+                  - /url: https://ewpc.icpc.global/
+                - text: — an individual algorithmic programming contest for women and non-binary students across Europe. Online qualification is on July 4, and top 20 contestants advance to the onsite finals in Stockholm on August 21-24!
+              - paragraph [ref=f3e1220]:
+                - text: Registration is open on
+                - link "ewpc.icpc.global" [ref=f3e1221] [cursor=pointer]:
+                  - /url: https://ewpc.icpc.global/
+                - text: .
+              - paragraph [ref=f3e1222]: See you there!
+            - paragraph [ref=f3e1223]:
+              - link "Full text and comments »" [ref=f3e1224] [cursor=pointer]:
+                - /url: /blog/entry/154531
+          - generic [ref=f3e1225]:
+            - generic [ref=f3e1226]:
+              - list:
+                - listitem [ref=f3e1227]:
+                  - 'link "Vote: I like it" [ref=f3e1228] [cursor=pointer]':
+                    - /url: "#"
+                    - 'img "Vote: I like it" [ref=f3e1229]'
+                - listitem [ref=f3e1230]: "+184"
+                - listitem [ref=f3e1231]:
+                  - 'link "Vote: I do not like it" [ref=f3e1232] [cursor=pointer]':
+                    - /url: "#"
+                    - 'img "Vote: I do not like it" [ref=f3e1233]'
+            - generic [ref=f3e1234]:
+              - list:
+                - listitem [ref=f3e1235]:
+                  - link "Author" [ref=f3e1236] [cursor=pointer]:
+                    - /url: /profile/prvocislo
+                    - img "Author" [ref=f3e1237]
+                  - link "prvocislo" [ref=f3e1238] [cursor=pointer]:
+                    - /url: /profile/prvocislo
+                - listitem [ref=f3e1239]:
+                  - img "Publication date" [ref=f3e1240]
+                  - text: 3 weeks ago
+                - listitem [ref=f3e1241]:
+                  - link "Comments" [ref=f3e1242] [cursor=pointer]:
+                    - /url: /blog/entry/154531#comments
+                    - img "Comments" [ref=f3e1243]
+                  - link "84" [ref=f3e1244] [cursor=pointer]:
+                    - /url: /blog/entry/154531#comments
+        - generic [ref=f3e1246]:
+          - link "Order Capital is back with Round 2" [ref=f3e1248] [cursor=pointer]:
+            - /url: /blog/entry/154436
+            - paragraph [ref=f3e1249]: Order Capital is back with Round 2
+          - generic [ref=f3e1250]:
+            - text: By
+            - link "OrderCapital" [ref=f3e1251] [cursor=pointer]:
+              - /url: /profile/OrderCapital
+            - text: ","
+            - link "history" [ref=f3e1252] [cursor=pointer]:
+              - /url: /topic/155078/en4
+            - text: ", 4 weeks ago,"
+            - img "In English" [ref=f3e1253]
+            - generic:
+              - list
+          - generic [ref=f3e1254]:
+            - generic [ref=f3e1255]:
+              - paragraph:
+                - img "Order Capital" [ref=f3e1256]
+              - heading "👋Yo Codeforces!" [level=3] [ref=f3e1257]
+              - paragraph [ref=f3e1258]:
+                - text: Hello from
+                - strong [ref=f3e1259]: Order Capital
+                - text: "!"
+              - paragraph [ref=f3e1260]:
+                - text: Last year we launched our very
+                - link "first Codeforces contest" [ref=f3e1261] [cursor=pointer]:
+                  - /url: https://codeforces.com/blog/entry/144537
+                - text: and the response was way beyond our expectations.
+              - paragraph [ref=f3e1262]: So we had no choice but to run it back!
+              - paragraph [ref=f3e1263]: "For those who don’t know us yet:"
+              - paragraph [ref=f3e1264]:
+                - link "Order Capital" [ref=f3e1265] [cursor=pointer]:
+                  - /url: https://ordercapital.com/
+                - text: is a group of companies specializing in software development and automated trading. We combine modern technology and research to make data-driven decisions in quantitative trading and explore new opportunities for business growth.
+              - paragraph [ref=f3e1266]:
+                - text: "🚀 Introducing:"
+                - link "Order Capital Round 2 (Codeforces Round 1104, Div. 1 + Div. 2)" [ref=f3e1267] [cursor=pointer]:
+                  - /url: /contest/2237
+                - text: .
+              - paragraph [ref=f3e1268]: "This time we’ve prepared:"
+              - list [ref=f3e1269]:
+                - listitem [ref=f3e1270]:
+                  - paragraph [ref=f3e1271]: a new set of problems;
+                - listitem [ref=f3e1272]:
+                  - paragraph [ref=f3e1273]: plenty of interesting ideas;
+                - listitem [ref=f3e1274]:
+                  - paragraph [ref=f3e1275]: a few unexpected twists.
+              - paragraph [ref=f3e1276]: Whether you're aiming for a new rating milestone, looking for a good challenge, or simply enjoy solving well-crafted problems, we'd love to see you on the leaderboard.
+              - paragraph [ref=f3e1277]: Competitive programming is a huge part of our culture, and organizing this round is our way of giving back to the community that continues to inspire us every day.
+              - paragraph [ref=f3e1278]:
+                - text: 💸
+                - strong [ref=f3e1279]: Prizes
+              - list [ref=f3e1280]:
+                - listitem [ref=f3e1281]: 🥇 🥈 🥉 🎖 1–4 — 1000 USDT
+                - listitem [ref=f3e1282]: 5 — 800 USDT
+                - listitem [ref=f3e1283]: 6 — 700 USDT
+                - listitem [ref=f3e1284]: 7 — 600 USDT
+                - listitem [ref=f3e1285]: 8 — 400 USDT
+                - listitem [ref=f3e1286]: 9 — 300 USDT
+                - listitem [ref=f3e1287]: 10 — 200 USDT
+              - paragraph [ref=f3e1288]:
+                - text: 🎁
+                - strong [ref=f3e1289]: "PLUS:"
+              - paragraph [ref=f3e1290]: Top 10 + 20 randomly selected participants ranked between 11 and 200 will get our secret Order Capital merch boxes 🎁
+              - paragraph [ref=f3e1291]: We’re keeping the tradition alive just like last year, there will be something fun and unexpected inside 👀
+              - paragraph [ref=f3e1292]: And here’s a little throwback to what we had last time to set the mood 📸
+              - paragraph [ref=f3e1293]:
+                - img [ref=f3e1294]
+              - paragraph [ref=f3e1295]:
+                - text: We are growing and have open positions in
+                - strong [ref=f3e1296]: Dubai
+                - text: and (drumroll 🥁)
+                - strong [ref=f3e1297]: Amsterdam
+                - text: — yes, we’re opening a new office and hiring onsite in both locations.
+              - paragraph [ref=f3e1298]:
+                - strong [ref=f3e1299]: "We’re looking for:"
+              - list [ref=f3e1300]:
+                - listitem [ref=f3e1301]: C++ Engineers (low-latency, high-performance)
+                - listitem [ref=f3e1302]: ML Infra Engineers (Python / C++)
+                - listitem [ref=f3e1303]: Research Engineers with strong algorithmic skills
+              - paragraph [ref=f3e1304]: "🎯 What drives us:"
+              - list [ref=f3e1305]:
+                - listitem [ref=f3e1306]: Solving hard Olympiad-level problems
+                - listitem [ref=f3e1307]: Open discussion and exchange of ideas
+                - listitem [ref=f3e1308]: A culture built around engineering, not process
+              - paragraph [ref=f3e1309]:
+                - strong [ref=f3e1310]: Curious about Order Capital? Just fill out a quick form.
+              - link "Fill Form →" [ref=f3e1312] [cursor=pointer]:
+                - /url: https://codeforces.com/userForm/6248764a2954be2f
+              - paragraph [ref=f3e1313]: Big shoutout to the Codeforces team + everyone who stress-tested these problems.
+              - paragraph [ref=f3e1314]:
+                - emphasis [ref=f3e1315]: We reserve the right to apply strict compliance checks when finalizing the results in order to prevent unfair participation and rule violations.
+              - paragraph [ref=f3e1316]:
+                - text: Good luck and have fun in
+                - link "Order Capital Round 2" [ref=f3e1317] [cursor=pointer]:
+                  - /url: https://codeforces.com/contest/2237
+                  - strong [ref=f3e1318]: Order Capital Round 2
+                - text: "!"
+              - paragraph [ref=f3e1319]: — Team Order Capital
+            - paragraph [ref=f3e1320]:
+              - link "Full text and comments »" [ref=f3e1321] [cursor=pointer]:
+                - /url: /blog/entry/154436
+          - generic [ref=f3e1322]:
+            - generic [ref=f3e1323]:
+              - list:
+                - listitem [ref=f3e1324]:
+                  - 'link "Vote: I like it" [ref=f3e1325] [cursor=pointer]':
+                    - /url: "#"
+                    - 'img "Vote: I like it" [ref=f3e1326]'
+                - listitem [ref=f3e1327]: "+294"
+                - listitem [ref=f3e1328]:
+                  - 'link "Vote: I do not like it" [ref=f3e1329] [cursor=pointer]':
+                    - /url: "#"
+                    - 'img "Vote: I do not like it" [ref=f3e1330]'
+            - generic [ref=f3e1331]:
+              - list:
+                - listitem [ref=f3e1332]:
+                  - link "Author" [ref=f3e1333] [cursor=pointer]:
+                    - /url: /profile/OrderCapital
+                    - img "Author" [ref=f3e1334]
+                  - link "OrderCapital" [ref=f3e1335] [cursor=pointer]:
+                    - /url: /profile/OrderCapital
+                - listitem [ref=f3e1336]:
+                  - img "Publication date" [ref=f3e1337]
+                  - text: 4 weeks ago
+                - listitem [ref=f3e1338]:
+                  - link "Comments" [ref=f3e1339] [cursor=pointer]:
+                    - /url: /blog/entry/154436#comments
+                    - img "Comments" [ref=f3e1340]
+                  - link "46" [ref=f3e1341] [cursor=pointer]:
+                    - /url: /blog/entry/154436#comments
+        - generic [ref=f3e1343]:
+          - link "Codeforces Round 1103 (Div. 3)" [ref=f3e1345] [cursor=pointer]:
+            - /url: /blog/entry/154345
+            - paragraph [ref=f3e1346]: Codeforces Round 1103 (Div. 3)
+          - generic [ref=f3e1347]:
+            - text: By
+            - link "eyfxrby" [ref=f3e1348] [cursor=pointer]:
+              - /url: /profile/eyfxrby
+            - text: ", 4 weeks ago, translation,"
+            - img "In English" [ref=f3e1349]
+            - generic:
+              - list
+          - generic [ref=f3e1350]:
+            - generic [ref=f3e1351]:
+              - heading "Шумбрат, Сәлам, Привет Codeforces!" [level=1] [ref=f3e1352]
+              - paragraph [ref=f3e1353]:
+                - text: We are pleased to invite you to participate in
+                - link "Codeforces Round 1103 (Div. 3)" [ref=f3e1354] [cursor=pointer]:
+                  - /url: /contest/2236
+                - text: "on"
+                - link "Friday, June 12, 2026 at 07:35UTC-7" [ref=f3e1355] [cursor=pointer]:
+                  - /url: https://www.timeanddate.com/worldclock/fixedtime.html?day=12&month=6&year=2026&hour=17&min=35&sec=0&p1=166
+                  - text: Friday, June 12, 2026 at 07:35
+                  - superscript [ref=f3e1356]: UTC-7
+                - text: — another Codeforces round for third division. You will be given 7-8 problems, which were prepared to create an interesting competition for participants with a rating 1599 or lower.
+                - strong [ref=f3e1357]: However, those with a rating 1600 or higher can register for the round unrated
+                - text: .
+              - paragraph [ref=f3e1358]: The round will be hosted by rules of educational rounds (extended ICPC). Thus, all solutions will be judged on preliminary tests during the round, and after the round, there will be a 12-hour phase of open hacks. After the open hack phase, all accepted solutions will be rejudged on successful hacks. We tried our best to make reliable tests — just like you, we will be very disappointed if many participants' solutions are hacked after the ending of the contest.
+              - paragraph [ref=f3e1359]:
+                - text: You will be given
+                - strong [ref=f3e1360]: 7-8 tasks
+                - text: for
+                - strong [ref=f3e1361]: 2 hours and 30 minutes
+                - text: to complete them.
+              - paragraph [ref=f3e1362]:
+                - text: Note that the
+                - strong [ref=f3e1363]: penalty
+                - text: for the wrong submission in this round is
+                - strong [ref=f3e1364]: 10 minutes
+                - text: .
+              - paragraph [ref=f3e1365]:
+                - link "Remember" [ref=f3e1366] [cursor=pointer]:
+                  - /url: https://codeforces.com/blog/entry/59228
+                - text: that only the trusted participants of the third division will be included in the official standings table. As it is written by link, this is a compulsory measure for combating unsporting behavior. To qualify as a
+                - emphasis [ref=f3e1367]: trusted participant of the third division
+                - text: ", you must:"
+              - list [ref=f3e1368]:
+                - listitem [ref=f3e1369]: take part in at least five rated rounds (and solve at least one problem in each of them)
+                - listitem [ref=f3e1370]:
+                  - text: do not have a point of
+                  - strong [ref=f3e1371]: 1900 or higher in the rating
+                  - text: .
+              - paragraph [ref=f3e1372]:
+                - strong [ref=f3e1373]: Regardless of whether you are a trusted participant of the third division or not, if your rating is less than 1600, then the round will be rated for you.
+              - paragraph [ref=f3e1374]:
+                - text: Problems have been created and written by
+                - link "arsen1y" [ref=f3e1375] [cursor=pointer]:
+                  - /url: /profile/arsen1y
+                - text: ","
+                - link "dvb1r" [ref=f3e1376] [cursor=pointer]:
+                  - /url: /profile/dvb1r
+                - text: and me.
+              - paragraph [ref=f3e1377]: "We would like to thank:"
+              - list [ref=f3e1378]:
+                - listitem [ref=f3e1379]:
+                  - paragraph [ref=f3e1380]:
+                    - link "Vladosiya" [ref=f3e1381] [cursor=pointer]:
+                      - /url: /profile/Vladosiya
+                    - text: for excellent coordination.
+                - listitem [ref=f3e1382]:
+                  - paragraph [ref=f3e1383]:
+                    - link "Friendiks" [ref=f3e1384] [cursor=pointer]:
+                      - /url: /profile/Friendiks
+                    - text: and
+                    - link "Treks" [ref=f3e1385] [cursor=pointer]:
+                      - /url: /profile/Treks
+                    - text: for red testing.
+                - listitem [ref=f3e1386]:
+                  - paragraph [ref=f3e1387]:
+                    - link "sqwiijqk" [ref=f3e1388] [cursor=pointer]:
+                      - /url: /profile/sqwiijqk
+                    - text: ","
+                    - link "Arpa" [ref=f3e1389] [cursor=pointer]:
+                      - /url: /profile/Arpa
+                    - text: ","
+                    - link "Fakewave" [ref=f3e1390] [cursor=pointer]:
+                      - /url: /profile/Fakewave
+                    - text: ","
+                    - link "sahasrad" [ref=f3e1391] [cursor=pointer]:
+                      - /url: /profile/sahasrad
+                    - text: ","
+                    - link "yanb0" [ref=f3e1392] [cursor=pointer]:
+                      - /url: /profile/yanb0
+                    - text: ","
+                    - link "Egorsa" [ref=f3e1393] [cursor=pointer]:
+                      - /url: /profile/Egorsa
+                    - text: and
+                    - link "absolut3" [ref=f3e1394] [cursor=pointer]:
+                      - /url: /profile/absolut3
+                    - text: for yellow testing.
+                - listitem [ref=f3e1395]:
+                  - paragraph [ref=f3e1396]:
+                    - link "SapeginIgor" [ref=f3e1397] [cursor=pointer]:
+                      - /url: /profile/SapeginIgor
+                    - text: ","
+                    - link "ElyesChaabouni" [ref=f3e1398] [cursor=pointer]:
+                      - /url: /profile/ElyesChaabouni
+                    - text: and
+                    - link "D_ck" [ref=f3e1399] [cursor=pointer]:
+                      - /url: /profile/D_ck
+                    - text: for purple testing.
+                - listitem [ref=f3e1400]:
+                  - paragraph [ref=f3e1401]:
+                    - link "_bourrasque_" [ref=f3e1402] [cursor=pointer]:
+                      - /url: /profile/_bourrasque_
+                    - text: ","
+                    - link "sh1n0a" [ref=f3e1403] [cursor=pointer]:
+                      - /url: /profile/sh1n0a
+                    - text: ","
+                    - link "OrleanMagic" [ref=f3e1404] [cursor=pointer]:
+                      - /url: /profile/OrleanMagic
+                    - text: ","
+                    - link "string_eureka" [ref=f3e1405] [cursor=pointer]:
+                      - /url: /profile/string_eureka
+                    - text: ","
+                    - link "stepan1111" [ref=f3e1406] [cursor=pointer]:
+                      - /url: /profile/stepan1111
+                    - text: ","
+                    - link "BankaVarenya" [ref=f3e1407] [cursor=pointer]:
+                      - /url: /profile/BankaVarenya
+                    - text: ","
+                    - link "Egorzykin" [ref=f3e1408] [cursor=pointer]:
+                      - /url: /profile/Egorzykin
+                    - text: ","
+                    - link "itz_pabloo" [ref=f3e1409] [cursor=pointer]:
+                      - /url: /profile/itz_pabloo
+                    - text: ","
+                    - link "Timiguro" [ref=f3e1410] [cursor=pointer]:
+                      - /url: /profile/Timiguro
+                    - text: ","
+                    - link "Datym" [ref=f3e1411] [cursor=pointer]:
+                      - /url: /profile/Datym
+                    - text: ","
+                    - link "Ferume" [ref=f3e1412] [cursor=pointer]:
+                      - /url: /profile/Ferume
+                    - text: and
+                    - link "ixeteny" [ref=f3e1413] [cursor=pointer]:
+                      - /url: /profile/ixeteny
+                    - text: for blue testing.
+                - listitem [ref=f3e1414]:
+                  - paragraph [ref=f3e1415]:
+                    - link "opa" [ref=f3e1416] [cursor=pointer]:
+                      - /url: /profile/opa
+                    - text: ","
+                    - link "WiseKid" [ref=f3e1417] [cursor=pointer]:
+                      - /url: /profile/WiseKid
+                    - text: ","
+                    - link "furt1ve" [ref=f3e1418] [cursor=pointer]:
+                      - /url: /profile/furt1ve
+                    - text: and
+                    - link "Gordey_Leushin" [ref=f3e1419] [cursor=pointer]:
+                      - /url: /profile/Gordey_Leushin
+                    - text: for cyan testing.
+                - listitem [ref=f3e1420]:
+                  - paragraph [ref=f3e1421]:
+                    - link "KruPavel" [ref=f3e1422] [cursor=pointer]:
+                      - /url: /profile/KruPavel
+                    - text: ","
+                    - link "mrskzv" [ref=f3e1423] [cursor=pointer]:
+                      - /url: /profile/mrskzv
+                    - text: ","
+                    - link "HelloFromMars" [ref=f3e1424] [cursor=pointer]:
+                      - /url: /profile/HelloFromMars
+                    - text: ","
+                    - link "mhmusanna" [ref=f3e1425] [cursor=pointer]:
+                      - /url: /profile/mhmusanna
+                    - text: ","
+                    - link "Chaynikov" [ref=f3e1426] [cursor=pointer]:
+                      - /url: /profile/Chaynikov
+                    - text: ","
+                    - link "Gosha2403" [ref=f3e1427] [cursor=pointer]:
+                      - /url: /profile/Gosha2403
+                    - text: ","
+                    - link "hsiFomeN" [ref=f3e1428] [cursor=pointer]:
+                      - /url: /profile/hsiFomeN
+                    - text: and
+                    - link "Everes" [ref=f3e1429] [cursor=pointer]:
+                      - /url: /profile/Everes
+                    - text: for green testing.
+                - listitem [ref=f3e1430]:
+                  - paragraph [ref=f3e1431]:
+                    - link "ilyamn22" [ref=f3e1432] [cursor=pointer]:
+                      - /url: /profile/ilyamn22
+                    - text: for grey testing.
+                - listitem [ref=f3e1433]:
+                  - paragraph [ref=f3e1434]:
+                    - link "MikeMirzayanov" [ref=f3e1435] [cursor=pointer]:
+                      - /url: /profile/MikeMirzayanov
+                    - text: и
+                    - link "KAN" [ref=f3e1436] [cursor=pointer]:
+                      - /url: /profile/KAN
+                    - text: for Polygon and Codeforces platforms.
+                - listitem [ref=f3e1437]:
+                  - paragraph [ref=f3e1438]:
+                    - text: And, of corse, thanks a lot
+                    - link "You" [ref=f3e1439] [cursor=pointer]:
+                      - /url: /profile/
+                    - text: for participating!
+              - paragraph [ref=f3e1440]:
+                - link "photo 2026 06 09 20 05 30" [ref=f3e1441] [cursor=pointer]:
+                  - /url: https://imgbb.com/
+                  - img "photo 2026 06 09 20 05 30" [ref=f3e1442]
+              - paragraph [ref=f3e1443]:
+                - strong [ref=f3e1444]: P.S.
+                - text: try to match the authors in the following photo!
+              - paragraph [ref=f3e1445]:
+                - strong [ref=f3e1446]: UPD.
+                - link "Editorial is posted!" [ref=f3e1447] [cursor=pointer]:
+                  - /url: https://codeforces.com/blog/entry/154496
+            - paragraph [ref=f3e1448]:
+              - link "Full text and comments »" [ref=f3e1449] [cursor=pointer]:
+                - /url: /blog/entry/154345
+          - generic [ref=f3e1450]:
+            - img [ref=f3e1451]
+            - generic [ref=f3e1452]:
+              - text: Announcement of
+              - link "Codeforces Round 1103 (Div. 3)" [ref=f3e1453] [cursor=pointer]:
+                - /url: /contest/2236
+          - generic [ref=f3e1454]:
+            - generic [ref=f3e1455]:
+              - list:
+                - listitem [ref=f3e1456]:
+                  - 'link "Vote: I like it" [ref=f3e1457] [cursor=pointer]':
+                    - /url: "#"
+                    - 'img "Vote: I like it" [ref=f3e1458]'
+                - listitem [ref=f3e1459]: "+240"
+                - listitem [ref=f3e1460]:
+                  - 'link "Vote: I do not like it" [ref=f3e1461] [cursor=pointer]':
+                    - /url: "#"
+                    - 'img "Vote: I do not like it" [ref=f3e1462]'
+            - generic [ref=f3e1463]:
+              - list:
+                - listitem [ref=f3e1464]:
+                  - link "Author" [ref=f3e1465] [cursor=pointer]:
+                    - /url: /profile/eyfxrby
+                    - img "Author" [ref=f3e1466]
+                  - link "eyfxrby" [ref=f3e1467] [cursor=pointer]:
+                    - /url: /profile/eyfxrby
+                - listitem [ref=f3e1468]:
+                  - img "Publication date" [ref=f3e1469]
+                  - text: 4 weeks ago
+                - listitem [ref=f3e1470]:
+                  - link "Comments" [ref=f3e1471] [cursor=pointer]:
+                    - /url: /blog/entry/154345#comments
+                    - img "Comments" [ref=f3e1472]
+                  - link "153" [ref=f3e1473] [cursor=pointer]:
+                    - /url: /blog/entry/154345#comments
+        - list [ref=f3e1475]:
+          - text: ←
+          - listitem [ref=f3e1476]:
+            - link "1" [ref=f3e1478] [cursor=pointer]:
+              - /url: /page/1
+          - listitem [ref=f3e1479]:
+            - link "2" [ref=f3e1481] [cursor=pointer]:
+              - /url: /page/2
+          - listitem [ref=f3e1482]:
+            - link "3" [ref=f3e1484] [cursor=pointer]:
+              - /url: /page/3
+          - listitem [ref=f3e1485]: ...
+          - listitem [ref=f3e1486]:
+            - link "262" [ref=f3e1488] [cursor=pointer]:
+              - /url: /page/262
+          - listitem [ref=f3e1489]:
+            - link "263" [ref=f3e1491] [cursor=pointer]:
+              - /url: /page/263
+          - listitem [ref=f3e1492]:
+            - link "→" [ref=f3e1493] [cursor=pointer]:
+              - /url: /page/2
+    - generic [ref=f3e1494]:
+      - generic [ref=f3e1495]:
+        - link "Codeforces" [ref=f3e1496] [cursor=pointer]:
+          - /url: https://codeforces.com/
+        - text: (c) Copyright 2010-2026 Mike Mirzayanov
+      - generic [ref=f3e1497]: The only programming contests Web 2.0 platform
+      - generic [ref=f3e1498]:
+        - text: "Server time: Jul/07/2026 03:40:05"
+        - superscript [ref=f3e1499]: UTC-7
+        - text: (k1).
+      - generic [ref=f3e1500]:
+        - text: Desktop version, switch to
+        - link "mobile version" [ref=f3e1501] [cursor=pointer]:
+          - /url: "?mobile=true"
+        - text: .
+      - generic [ref=f3e1502]:
+        - link "Privacy Policy" [ref=f3e1503] [cursor=pointer]:
+          - /url: /privacy
+        - text: "|"
+        - link "Terms and Conditions" [ref=f3e1504] [cursor=pointer]:
+          - /url: /terms
+      - generic [ref=f3e1505]: Supported by
+      - link "TON" [ref=f3e1507] [cursor=pointer]:
+        - /url: https://ton.org/
+        - img "TON" [ref=f3e1508]

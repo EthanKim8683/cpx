@@ -1,0 +1,616 @@
+- generic [active] [ref=f3e1]:
+  - generic [ref=f3e2]: Loading [MathJax]/jax/output/HTML-CSS/fonts/STIX/fontdata.js
+  - text: 
+  - generic [ref=f3e3]:
+    - generic [ref=f3e4]:
+      - link "Codeforces" [ref=f3e6] [cursor=pointer]:
+        - /url: /
+        - img "Codeforces" [ref=f3e7]
+      - generic [ref=f3e8]:
+        - generic [ref=f3e9]:
+          - link "In English" [ref=f3e10] [cursor=pointer]:
+            - /url: "?locale=en"
+            - img "In English" [ref=f3e11]
+          - link "По-русски" [ref=f3e12] [cursor=pointer]:
+            - /url: "?locale=ru"
+            - img "По-русски" [ref=f3e13]
+        - generic [ref=f3e14]:
+          - link "Enter" [ref=f3e15] [cursor=pointer]:
+            - /url: /enter?back=%2Fprofile%2FEthanKim8683
+          - text: "|"
+          - link "Register" [ref=f3e16] [cursor=pointer]:
+            - /url: /register
+    - generic [ref=f3e18]:
+      - list:
+        - listitem [ref=f3e19]:
+          - link "Home" [ref=f3e20] [cursor=pointer]:
+            - /url: /
+        - listitem [ref=f3e21]:
+          - link "Top" [ref=f3e22] [cursor=pointer]:
+            - /url: /top
+        - listitem [ref=f3e23]:
+          - link "Catalog" [ref=f3e24] [cursor=pointer]:
+            - /url: /catalog
+        - listitem [ref=f3e25]:
+          - link "Contests" [ref=f3e26] [cursor=pointer]:
+            - /url: /contests
+        - listitem [ref=f3e27]:
+          - link "Gym" [ref=f3e28] [cursor=pointer]:
+            - /url: /gyms
+        - listitem [ref=f3e29]:
+          - link "Problemset" [ref=f3e30] [cursor=pointer]:
+            - /url: /problemset
+        - listitem [ref=f3e31]:
+          - link "Groups" [ref=f3e32] [cursor=pointer]:
+            - /url: /groups
+        - listitem [ref=f3e33]:
+          - link "Rating" [ref=f3e34] [cursor=pointer]:
+            - /url: /ratings
+        - listitem [ref=f3e35]:
+          - link "Edu" [ref=f3e36] [cursor=pointer]:
+            - /url: /edu/courses
+        - listitem [ref=f3e37]:
+          - link "API" [ref=f3e38] [cursor=pointer]:
+            - /url: /apiHelp
+        - listitem [ref=f3e39]:
+          - link "Calendar" [ref=f3e40] [cursor=pointer]:
+            - /url: /calendar
+        - listitem [ref=f3e41]:
+          - link "Help" [ref=f3e42] [cursor=pointer]:
+            - /url: /help
+      - textbox [ref=f3e43]
+    - generic [ref=f3e44]:
+      - generic [ref=f3e45]:
+        - generic [ref=f3e46]:
+          - generic [ref=f3e47]: → Pay attention
+          - generic [ref=f3e49]:
+            - text: Before contest
+            - link "Codeforces Round (Div. 2)" [ref=f3e50] [cursor=pointer]:
+              - /url: /contests/2246
+            - generic [ref=f3e51]: 5 days
+        - generic [ref=f3e52]:
+          - generic [ref=f3e53]: → Top rated
+          - table [ref=f3e54]:
+            - rowgroup [ref=f3e55]:
+              - row "# User Rating" [ref=f3e56]:
+                - columnheader "#" [ref=f3e57]
+                - columnheader "User" [ref=f3e58]
+                - columnheader "Rating" [ref=f3e59]
+              - row "1 jiangly 3728" [ref=f3e60]:
+                - cell "1" [ref=f3e61]
+                - cell "jiangly" [ref=f3e62]:
+                  - link "jiangly" [ref=f3e63] [cursor=pointer]:
+                    - /url: /profile/jiangly
+                - cell "3728" [ref=f3e64]
+              - row "2 VivaciousAubergine 3647" [ref=f3e65]:
+                - cell "2" [ref=f3e66]
+                - cell "VivaciousAubergine" [ref=f3e67]:
+                  - link "VivaciousAubergine" [ref=f3e68] [cursor=pointer]:
+                    - /url: /profile/VivaciousAubergine
+                - cell "3647" [ref=f3e69]
+              - row "3 Kevin114514 3625" [ref=f3e70]:
+                - cell "3" [ref=f3e71]
+                - cell "Kevin114514" [ref=f3e72]:
+                  - link "Kevin114514" [ref=f3e73] [cursor=pointer]:
+                    - /url: /profile/Kevin114514
+                - cell "3625" [ref=f3e74]
+              - row "4 maroonrk 3555" [ref=f3e75]:
+                - cell "4" [ref=f3e76]
+                - cell "maroonrk" [ref=f3e77]:
+                  - link "maroonrk" [ref=f3e78] [cursor=pointer]:
+                    - /url: /profile/maroonrk
+                - cell "3555" [ref=f3e79]
+              - row "5 strapple 3515" [ref=f3e80]:
+                - cell "5" [ref=f3e81]
+                - cell "strapple" [ref=f3e82]:
+                  - link "strapple" [ref=f3e83] [cursor=pointer]:
+                    - /url: /profile/strapple
+                - cell "3515" [ref=f3e84]
+              - row "6 tourist 3439" [ref=f3e85]:
+                - cell "6" [ref=f3e86]
+                - cell "tourist" [ref=f3e87]:
+                  - link "tourist" [ref=f3e88] [cursor=pointer]:
+                    - /url: /profile/tourist
+                - cell "3439" [ref=f3e89]
+              - row "7 Um_nik 3376" [ref=f3e90]:
+                - cell "7" [ref=f3e91]
+                - cell "Um_nik" [ref=f3e92]:
+                  - link "Um_nik" [ref=f3e93] [cursor=pointer]:
+                    - /url: /profile/Um_nik
+                - cell "3376" [ref=f3e94]
+              - row "7 turmax 3376" [ref=f3e95]:
+                - cell "7" [ref=f3e96]
+                - cell "turmax" [ref=f3e97]:
+                  - link "turmax" [ref=f3e98] [cursor=pointer]:
+                    - /url: /profile/turmax
+                - cell "3376" [ref=f3e99]
+              - row "9 Radewoosh 3367" [ref=f3e100]:
+                - cell "9" [ref=f3e101]
+                - cell "Radewoosh" [ref=f3e102]:
+                  - link "Radewoosh" [ref=f3e103] [cursor=pointer]:
+                    - /url: /profile/Radewoosh
+                - cell "3367" [ref=f3e104]
+              - row "10 qiuzx 3343" [ref=f3e105]:
+                - cell "10" [ref=f3e106]
+                - cell "qiuzx" [ref=f3e107]:
+                  - link "qiuzx" [ref=f3e108] [cursor=pointer]:
+                    - /url: /profile/qiuzx
+                - cell "3343" [ref=f3e109]
+          - table [ref=f3e111]:
+            - rowgroup [ref=f3e112]:
+              - row "Countries | Cities | Organizations View all →" [ref=f3e113]:
+                - cell "Countries | Cities | Organizations" [ref=f3e114]:
+                  - link "Countries" [ref=f3e115] [cursor=pointer]:
+                    - /url: /ratings/countries
+                  - text: "|"
+                  - link "Cities" [ref=f3e116] [cursor=pointer]:
+                    - /url: /ratings/cities
+                  - text: "|"
+                  - link "Organizations" [ref=f3e117] [cursor=pointer]:
+                    - /url: /ratings/organizations
+                - cell "View all →" [ref=f3e118]:
+                  - link "View all →" [ref=f3e119] [cursor=pointer]:
+                    - /url: /ratings
+        - generic [ref=f3e120]:
+          - generic [ref=f3e121]: → Top contributors
+          - table [ref=f3e122]:
+            - rowgroup [ref=f3e123]:
+              - row "# User Contrib." [ref=f3e124]:
+                - columnheader "#" [ref=f3e125]
+                - columnheader "User" [ref=f3e126]
+                - columnheader "Contrib." [ref=f3e127]
+              - row "1 Qingyu 163" [ref=f3e128]:
+                - cell "1" [ref=f3e129]
+                - cell "Qingyu" [ref=f3e130]:
+                  - link "Qingyu" [ref=f3e131] [cursor=pointer]:
+                    - /url: /profile/Qingyu
+                - cell "163" [ref=f3e132]
+              - row "2 Um_nik 145" [ref=f3e133]:
+                - cell "2" [ref=f3e134]
+                - cell "Um_nik" [ref=f3e135]:
+                  - link "Um_nik" [ref=f3e136] [cursor=pointer]:
+                    - /url: /profile/Um_nik
+                - cell "145" [ref=f3e137]
+              - row "3 adamant 142" [ref=f3e138]:
+                - cell "3" [ref=f3e139]
+                - cell "adamant" [ref=f3e140]:
+                  - link "adamant" [ref=f3e141] [cursor=pointer]:
+                    - /url: /profile/adamant
+                - cell "142" [ref=f3e142]
+              - row "4 Dominater069 137" [ref=f3e143]:
+                - cell "4" [ref=f3e144]
+                - cell "Dominater069" [ref=f3e145]:
+                  - link "Dominater069" [ref=f3e146] [cursor=pointer]:
+                    - /url: /profile/Dominater069
+                - cell "137" [ref=f3e147]
+              - row "5 chromate00 133" [ref=f3e148]:
+                - cell "5" [ref=f3e149]
+                - cell "chromate00" [ref=f3e150]:
+                  - link "chromate00" [ref=f3e151] [cursor=pointer]:
+                    - /url: /profile/chromate00
+                - cell "133" [ref=f3e152]
+              - row "5 DNR 133" [ref=f3e153]:
+                - cell "5" [ref=f3e154]
+                - cell "DNR" [ref=f3e155]:
+                  - link "DNR" [ref=f3e156] [cursor=pointer]:
+                    - /url: /profile/DNR
+                - cell "133" [ref=f3e157]
+              - row "7 cry 132" [ref=f3e158]:
+                - cell "7" [ref=f3e159]
+                - cell "cry" [ref=f3e160]:
+                  - link "cry" [ref=f3e161] [cursor=pointer]:
+                    - /url: /profile/cry
+                - cell "132" [ref=f3e162]
+              - row "7 maspy 132" [ref=f3e163]:
+                - cell "7" [ref=f3e164]
+                - cell "maspy" [ref=f3e165]:
+                  - link "maspy" [ref=f3e166] [cursor=pointer]:
+                    - /url: /profile/maspy
+                - cell "132" [ref=f3e167]
+              - row "9 maroonrk 131" [ref=f3e168]:
+                - cell "9" [ref=f3e169]
+                - cell "maroonrk" [ref=f3e170]:
+                  - link "maroonrk" [ref=f3e171] [cursor=pointer]:
+                    - /url: /profile/maroonrk
+                - cell "131" [ref=f3e172]
+              - row "9 Proof_by_QED 131" [ref=f3e173]:
+                - cell "9" [ref=f3e174]
+                - cell "Proof_by_QED" [ref=f3e175]:
+                  - link "Proof_by_QED" [ref=f3e176] [cursor=pointer]:
+                    - /url: /profile/Proof_by_QED
+                - cell "131" [ref=f3e177]
+          - table [ref=f3e179]:
+            - rowgroup [ref=f3e180]:
+              - row "View all →" [ref=f3e181]:
+                - cell
+                - cell "View all →" [ref=f3e182]:
+                  - link "View all →" [ref=f3e183] [cursor=pointer]:
+                    - /url: /top-contributed
+        - generic [ref=f3e184]:
+          - generic [ref=f3e185]: → Find user
+          - generic [ref=f3e186]:
+            - generic [ref=f3e188]:
+              - text: "Handle:"
+              - textbox "Handle:" [ref=f3e189]
+            - button "Find" [ref=f3e191]
+        - generic [ref=f3e192]:
+          - generic [ref=f3e193]: → Recent actions
+          - list [ref=f3e195]:
+            - listitem [ref=f3e196]:
+              - generic [ref=f3e197]:
+                - link "ShulkerBox" [ref=f3e198] [cursor=pointer]:
+                  - /url: /profile/ShulkerBox
+                - text: →
+                - link "It's so unfair..." [ref=f3e199] [cursor=pointer]:
+                  - /url: /blog/entry/155044
+                - img "New comment(s)" [ref=f3e200]
+            - listitem [ref=f3e201]:
+              - generic [ref=f3e202]:
+                - link "BledDest" [ref=f3e203] [cursor=pointer]:
+                  - /url: /profile/BledDest
+                - text: →
+                - link "Educational Codeforces Round 192 (rated for Div. 2)" [ref=f3e204] [cursor=pointer]:
+                  - /url: /blog/entry/154971
+                - img "New comment(s)" [ref=f3e205]
+            - listitem [ref=f3e206]:
+              - generic [ref=f3e207]:
+                - link "vaultdmn" [ref=f3e208] [cursor=pointer]:
+                  - /url: /profile/vaultdmn
+                - text: →
+                - link "need some help from this community before I build something" [ref=f3e209] [cursor=pointer]:
+                  - /url: /blog/entry/155043
+                - img "Text created or updated" [ref=f3e210]
+            - listitem [ref=f3e211]:
+              - generic [ref=f3e212]:
+                - link "ShulkerBox" [ref=f3e213] [cursor=pointer]:
+                  - /url: /profile/ShulkerBox
+                - text: →
+                - link "Does C++17 execution time different from C++23?" [ref=f3e214] [cursor=pointer]:
+                  - /url: /blog/entry/155042
+                - img "New comment(s)" [ref=f3e215]
+            - listitem [ref=f3e216]:
+              - generic [ref=f3e217]:
+                - link "harshitj183" [ref=f3e218] [cursor=pointer]:
+                  - /url: /profile/harshitj183
+                - text: →
+                - link "difficulty ( reading question >>> actual solving" [ref=f3e219] [cursor=pointer]:
+                  - /url: /blog/entry/155037
+                - img "New comment(s)" [ref=f3e220]
+            - listitem [ref=f3e221]:
+              - generic [ref=f3e222]:
+                - link "farmersrice" [ref=f3e223] [cursor=pointer]:
+                  - /url: /profile/farmersrice
+                - text: →
+                - link "Why do programmers love the summer?" [ref=f3e224] [cursor=pointer]:
+                  - /url: /blog/entry/154990
+                - img "New comment(s)" [ref=f3e225]
+            - listitem [ref=f3e226]:
+              - generic [ref=f3e227]:
+                - link "ShulkerBox" [ref=f3e228] [cursor=pointer]:
+                  - /url: /profile/ShulkerBox
+                - text: →
+                - link "C++ integer limit solved with BigInt class!" [ref=f3e229] [cursor=pointer]:
+                  - /url: /blog/entry/155001
+                - img "New comment(s)" [ref=f3e230]
+            - listitem [ref=f3e231]:
+              - generic [ref=f3e232]:
+                - link "idkwhy23" [ref=f3e233] [cursor=pointer]:
+                  - /url: /profile/idkwhy23
+                - text: →
+                - link "Appeal Regarding Disabled Account - Plagiarism Violation" [ref=f3e234] [cursor=pointer]:
+                  - /url: /blog/entry/155041
+                - img "Text created or updated" [ref=f3e235]
+            - listitem [ref=f3e236]:
+              - generic [ref=f3e237]:
+                - link "patilc125" [ref=f3e238] [cursor=pointer]:
+                  - /url: /profile/patilc125
+                - text: →
+                - link "Need Your Support" [ref=f3e239] [cursor=pointer]:
+                  - /url: /blog/entry/155032
+                - img "New comment(s)" [ref=f3e240]
+            - listitem [ref=f3e241]:
+              - generic [ref=f3e242]:
+                - link "greateric" [ref=f3e243] [cursor=pointer]:
+                  - /url: /profile/greateric
+                - text: →
+                - 'link "Possibly Useful CP Information #3: Min/Max Abuse" [ref=f3e244] [cursor=pointer]':
+                  - /url: /blog/entry/154442
+                - img "New comment(s)" [ref=f3e245]
+            - listitem [ref=f3e246]:
+              - generic [ref=f3e247]:
+                - link "FiniteMoves" [ref=f3e248] [cursor=pointer]:
+                  - /url: /profile/FiniteMoves
+                - text: →
+                - link "I am just Tired of Lectures by Grays and Greens" [ref=f3e249] [cursor=pointer]:
+                  - /url: /blog/entry/154984
+                - img "New comment(s)" [ref=f3e250]
+            - listitem [ref=f3e251]:
+              - generic [ref=f3e252]:
+                - link "AdhamAfterMidnight" [ref=f3e253] [cursor=pointer]:
+                  - /url: /profile/AdhamAfterMidnight
+                - text: →
+                - 'link "VoidHub Update: Custom Rooms and Shareable Match Results" [ref=f3e254] [cursor=pointer]':
+                  - /url: /blog/entry/155019
+                - img "New comment(s)" [ref=f3e255]
+            - listitem [ref=f3e256]:
+              - generic [ref=f3e257]:
+                - link "awoo" [ref=f3e258] [cursor=pointer]:
+                  - /url: /profile/awoo
+                - text: →
+                - link "Educational Codeforces Round 184 Editorial" [ref=f3e259] [cursor=pointer]:
+                  - /url: /blog/entry/148390
+                - img "New comment(s)" [ref=f3e260]
+            - listitem [ref=f3e261]:
+              - generic [ref=f3e262]:
+                - link "TanjilLazim" [ref=f3e263] [cursor=pointer]:
+                  - /url: /profile/TanjilLazim
+                - text: →
+                - link "CPIDE — free online compiler and judge for competitive programming" [ref=f3e264] [cursor=pointer]:
+                  - /url: /blog/entry/155018
+                - img "New comment(s)" [ref=f3e265]
+            - listitem [ref=f3e266]:
+              - generic [ref=f3e267]:
+                - link "employed" [ref=f3e268] [cursor=pointer]:
+                  - /url: /profile/employed
+                - text: →
+                - link "The only ARABIC content" [ref=f3e269] [cursor=pointer]:
+                  - /url: /blog/entry/155024
+                - img "New comment(s)" [ref=f3e270]
+            - listitem [ref=f3e271]:
+              - generic [ref=f3e272]:
+                - link "yse" [ref=f3e273] [cursor=pointer]:
+                  - /url: /profile/yse
+                - text: →
+                - link "Codeforces Round 1096 (Div. 3) — Editorial" [ref=f3e274] [cursor=pointer]:
+                  - /url: /blog/entry/153099
+                - img "New comment(s)" [ref=f3e275]
+            - listitem [ref=f3e276]:
+              - generic [ref=f3e277]:
+                - link "AmShZ" [ref=f3e278] [cursor=pointer]:
+                  - /url: /profile/AmShZ
+                - text: →
+                - 'link "Repovive Weekly Challenge 1: Approximation" [ref=f3e279] [cursor=pointer]':
+                  - /url: /blog/entry/155031
+                - img "New comment(s)" [ref=f3e280]
+            - listitem [ref=f3e281]:
+              - generic [ref=f3e282]:
+                - link "Equilibrium" [ref=f3e283] [cursor=pointer]:
+                  - /url: /profile/Equilibrium
+                - text: →
+                - link "Remembering Childhood dream !" [ref=f3e284] [cursor=pointer]:
+                  - /url: /blog/entry/72750
+                - img "New comment(s)" [ref=f3e285]
+                - img "Necropost" [ref=f3e286]
+            - listitem [ref=f3e287]:
+              - generic [ref=f3e288]:
+                - link "N29" [ref=f3e289] [cursor=pointer]:
+                  - /url: /profile/N29
+                - text: →
+                - link "Codeforces Round 1054 (Div. 3)" [ref=f3e290] [cursor=pointer]:
+                  - /url: /blog/entry/146694
+                - img "New comment(s)" [ref=f3e291]
+            - listitem [ref=f3e292]:
+              - generic [ref=f3e293]:
+                - link "Jajceslav" [ref=f3e294] [cursor=pointer]:
+                  - /url: /profile/Jajceslav
+                - text: →
+                - link "Dynamic Programming Video pt. 2" [ref=f3e295] [cursor=pointer]:
+                  - /url: /blog/entry/152849
+                - img "Text created or updated" [ref=f3e296]
+            - listitem [ref=f3e297]:
+              - generic [ref=f3e298]:
+                - link "Faro7a206" [ref=f3e299] [cursor=pointer]:
+                  - /url: /profile/Faro7a206
+                - text: →
+                - link "My Codeforces Account Was Blocked by Administrators – Need Help" [ref=f3e300] [cursor=pointer]:
+                  - /url: /blog/entry/155030
+                - img "Text created or updated" [ref=f3e301]
+            - listitem [ref=f3e302]:
+              - generic [ref=f3e303]:
+                - link "IterumSurgo" [ref=f3e304] [cursor=pointer]:
+                  - /url: /profile/IterumSurgo
+                - text: →
+                - link "Big Leetcode BUG!!" [ref=f3e305] [cursor=pointer]:
+                  - /url: /blog/entry/155026
+                - img "Text created or updated" [ref=f3e306]
+            - listitem [ref=f3e307]:
+              - generic [ref=f3e308]:
+                - link "AB22" [ref=f3e309] [cursor=pointer]:
+                  - /url: /profile/AB22
+                - text: →
+                - link "I rewrote my CP desktop app into a terminal TUI (cocom)" [ref=f3e310] [cursor=pointer]:
+                  - /url: /blog/entry/154959
+                - img "Text created or updated" [ref=f3e311]
+            - listitem [ref=f3e312]:
+              - generic [ref=f3e313]:
+                - link "cry" [ref=f3e314] [cursor=pointer]:
+                  - /url: /profile/cry
+                - text: →
+                - link "Codeforces Round 887 (Div 1, Div 2) Tutorial" [ref=f3e315] [cursor=pointer]:
+                  - /url: /blog/entry/116940
+                - img "New comment(s)" [ref=f3e316]
+                - img "Necropost" [ref=f3e317]
+            - listitem [ref=f3e318]:
+              - generic [ref=f3e319]:
+                - link "MIRZAPURI" [ref=f3e320] [cursor=pointer]:
+                  - /url: /profile/MIRZAPURI
+                - text: →
+                - link "Are we necromancers for enjoying a dead thing?" [ref=f3e321] [cursor=pointer]:
+                  - /url: /blog/entry/154928
+                - img "New comment(s)" [ref=f3e322]
+          - table [ref=f3e324]:
+            - rowgroup [ref=f3e325]:
+              - row "Detailed →" [ref=f3e326]:
+                - cell
+                - cell "Detailed →" [ref=f3e327]:
+                  - link "Detailed →" [ref=f3e328] [cursor=pointer]:
+                    - /url: /recent-actions
+      - generic [ref=f3e329]:
+        - list [ref=f3e331]:
+          - listitem [ref=f3e332]
+          - listitem [ref=f3e334]:
+            - link "EthanKim8683" [ref=f3e335] [cursor=pointer]:
+              - /url: /profile/EthanKim8683
+          - listitem [ref=f3e336]:
+            - link "Blog" [ref=f3e337] [cursor=pointer]:
+              - /url: /blog/EthanKim8683
+          - listitem [ref=f3e338]:
+            - link "Teams" [ref=f3e339] [cursor=pointer]:
+              - /url: /teams/with/EthanKim8683
+          - listitem [ref=f3e340]:
+            - link "Submissions" [ref=f3e341] [cursor=pointer]:
+              - /url: /submissions/EthanKim8683
+          - listitem [ref=f3e342]:
+            - link "Groups" [ref=f3e343] [cursor=pointer]:
+              - /url: /groups/with/EthanKim8683
+          - listitem [ref=f3e344]:
+            - link "Contests" [ref=f3e345] [cursor=pointer]:
+              - /url: /contests/with/EthanKim8683
+        - generic [ref=f3e346]:
+          - generic [ref=f3e347]:
+            - img [ref=f3e351]
+            - generic [ref=f3e352]:
+              - generic [ref=f3e353]:
+                - generic [ref=f3e354]: Master
+                - heading "EthanKim8683" [level=1] [ref=f3e355]:
+                  - link "EthanKim8683" [ref=f3e356] [cursor=pointer]:
+                    - /url: /profile/EthanKim8683
+                - generic [ref=f3e358]:
+                  - text: Ethan Kim,
+                  - link "United States" [ref=f3e359] [cursor=pointer]:
+                    - /url: /ratings/country/United%20States
+              - list [ref=f3e360]:
+                - listitem [ref=f3e361]:
+                  - img "User''s contest rating in Codeforces community" [ref=f3e362]
+                  - text: "Contest rating: 2273"
+                  - generic [ref=f3e363]: (max. master, 2282)
+                - listitem [ref=f3e364]:
+                  - img "User''s contribution into Codeforces community" [ref=f3e365]
+                  - text: "Contribution: +1"
+                - listitem [ref=f3e366]:
+                  - img [ref=f3e367]
+                  - text: "Friend of: 20 users"
+                - listitem [ref=f3e368]: "Last visit: 19 minutes ago"
+                - listitem [ref=f3e369]: "Registered: 4 years ago"
+                - listitem [ref=f3e370]:
+                  - link "EthanKim8683's blog" [ref=f3e371] [cursor=pointer]:
+                    - /url: /blog/EthanKim8683
+                    - img "EthanKim8683's blog" [ref=f3e372]
+                  - link "Blog entries (0)" [ref=f3e373] [cursor=pointer]:
+                    - /url: /blog/EthanKim8683
+                  - text: ","
+                  - link "comments" [ref=f3e374] [cursor=pointer]:
+                    - /url: /comments/with/EthanKim8683
+                - listitem [ref=f3e375]:
+                  - link "Your talks with EthanKim8683" [ref=f3e376] [cursor=pointer]:
+                    - /url: /usertalk/with/EthanKim8683
+                    - img "Your talks with EthanKim8683" [ref=f3e377]
+                  - link "Talks" [ref=f3e378] [cursor=pointer]:
+                    - /url: /usertalk/with/EthanKim8683
+                  - text: "|"
+                  - link "Send message" [ref=f3e379] [cursor=pointer]:
+                    - /url: /usertalk?other=EthanKim8683
+          - text: 
+        - generic [ref=f3e380]:
+          - combobox [ref=f3e384]:
+            - option "Only rated" [selected]
+            - option "All"
+          - generic [ref=f3e385]:
+            - generic [ref=f3e387]:
+              - generic [ref=f3e388]:
+                - generic [ref=f3e389]: Jul 2022
+                - generic [ref=f3e390]: Oct 2022
+                - generic [ref=f3e391]: Jan 2023
+                - generic [ref=f3e392]: Apr 2023
+                - generic [ref=f3e393]: Jul 2023
+                - generic [ref=f3e394]: Oct 2023
+                - generic [ref=f3e395]: Jan 2024
+                - generic [ref=f3e396]: Apr 2024
+                - generic [ref=f3e397]: Jul 2024
+                - generic [ref=f3e398]: Oct 2024
+                - generic [ref=f3e399]: Jan 2025
+              - generic [ref=f3e400]:
+                - generic [ref=f3e401]: "1200"
+                - generic [ref=f3e402]: "1400"
+                - generic [ref=f3e403]: "1600"
+                - generic [ref=f3e404]: "1900"
+                - generic [ref=f3e405]: "2100"
+                - generic [ref=f3e406]: "2300"
+                - generic [ref=f3e407]: "2400"
+            - table [ref=f3e410]:
+              - rowgroup [ref=f3e411]:
+                - row "EthanKim8683" [ref=f3e412]:
+                  - cell [ref=f3e413]
+                  - cell "EthanKim8683" [ref=f3e416]
+        - generic [ref=f3e418]:
+          - combobox [ref=f3e421]:
+            - option "Choose year" [selected]
+            - option "2026"
+            - option "2025"
+            - option "2024"
+            - option "2023"
+            - option "2022"
+          - img [ref=f3e423]:
+            - generic [ref=f3e424]:
+              - generic [ref=f3e837]: Aug
+              - generic [ref=f3e838]: Sep
+              - generic [ref=f3e839]: Oct
+              - generic [ref=f3e840]: Nov
+              - generic [ref=f3e841]: Dec
+              - generic [ref=f3e842]: Jan
+              - generic [ref=f3e843]: Feb
+              - generic [ref=f3e844]: Mar
+              - generic [ref=f3e845]: Apr
+              - generic [ref=f3e846]: May
+              - generic [ref=f3e847]: Jun
+              - generic [ref=f3e848]: Jul
+              - generic [ref=f3e849]: Mon
+              - generic [ref=f3e850]: Wed
+              - generic [ref=f3e851]: Fri
+            - text: "\"Your browser does not support inline SVG.\""
+          - generic [ref=f3e852]:
+            - generic [ref=f3e853]:
+              - generic [ref=f3e854]:
+                - generic [ref=f3e855]: 2981 problems
+                - generic [ref=f3e856]: solved for all time
+              - generic [ref=f3e857]:
+                - generic [ref=f3e858]: 188 problems
+                - generic [ref=f3e859]: solved for the last year
+              - generic [ref=f3e860]:
+                - generic [ref=f3e861]: 0 problems
+                - generic [ref=f3e862]: solved for the last month
+            - generic [ref=f3e863]:
+              - generic [ref=f3e864]:
+                - generic [ref=f3e865]: 70 days
+                - generic [ref=f3e866]: in a row max.
+              - generic [ref=f3e867]:
+                - generic [ref=f3e868]: 9 days
+                - generic [ref=f3e869]: in a row for the last year
+              - generic [ref=f3e870]:
+                - generic [ref=f3e871]: 0 days
+                - generic [ref=f3e872]: in a row for the last month
+    - generic [ref=f3e873]:
+      - generic [ref=f3e874]:
+        - link "Codeforces" [ref=f3e875] [cursor=pointer]:
+          - /url: https://codeforces.com/
+        - text: (c) Copyright 2010-2026 Mike Mirzayanov
+      - generic [ref=f3e876]: The only programming contests Web 2.0 platform
+      - generic [ref=f3e877]:
+        - text: "Server time: Jul/07/2026 03:12:29"
+        - superscript [ref=f3e878]: UTC-7
+        - text: (k1).
+      - generic [ref=f3e879]:
+        - text: Desktop version, switch to
+        - link "mobile version" [ref=f3e880] [cursor=pointer]:
+          - /url: "?mobile=true"
+        - text: .
+      - generic [ref=f3e881]:
+        - link "Privacy Policy" [ref=f3e882] [cursor=pointer]:
+          - /url: /privacy
+        - text: "|"
+        - link "Terms and Conditions" [ref=f3e883] [cursor=pointer]:
+          - /url: /terms
+      - generic [ref=f3e884]: Supported by
+      - link "TON" [ref=f3e886] [cursor=pointer]:
+        - /url: https://ton.org/
+        - img "TON" [ref=f3e887]

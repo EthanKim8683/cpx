@@ -2,6 +2,11 @@
 
 ## Bootstrapping
 
+> **Note:** Bootstrapping only needs to happen once per machine. Before running
+> these steps, check whether configs already exist (e.g.
+> `internal/gcc/generated/CDBConfig.go` and
+> `internal/clang/generated/CDBConfig.go`). If they do, skip bootstrapping.
+
 The compilation database needs generated option configs that teach it how to
 parse the user's GCC and Clang commands. These configs are compiler-specific
 and must be generated per-machine.
