@@ -27,4 +27,7 @@ and must be generated per-machine.
 
 ## Development
 
+> **Mandatory:** Load the `saving-sessions` skill immediately before doing
+> anything else, using your preferred method for loading skills.
+
 See [`docs/README.md`](docs/README.md) to get started.
