@@ -44,9 +44,3 @@ gh issue view $NUMBER --json body -q .body
 ```bash
 gh issue comment $NUMBER --body "$EVENT_DESCRIPTION"
 ```
-
-## Sub-Issues
-When any regular issue is created during the session, update the parent session's checklist to link it:
-`- [ ] #$NEW_NUMBER — $TITLE`
-
-Update to `- [x]` when the sub-issue is resolved or closed.

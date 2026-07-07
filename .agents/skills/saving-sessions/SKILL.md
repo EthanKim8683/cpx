@@ -9,8 +9,8 @@ languages: all
 
 ## Overview
 All conversation sessions must be persisted in a tracking issue (e.g., GitHub issue).
-1. **Issue Body**: A living, high-level summary of the overall workspace state, configurations, and final decisions. It synthesizes the progress made and must be kept up-to-date as the single source of truth.
-2. **Issue Comments**: An append-only log of significant events, containing detailed context, findings, error traces, and step-by-step outcomes as they occur.
+1. **Issue Body**: A living, high-level summary of the overall workspace state, configurations, and final decisions. It synthesizes the progress made and must be kept up-to-date as the single source of truth. The issue body is simply the summary itself (no templates, headers, or sub-issue lists needed).
+2. **Issue Comments**: An append-only log of significant events, where each comment contains detailed context, findings, error traces, and step-by-step outcomes as they occur (no headers or timestamps needed; just the direct event description).
 3. **Dual Update**: When a significant event occurs, immediately post a detailed comment, then rewrite the issue body summary to synthesize the new state.
 
 ## Initialization (Run First)
@@ -30,12 +30,8 @@ Immediately upon encountering a significant event, execute these two steps:
 1. **Comment**: Post the event description as a new comment on the session issue (specific, objective, no timestamps).
 2. **Rewrite Summary**: Read the current session body, update the living summary to reflect the new state, and edit the body.
 
-## Sub-Issues
-Sub-issues are regular issues created during the session to track independent work. Link any created sub-issues inside the parent session issue's `## Sub-Issues` section as a reference to establish context.
-
 ## Quick Reference
 - **GitHub CLI Commands**: See [github.md](references/github.md)
-- **Formatting Templates**: See [templates.md](references/templates.md)
 
 ## Common Mistakes
 - **Mistake**: Making workspace changes before initializing the session tracker.
