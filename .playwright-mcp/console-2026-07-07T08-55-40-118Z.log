@@ -1,8 +1,0 @@
-[     175ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ https://static.cloudflareinsights.com/beacon.min.js/v4513226cdae34746b4dedf0b4dfa099e1781791509496:0
-[     183ms] TypeError: Failed to execute 'sendBeacon' on 'Navigator': 1 argument required, but only 0 present.
-    at https://bot.sannysoft.com/:157:40
-[     183ms] TypeError: Failed to execute 'getUserMedia' on 'Navigator': 3 arguments required, but only 0 present.
-    at https://bot.sannysoft.com/:205:40
-[     207ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ https://mc.yandex.ru/metrika/tag.js:0
-[     626ms] [ERROR] WebSocket connection to 'wss://bot.sannysoft.com/itsgonnafail' failed: Error during WebSocket handshake: Unexpected response code: 404 @ https://bot.sannysoft.com/fpCollect.min.js:272
-[     662ms] [ERROR] Failed to load resource: the server responded with a status of 404 () @ https://bot.sannysoft.com/favicon.ico:0
