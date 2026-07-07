@@ -1,3 +1,4 @@
+// Package cdb provides the compilation database types and command parsing for cpx.
 package cdb
 
 import (

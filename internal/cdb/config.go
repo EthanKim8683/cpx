@@ -16,15 +16,44 @@ import (
 type OptionKind string
 
 const (
-	OptionKindFlag                OptionKind = "Flag"
-	OptionKindJoined              OptionKind = "Joined"
-	OptionKindSeparate            OptionKind = "Separate"
-	OptionKindMultiArg            OptionKind = "MultiArg"
-	OptionKindJoinedAndSeparate   OptionKind = "JoinedAndSeparate"
-	OptionKindRemainingArgs       OptionKind = "RemainingArgs"
+	// OptionKindFlag represents a standalone option that consumes no arguments.
+	// The option appears by itself in argv (e.g., -c, -v).
+	OptionKindFlag OptionKind = "Flag"
+
+	// OptionKindJoined represents an option whose argument is appended directly
+	// to the option spelling with no separator. The suffix after the spelling
+	// is extracted as the option's argument (e.g., -std=c++17 with spelling
+	// "-std=" yields argument "c++17").
+	OptionKindJoined OptionKind = "Joined"
+
+	// OptionKindSeparate represents an option that consumes exactly one
+	// subsequent argv element as its argument (e.g., -o out consumes "out").
+	OptionKindSeparate OptionKind = "Separate"
+
+	// OptionKindMultiArg represents an option that consumes a fixed number
+	// (NumArgs) of subsequent argv elements as its arguments (e.g., -MF a b
+	// with NumArgs=2 consumes "a" and "b").
+	OptionKindMultiArg OptionKind = "MultiArg"
+
+	// OptionKindJoinedAndSeparate represents an option that accepts both a
+	// joined suffix and a separate argument. The suffix is extracted from the
+	// same argv element, and one additional argv element is consumed (e.g.,
+	// -Ifoo bar with spelling "-I" yields joined suffix "foo" and separate
+	// argument "bar").
+	OptionKindJoinedAndSeparate OptionKind = "JoinedAndSeparate"
+
+	// OptionKindRemainingArgs represents an option that consumes all remaining
+	// argv elements as its arguments. Everything after the flag is captured.
+	OptionKindRemainingArgs OptionKind = "RemainingArgs"
+
+	// OptionKindRemainingArgsJoined represents an option that accepts a joined
+	// suffix and also consumes all remaining argv elements. The suffix is
+	// extracted from the same argv element, and the rest of argv is appended.
 	OptionKindRemainingArgsJoined OptionKind = "RemainingArgsJoined"
 )
 
+// IsJoined reports whether the option kind accepts a joined suffix — that is,
+// an argument appended directly to the option spelling with no separator.
 func (k OptionKind) IsJoined() bool {
 	return k == OptionKindJoined ||
 		k == OptionKindJoinedAndSeparate ||

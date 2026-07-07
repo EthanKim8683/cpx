@@ -17,10 +17,17 @@ type Config struct {
 
 // Load reads configuration from the environment.
 // It returns an error if any required value is missing or empty.
-func Load() (Config, error) {
-	cfg, err := env.ParseAs[Config]()
+// Pass env.Options to override the environment (e.g. for testing).
+func Load(opts ...env.Options) (Config, error) {
+	var cfg Config
+	var err error
+	if len(opts) > 0 {
+		cfg, err = env.ParseAsWithOptions[Config](opts[0])
+	} else {
+		cfg, err = env.ParseAs[Config]()
+	}
 	if err != nil {
-		return Config{}, fmt.Errorf("config: %w", err)
+		return Config{}, fmt.Errorf("loading config: %w", err)
 	}
 	return cfg, nil
 }

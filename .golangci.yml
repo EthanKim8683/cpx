@@ -9,7 +9,12 @@ linters:
     - forbidigo
     - testableexamples
     - depguard
+    - gocritic
+    - misspell
   settings:
+    gocritic:
+      disabled-checks:
+        - exitAfterDefer
     revive:
       rules:
         - name: exported
@@ -22,12 +27,12 @@ linters:
           list-mode: lax
           deny:
             - pkg: github.com/google/go-cmp
-              desc: use testify assertions; see docs/agents/tests.md
+              desc: use testify assertions; see docs/adr/0004-testing-frameworks.md
     forbidigo:
       analyze-types: true
       forbid:
         - pattern: ^reflect\.DeepEqual$
-          msg: use testify assertions; see docs/agents/tests.md
+          msg: use testify assertions; see docs/adr/0004-testing-frameworks.md
   exclusions:
     presets:
       - common-false-positives
@@ -42,3 +47,7 @@ linters:
 
 run:
   timeout: 5m
+
+formatters:
+  enable:
+    - goimports

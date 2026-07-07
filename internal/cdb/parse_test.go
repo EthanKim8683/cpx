@@ -56,8 +56,8 @@ func TestFindPattern(t *testing.T) {
 			wantKind: OptionKindFlag,
 		},
 		{
-			name:     "exact match on Joined with no joined prefix",
-			arg:      "-std=",
+			name:    "exact match on Joined with no joined prefix",
+			arg:     "-std=",
 			wantNil: true,
 		},
 		{
@@ -95,6 +95,8 @@ func TestFindPattern(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+
 			got := findPattern(cfg, tt.arg)
 			if tt.wantNil {
 				assert.Nil(t, got)
@@ -208,6 +210,8 @@ func TestParse(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+
 			got, err := Parse(cfg, tt.argv)
 			if tt.wantErr {
 				require.Error(t, err)

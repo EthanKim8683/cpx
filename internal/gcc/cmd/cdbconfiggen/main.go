@@ -18,7 +18,7 @@ import (
 func main() {
 	var output string
 	flag.Usage = func() {
-		fmt.Fprintf(flag.CommandLine.Output(), `Usage: %s [flags] <dir>
+		fmt.Fprintf(os.Stderr, `Usage: %s [flags] <dir>
 
 Arguments:
   dir     search for .opt files in dir

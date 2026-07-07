@@ -1,50 +1,38 @@
-# ADR-0003: File System Abstraction
+# ADR-0003: Filesystem Abstraction
 
 - **Status**: Accepted
-- **Date**: 2026-06-30
-- **Related**: [GitHub #55](https://github.com/EthanKim8683/cpx/issues/55)
-
----
+- **Date**: 2026-06-28
+- **Related**: [CP-6](https://linear.app/ethankim8683/issue/CP-6/filesystem-abstraction-adr)
 
 ## Context
 
-`cpx` performs various file system operations, such as reading compiler configurations, generating directory skeletons, and saving build templates. Direct usage of the Go standard library `os` package binds functions to physical storage. This introduces several testing challenges:
-- **Flaky & Slow Tests**: Tests performing physical disk I/O are slower, cannot safely run in parallel (risk of path collisions), and require tedious cleanup (`os.RemoveAll`, `defer`).
-- **Platform-Specific Bugs**: File separator (`/` vs `\`) and line ending (`\n` vs `\r\n`) variations can lead to tests failing on Windows CI environments.
-- **Lack of Mockability**: Hardcoded `os` calls are difficult to stub or mock.
+cpx reads and writes filesystems — config, caches, bundles, temp dirs. Without abstraction, real I/O is coupled to every workflow. Unit tests hit the real disk, break in CI, and race when parallel.
 
----
+The requirement is an abstraction layer over disk and in-memory filesystems. cpx currently has 24 `afero.Fs` and 5 `afero.Afero` references, mostly in config, cdb, and gcc. Clang is not yet wired up. The abstraction is in production use, not aspirational.
 
 ## Decision
 
-We adopt **`github.com/spf13/afero`** as the standard file system abstraction layer for the `cpx` repository.
+- **Use `afero.Fs` everywhere**: All disk I/O goes through the `afero.Fs` interface.
+- **Method syntax**: Wrap with `&afero.Afero{Fs: fs}` and call `afs.ReadFile(path)`. Avoids `afero.ReadFile(fs, path)` call-site noise.
+- **Unit tests**: Use `afero.NewMemMapFs()` for read/write, `testing/fstest.MapFS` for read-only.
+- **Integration tests**: Use `afero.NewOsFs()` when real disk output is required.
+- **Where to apply**: Config loading, cache reading/writing, bundle output, temp directory management, manifest handling, GCC/Clang scratch dirs.
 
-### Rules of Engagement:
-1.  **Production Functions**: Code that reads or writes to the file system must not make direct calls to the `os` package. Instead, it must accept an `afero.Fs` interface (or Go's standard `fs.FS` if read-only operations are sufficient) and perform operations through it.
-2.  **Unit Testing**: Tests must substitute the physical filesystem with an in-memory implementation:
-    -   Use `afero.NewMemMapFs()` for write/read workloads.
-    -   Use the standard library `testing/fstest.MapFS` for read-only workloads.
-3.  **Integration Testing**: Use `afero.NewOsFs()` when validating actual physical disk outputs is strictly required.
-4.  **Method Call Ergonomics**: To maintain clean and readable method-based syntax, wrap `afero.Fs` in `&afero.Afero{Fs: fs}` inside functions and test verification routines. Avoid using Afero package-level function wrappers (e.g., prefer `afs.ReadFile(path)` over `afero.ReadFile(fs, path)`).
+## Alternatives considered
 
----
-
-## Alternatives
-
--   **Direct OS interactions**: Hardcoding standard `os` calls. (Rejected: prevents parallel unit tests, makes mocking complex, and causes cross-platform flakiness).
--   **Custom Mock File System**: Defining our own interfaces and mocks. (Rejected: duplicates work already handled cleanly by `afero`'s rich ecosystems and helper functions).
-
----
+- **`io/fs` + `os` adapter**: Stdlib since Go 1.16, but read-only by design. cpx needs write. Would require an `fs.FS` → `afero.Fs` adapter anyway.
+- **`fs.FS` + own interface**: Possible, but invents a new abstraction with no ecosystem.
+- **`os` package only**: Breaks unit testing and parallel safety.
+- **Billy (src-d)**: Lower-level, no `MemMapFs` equivalent, unmaintained since 2020.
 
 ## Consequences
 
--   **Test Hermeticity**: Unit tests run fully in-memory, requiring no disk cleanups and preventing file leaks.
--   **Execution Speed**: Test suites execute at CPU/RAM speeds.
--   **Dependency injection**: Production functions require a filesystem instance to be passed, increasing modularity and decoupling.
-
----
+- **`MemMapFs` limitations**: No hardlink/symlink support, no mmap semantics, no real file permissions. Acceptable — cpx does not use these features.
+- **Migration scope**: 24 `afero.Fs` + 5 `Afero` references already in cpx. Incremental expansion, not greenfield.
+- **Clang gap**: 10 `os` calls in clang still need wiring. GCC is partially wired.
+- **`fstest.MapFS` for read-only tests**: Avoids `MemMapFs` write setup when tests only read.
 
 ## References
 
--   [Go Testing Guidelines](../agents/tests.md)
--   [GitHub Issue #55](https://github.com/EthanKim8683/cpx/issues/55)
+- [CP-6](https://linear.app/ethankim8683/issue/CP-6/filesystem-abstraction-adr)
+
