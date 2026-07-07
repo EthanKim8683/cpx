@@ -10,6 +10,8 @@ import (
 
 func TestMergeOptRecords(t *testing.T) {
 	t.Run("merges duplicate names", func(t *testing.T) {
+		t.Parallel()
+
 		records := []optRecord{
 			{name: "foo", props: "Joined"},
 			{name: "bar", props: "Separate"},
@@ -22,6 +24,8 @@ func TestMergeOptRecords(t *testing.T) {
 	})
 
 	t.Run("no duplicates", func(t *testing.T) {
+		t.Parallel()
+
 		records := []optRecord{
 			{name: "a", props: "Joined"},
 			{name: "b", props: "Separate"},
@@ -78,6 +82,8 @@ func TestHasProp(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+
 			got := hasProp(tt.prop, tt.props)
 			assert.Equal(t, tt.want, got)
 		})
@@ -119,6 +125,8 @@ func TestPropArgs(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+
 			got := propArgs(tt.key, tt.props)
 			assert.Equal(t, tt.want, got)
 		})
@@ -138,6 +146,8 @@ func TestNegative(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+
 			got := negative(tt.in)
 			assert.Equal(t, tt.want, got)
 		})
@@ -217,6 +227,8 @@ func TestTranslateOptRecord(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+
 			got := translateOptRecord(tt.record)
 			if tt.want == nil {
 				assert.Nil(t, got)
@@ -229,6 +241,8 @@ func TestTranslateOptRecord(t *testing.T) {
 
 func TestTranslateOptRecords(t *testing.T) {
 	t.Run("normal input", func(t *testing.T) {
+		t.Parallel()
+
 		records := []optRecord{
 			{name: "std=", props: "Joined"},
 			{name: "o", props: "Separate"},
@@ -242,6 +256,8 @@ func TestTranslateOptRecords(t *testing.T) {
 	})
 
 	t.Run("nil input", func(t *testing.T) {
+		t.Parallel()
+
 		got := translateOptRecords(nil)
 		require.Nil(t, got)
 	})

@@ -131,6 +131,8 @@ func TestNewConfig(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+
 			inputCopy := make([]OptionPattern, len(tt.input))
 			copy(inputCopy, tt.input)
 
@@ -173,6 +175,8 @@ func TestIsJoined(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+
 			assert.Equal(t, tt.want, tt.kind.IsJoined())
 		})
 	}

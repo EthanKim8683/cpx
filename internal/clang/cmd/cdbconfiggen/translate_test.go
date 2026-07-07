@@ -184,6 +184,8 @@ func TestTranslateDef(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+
 			got := translateDef(tt.def)
 			if tt.want == nil {
 				assert.Nil(t, got)
@@ -196,15 +198,19 @@ func TestTranslateDef(t *testing.T) {
 
 func TestUnmarshalDump(t *testing.T) {
 	t.Run("valid JSON", func(t *testing.T) {
+		t.Parallel()
+
 		data := []byte(`{"!tablegen_json_version": 1, "!instanceof": {}, "foo": {"!superclasses": ["Option"], "Prefixes": ["-"], "Name": "foo", "Kind": {"def": "KIND_FLAG"}, "NumArgs": 0, "Flags": []}}`)
 		got, err := unmarshalDump(data)
 		require.NoError(t, err)
-		require.Equal(t, 1, got.TablegenJSONVersion)
+		require.Equal(t, 1, got.TableGenJSONVersion)
 		require.Len(t, got.Defs, 1)
 		require.Contains(t, got.Defs, "foo")
 	})
 
 	t.Run("invalid JSON", func(t *testing.T) {
+		t.Parallel()
+
 		_, err := unmarshalDump([]byte("not json"))
 		require.Error(t, err)
 	})
@@ -212,8 +218,10 @@ func TestUnmarshalDump(t *testing.T) {
 
 func TestTranslateDump(t *testing.T) {
 	t.Run("valid dump", func(t *testing.T) {
+		t.Parallel()
+
 		d := &dump{
-			TablegenJSONVersion: 1,
+			TableGenJSONVersion: 1,
 			Defs: map[string]def{
 				"foo": {
 					Superclasses: []string{"Option"},
@@ -246,7 +254,9 @@ func TestTranslateDump(t *testing.T) {
 	})
 
 	t.Run("wrong version", func(t *testing.T) {
-		d := &dump{TablegenJSONVersion: 2}
+		t.Parallel()
+
+		d := &dump{TableGenJSONVersion: 2}
 		_, err := translateDump(d)
 		require.Error(t, err)
 		require.Contains(t, err.Error(), "unexpected TableGen JSON version")

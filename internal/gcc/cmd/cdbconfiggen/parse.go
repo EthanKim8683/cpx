@@ -14,14 +14,14 @@ var (
 
 // excludes contains record types to exclude when parsing option records.
 // See gcc/doc/internals.texi for record type documentation.
-var excludes = map[string]bool{
-	"Language":       true,
-	"Variable":       true,
-	"TargetVariable": true,
-	"TargetSave":     true,
-	"HeaderKeep":     true,
-	"Enum":           true,
-	"EnumValue":      true,
+var excludes = map[string]struct{}{
+	"Language":       {},
+	"Variable":       {},
+	"TargetVariable": {},
+	"TargetSave":     {},
+	"HeaderKeep":     {},
+	"Enum":           {},
+	"EnumValue":      {},
 }
 
 // optRecord represents a parsed option record.
@@ -37,7 +37,8 @@ func isOptRecord(content string) bool {
 	if name == "" {
 		return false
 	}
-	return !excludes[name]
+	_, excluded := excludes[name]
+	return !excluded
 }
 
 // parseOptRecord parses a record block into an optRecord.

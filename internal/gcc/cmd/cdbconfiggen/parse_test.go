@@ -66,6 +66,8 @@ func TestIsOptRecord(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+
 			got := isOptRecord(tt.content)
 			assert.Equal(t, tt.want, got)
 		})
@@ -74,9 +76,9 @@ func TestIsOptRecord(t *testing.T) {
 
 func TestParseOptRecord(t *testing.T) {
 	tests := []struct {
-		name     string
-		content  string
-		wantName string
+		name      string
+		content   string
+		wantName  string
 		wantProps string
 	}{
 		{
@@ -113,6 +115,8 @@ func TestParseOptRecord(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
+			t.Parallel()
+
 			got := parseOptRecord(tt.content)
 			assert.Equal(t, tt.wantName, got.name)
 			assert.Equal(t, tt.wantProps, got.props)
@@ -122,6 +126,8 @@ func TestParseOptRecord(t *testing.T) {
 
 func TestParseOptRecords(t *testing.T) {
 	t.Run("single option record", func(t *testing.T) {
+		t.Parallel()
+
 		content := "foo\nJoined Driver"
 		got := parseOptRecords(content)
 		assert.Len(t, got, 1)
@@ -130,12 +136,16 @@ func TestParseOptRecords(t *testing.T) {
 	})
 
 	t.Run("multiple records separated by blank lines", func(t *testing.T) {
+		t.Parallel()
+
 		content := "foo\nJoined\n\nbar\nSeparate"
 		got := parseOptRecords(content)
 		assert.Len(t, got, 2)
 	})
 
 	t.Run("comments are stripped", func(t *testing.T) {
+		t.Parallel()
+
 		content := "; this is a comment\nfoo\nJoined\n; another comment"
 		got := parseOptRecords(content)
 		assert.Len(t, got, 1)
@@ -143,6 +153,8 @@ func TestParseOptRecords(t *testing.T) {
 	})
 
 	t.Run("excluded record types are skipped", func(t *testing.T) {
+		t.Parallel()
+
 		content := "Variable\nint target_flags\n\nfoo\nJoined"
 		got := parseOptRecords(content)
 		assert.Len(t, got, 1)
@@ -150,23 +162,31 @@ func TestParseOptRecords(t *testing.T) {
 	})
 
 	t.Run("CRLF line endings are normalized", func(t *testing.T) {
+		t.Parallel()
+
 		content := "foo\r\nJoined\r\n\r\nbar\r\nSeparate"
 		got := parseOptRecords(content)
 		assert.Len(t, got, 2)
 	})
 
 	t.Run("empty input", func(t *testing.T) {
+		t.Parallel()
+
 		got := parseOptRecords("")
 		assert.Empty(t, got)
 	})
 
 	t.Run("only comments and blank lines", func(t *testing.T) {
+		t.Parallel()
+
 		content := "; comment\n\n; another comment\n"
 		got := parseOptRecords(content)
 		assert.Empty(t, got)
 	})
 
 	t.Run("mixed records and exclusions", func(t *testing.T) {
+		t.Parallel()
+
 		content := "; Header\nVariable\nint flags\n\nfoo\nJoined RejectDriver\n\nbar\nSeparate"
 		got := parseOptRecords(content)
 		assert.Len(t, got, 2)

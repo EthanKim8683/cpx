@@ -28,10 +28,10 @@ type def struct {
 
 // dump is the top-level structure of a TableGen JSON dump.
 type dump struct {
-	TablegenJSONVersion int                 `json:"!tablegen_json_version"`
+	TableGenJSONVersion int                 `json:"!tablegen_json_version"`
 	Instanceof          map[string][]string `json:"!instanceof"`
 	// Defs captures all non-reserved keys as defs. Requires json/v2 for embed support.
-	Defs map[string]def `json:",embed"`
+	Defs map[string]def `json:",embed"` //nolint:staticcheck // SA5008: valid json/v2 embed tag, not recognized by staticcheck yet
 }
 
 // translateDef decomposes a single def into CDB option patterns.
@@ -89,8 +89,8 @@ func translateDef(def def) []cdb.OptionPattern {
 			Kind: cdb.OptionKindSeparate,
 		})
 	case "KIND_JOINED_AND_SEPARATE":
-		// JoinedAndSeparate retains its own kind plus a Separate pattern
-		// for the trailing argument.
+		// Same empty-suffix reasoning as KIND_JOINED: JoinedAndSeparate for
+		// present arguments, Separate for empty (consumes next argv element).
 		partials = append(partials, cdb.OptionPattern{
 			Kind: cdb.OptionKindJoinedAndSeparate,
 		})
@@ -102,8 +102,8 @@ func translateDef(def def) []cdb.OptionPattern {
 			Kind: cdb.OptionKindRemainingArgs,
 		})
 	case "KIND_REMAINING_ARGS_JOINED":
-		// RemainingArgsJoined retains its own kind plus a RemainingArgs
-		// pattern for the unconsumed tail.
+		// Same empty-suffix reasoning as KIND_JOINED: RemainingArgsJoined for
+		// present arguments, RemainingArgs for empty (consumes remaining argv).
 		partials = append(partials, cdb.OptionPattern{
 			Kind: cdb.OptionKindRemainingArgsJoined,
 		})
@@ -137,7 +137,7 @@ func unmarshalDump(data []byte) (*dump, error) {
 
 // translateDump translates an entire TableGen JSON dump into CDB option patterns.
 func translateDump(dump *dump) ([]cdb.OptionPattern, error) {
-	if version := dump.TablegenJSONVersion; version != 1 {
+	if version := dump.TableGenJSONVersion; version != 1 {
 		return nil, fmt.Errorf("unexpected TableGen JSON version: %d", version)
 	}
 

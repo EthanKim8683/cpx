@@ -16,7 +16,7 @@ import (
 func main() {
 	var output string
 	flag.Usage = func() {
-		fmt.Fprintf(flag.CommandLine.Output(), `Usage: %s [flags] <dump>
+		fmt.Fprintf(os.Stderr, `Usage: %s [flags] <dump>
 
 Arguments:
   dump    path to TableGen JSON dump
