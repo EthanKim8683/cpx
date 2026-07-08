@@ -22,21 +22,23 @@ type Command struct {
 	Args    []string
 }
 
-// findPattern locates the option pattern matching arg via binary search and
-// back-chain prefix matching.
+// findPattern locates the option pattern matching arg.
+//
+// Longest-prefix matching is performed in O(log n) time by binary searching the
+// sorted option spellings and traversing pre-computed back-chain links. This algorithm
+// is based on GCC's own internal options-parsing implementation, avoiding the complexity
+// of a trie while remaining fast and easy to serialize.
 func findPattern(cfg *Config, arg string) *OptionPattern {
-	// Binary searching over a list of strings has the property that the
-	// greatest string lexicographically smaller or equal to the target string
-	// also has the longest common prefix with the target string among the
-	// strings in the list.
 	i := sort.Search(len(cfg.Patterns), func(i int) bool {
 		return cfg.Patterns[i].Spelling >= arg
 	})
 
-	// Exact match: for non-joined kinds, return the pattern directly.
-	// For joined kinds, the argument must contain a non-empty suffix after the spelling.
-	// Therefore, an exact spelling match on a base joined option (which has no shorter back-chain
-	// prefix) returns nil because the suffix would be empty.
+	// Exact matches: non-joined options are returned directly.
+	//
+	// Joined options require a non-empty suffix to match. If a compiler option accepts
+	// an empty suffix, it is represented as separate Joined and Flag patterns. Therefore,
+	// an exact match on a Joined option's spelling (which has no shorter back-chain prefix)
+	// returns nil to allow matching an alternate Flag pattern or falling back to a positional argument.
 	if i < len(cfg.Patterns) && cfg.Patterns[i].Spelling == arg {
 		pattern := cfg.Patterns[i]
 		if !pattern.Kind.IsJoined() {

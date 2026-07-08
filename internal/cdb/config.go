@@ -21,9 +21,11 @@ const (
 	OptionKindFlag OptionKind = "Flag"
 
 	// OptionKindJoined represents an option whose argument is appended directly
-	// to the option spelling with no separator. The suffix after the spelling
-	// is extracted as the option's argument (must be non-empty; e.g., -std=c++17
-	// with spelling "-std=" yields argument "c++17", but exactly "-std=" is ignored).
+	// to the option spelling with no separator.
+	//
+	// Joined option patterns strictly require a non-empty suffix. If a joined option
+	// can have an empty suffix, it is represented using multiple distinct patterns
+	// (e.g., a Joined pattern for a non-empty suffix, and a Flag pattern for an empty suffix).
 	OptionKindJoined OptionKind = "Joined"
 
 	// OptionKindSeparate represents an option that consumes exactly one
@@ -36,10 +38,10 @@ const (
 	OptionKindMultiArg OptionKind = "MultiArg"
 
 	// OptionKindJoinedAndSeparate represents an option that accepts both a
-	// joined suffix and a separate argument. The suffix is extracted from the
-	// same argv element (must be non-empty), and one additional argv element is
-	// consumed (e.g., -Ifoo bar with spelling "-I" yields joined suffix "foo" and
-	// separate argument "bar").
+	// joined suffix and a separate argument.
+	//
+	// The joined suffix is extracted from the same argv element and must be non-empty.
+	// If the joined suffix can be empty, it is represented as a separate OptionKindSeparate pattern.
 	OptionKindJoinedAndSeparate OptionKind = "JoinedAndSeparate"
 
 	// OptionKindRemainingArgs represents an option that consumes all remaining
@@ -47,9 +49,10 @@ const (
 	OptionKindRemainingArgs OptionKind = "RemainingArgs"
 
 	// OptionKindRemainingArgsJoined represents an option that accepts a joined
-	// suffix and also consumes all remaining argv elements. The suffix is
-	// extracted from the same argv element (must be non-empty), and the rest of
-	// argv is appended.
+	// suffix and also consumes all remaining argv elements.
+	//
+	// The joined suffix is extracted from the same argv element and must be non-empty.
+	// If the joined suffix can be empty, it is represented as a separate OptionKindRemainingArgs pattern.
 	OptionKindRemainingArgsJoined OptionKind = "RemainingArgsJoined"
 )
 

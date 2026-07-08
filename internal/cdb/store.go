@@ -38,8 +38,11 @@ type Store struct {
 	file string
 }
 
-// Add merges new compilation records into the database file, performing
-// atomic updates using a swap file and file locks.
+// Add merges new compilation records into the database file.
+//
+// To prevent database corruption and guarantee reliability during concurrent compiler
+// execution, updates are serialized using an advisory lock, and the write is performed
+// atomically via a temporary swap file to ensure the database is never left in a partially-written state.
 func (s *Store) Add(records []Record) error {
 	if err := os.MkdirAll(filepath.Dir(s.file), 0755); err != nil {
 		return fmt.Errorf("creating database directory: %w", err)
