@@ -12,11 +12,14 @@ import (
 // parenRE matches parenthesized groups in property strings.
 var parenRE = regexp.MustCompile(`\([^)]+\)`)
 
-// negateRE matches GCC option names with implicit negative forms (e.g. -ffoo → -fno-foo).
+// negateRE matches option flags (starting with f, g, W, or m) that GCC automatically
+// generates negative forms for (e.g., -ffoo has an implicit -fno-foo negated variant).
 var negateRE = regexp.MustCompile(`^[fgWm][^=]+$`)
 
-// mergeOptRecords merges optRecords with the same name into a single record by
-// concatenating their props. The input slice is sorted in place.
+// mergeOptRecords merges options sharing the same spelling into a single entry.
+//
+// This replicates the merging behavior of GCC's opt-gather script to consolidate
+// options defined across multiple target-independent and language-specific files.
 func mergeOptRecords(records []optRecord) []optRecord {
 	slices.SortFunc(records, func(a, b optRecord) int {
 		return strings.Compare(a.name, b.name)
@@ -42,18 +45,13 @@ func mergeOptRecords(records []optRecord) []optRecord {
 	return merged
 }
 
-// hasProp emulates flag_set_p from gcc/gcc/opt-functions.awk. It checks whether
-// a property like "Joined" or "Separate" appears in the space-separated property
-// string, excluding parenthesized groups to avoid matching macro arguments.
+// hasProp emulates flag_set_p from GCC's opt-functions.awk.
 func hasProp(prop, props string) bool {
 	props = parenRE.ReplaceAllString(props, "")
 	return strings.Contains(" "+props+" ", " "+prop+" ")
 }
 
-// propArgs emulates opt_args from gcc/gcc/opt-functions.awk. It pulls out the
-// value for a named property, handling both parenthesized forms like
-// "Var({foo})" and bare forms like "Args(2)". Returns empty string if the
-// property isn't present.
+// propArgs emulates opt_args from GCC's opt-functions.awk.
 func propArgs(name, props string) string {
 	_, s, found := strings.Cut(" "+props, " "+name+"(")
 	if !found {
@@ -68,8 +66,10 @@ func propArgs(name, props string) string {
 	return s
 }
 
-// negative returns the negated form of a GCC option name by inserting "no-"
-// after the first character. For example, "ffoo" becomes "fno-foo".
+// negative returns the negated option name variant.
+//
+// GCC's option system inserts "no-" after the first letter of the name (e.g.,
+// name "ffoo" yields "fno-foo").
 func negative(name string) string {
 	return name[0:1] + "no-" + name[1:]
 }

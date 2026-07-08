@@ -6,14 +6,16 @@ import (
 )
 
 var (
-	// commentRE matches full-line comments in GCC .opt files (lines starting with ';').
+	// commentRE matches semicolon-prefixed lines, which denote comments in GCC's
+	// custom .opt configuration syntax.
 	commentRE = regexp.MustCompile(`(?m)^[ \t]*;.*$`)
 	// splitRE splits record blocks separated by one or more blank lines.
 	splitRE = regexp.MustCompile(`(?:[ \t]*\n){2,}`)
 )
 
-// excludes contains record types to exclude when parsing option records.
-// See gcc/doc/internals.texi for record type documentation.
+// excludes contains non-option record types that configure internal compiler state
+// rather than defining command-line option flags.
+// Reference: gcc/doc/internals.texi (Option properties).
 var excludes = map[string]struct{}{
 	"Language":       {},
 	"Variable":       {},

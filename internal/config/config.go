@@ -9,15 +9,15 @@ import (
 
 // Config holds shared configuration for cpx.
 type Config struct {
-	// GCC is the path to the gcc driver.
+	// GCC is the absolute path to the GCC compiler driver (required).
 	GCC string `env:"GCC,notEmpty"`
-	// GXX is the path to the g++ driver.
+	// GXX is the absolute path to the G++ compiler driver (optional).
 	GXX string `env:"GXX"`
-	// Clang is the path to the clang driver.
+	// Clang is the absolute path to the Clang compiler driver (required).
 	Clang string `env:"CLANG,notEmpty"`
-	// ClangXX is the path to the clang++ driver.
+	// ClangXX is the absolute path to the Clang++ compiler driver (optional).
 	ClangXX string `env:"CLANGXX"`
-	// CDB is the path to the compilation database file.
+	// CDB is the destination path to write the compilation database JSON file.
 	CDB string `env:"CPX_CDB" envDefault:"./cpx/cdb.json"`
 }
 
