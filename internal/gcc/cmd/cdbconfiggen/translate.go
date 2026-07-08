@@ -81,7 +81,7 @@ func translateOptRecord(record optRecord) []cdb.OptionPattern {
 	}
 
 	// partials holds intermediate patterns before negation expansion.
-	var partials []cdb.OptionPattern
+	partials := []cdb.OptionPattern{}
 	if hasProp("Joined", record.props) {
 		partials = append(partials, cdb.OptionPattern{
 			Kind: cdb.OptionKindJoined,
@@ -95,6 +95,8 @@ func translateOptRecord(record optRecord) []cdb.OptionPattern {
 				Kind: cdb.OptionKindFlag,
 			})
 		case hasProp("Args", record.props):
+			// We intentionally discard the error here because the input option records
+			// are pre-validated by the compiler's build tools upstream.
 			n, _ := strconv.Atoi(propArgs("Args", record.props))
 			partials = append(partials, cdb.OptionPattern{
 				Kind:    cdb.OptionKindMultiArg,
@@ -116,14 +118,14 @@ func translateOptRecord(record optRecord) []cdb.OptionPattern {
 		})
 	}
 	// GCC options without any recognized property default to Flag.
-	if partials == nil {
+	if len(partials) == 0 {
 		partials = append(partials, cdb.OptionPattern{
 			Kind: cdb.OptionKindFlag,
 		})
 	}
 
 	// patterns holds the final patterns with spellings filled in.
-	var patterns []cdb.OptionPattern
+	patterns := []cdb.OptionPattern{}
 	for _, partial := range partials {
 		partial.Spelling = "-" + record.name
 		patterns = append(patterns, partial)
@@ -141,7 +143,7 @@ func translateOptRecord(record optRecord) []cdb.OptionPattern {
 
 // translateOptRecords translates a slice of parsed option records into CDB option patterns.
 func translateOptRecords(records []optRecord) []cdb.OptionPattern {
-	var patterns []cdb.OptionPattern
+	patterns := []cdb.OptionPattern{}
 	for _, record := range records {
 		patterns = append(patterns, translateOptRecord(record)...)
 	}

@@ -22,8 +22,8 @@ const (
 
 	// OptionKindJoined represents an option whose argument is appended directly
 	// to the option spelling with no separator. The suffix after the spelling
-	// is extracted as the option's argument (e.g., -std=c++17 with spelling
-	// "-std=" yields argument "c++17").
+	// is extracted as the option's argument (must be non-empty; e.g., -std=c++17
+	// with spelling "-std=" yields argument "c++17", but exactly "-std=" is ignored).
 	OptionKindJoined OptionKind = "Joined"
 
 	// OptionKindSeparate represents an option that consumes exactly one
@@ -37,9 +37,9 @@ const (
 
 	// OptionKindJoinedAndSeparate represents an option that accepts both a
 	// joined suffix and a separate argument. The suffix is extracted from the
-	// same argv element, and one additional argv element is consumed (e.g.,
-	// -Ifoo bar with spelling "-I" yields joined suffix "foo" and separate
-	// argument "bar").
+	// same argv element (must be non-empty), and one additional argv element is
+	// consumed (e.g., -Ifoo bar with spelling "-I" yields joined suffix "foo" and
+	// separate argument "bar").
 	OptionKindJoinedAndSeparate OptionKind = "JoinedAndSeparate"
 
 	// OptionKindRemainingArgs represents an option that consumes all remaining
@@ -48,7 +48,8 @@ const (
 
 	// OptionKindRemainingArgsJoined represents an option that accepts a joined
 	// suffix and also consumes all remaining argv elements. The suffix is
-	// extracted from the same argv element, and the rest of argv is appended.
+	// extracted from the same argv element (must be non-empty), and the rest of
+	// argv is appended.
 	OptionKindRemainingArgsJoined OptionKind = "RemainingArgsJoined"
 )
 
@@ -74,12 +75,22 @@ type Config struct {
 	BackChains []int
 }
 
-// NewConfig sorts the provided option patterns by spelling and computes
-// back-chain links for prefix-based matching.
+// NewConfig sorts the provided option patterns by spelling and kind (separated before
+// joined) and computes back-chain links for prefix-based matching.
 func NewConfig(patterns []OptionPattern) *Config {
 	patterns = slices.Clone(patterns)
 	slices.SortFunc(patterns, func(a, b OptionPattern) int {
-		return strings.Compare(a.Spelling, b.Spelling)
+		if d := strings.Compare(a.Spelling, b.Spelling); d != 0 {
+			return d
+		}
+
+		if !a.Kind.IsJoined() && b.Kind.IsJoined() {
+			return -1
+		}
+		if a.Kind.IsJoined() && !b.Kind.IsJoined() {
+			return 1
+		}
+		return 0
 	})
 
 	// Back-chain: for each joined kind, find the longest joined prefix

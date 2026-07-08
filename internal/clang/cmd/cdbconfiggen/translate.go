@@ -48,7 +48,7 @@ func translateDef(def def) []cdb.OptionPattern {
 	}
 
 	// partials holds intermediate patterns before prefix expansion.
-	var partials []cdb.OptionPattern
+	partials := []cdb.OptionPattern{}
 	switch def.Kind.Def {
 	case "KIND_FLAG":
 		partials = append(partials, cdb.OptionPattern{
@@ -110,10 +110,14 @@ func translateDef(def def) []cdb.OptionPattern {
 		partials = append(partials, cdb.OptionPattern{
 			Kind: cdb.OptionKindRemainingArgs,
 		})
+	default:
+		// We intentionally return nil here to signal that this option kind is unhandled
+		// and should be excluded from the generated configuration.
+		return nil
 	}
 
 	// Expand each prefix × kind into a separate pattern.
-	var patterns []cdb.OptionPattern
+	patterns := []cdb.OptionPattern{}
 	for _, prefix := range def.Prefixes {
 		for _, partial := range partials {
 			patterns = append(patterns, cdb.OptionPattern{
@@ -141,7 +145,7 @@ func translateDump(dump *dump) ([]cdb.OptionPattern, error) {
 		return nil, fmt.Errorf("unexpected TableGen JSON version: %d", version)
 	}
 
-	var patterns []cdb.OptionPattern
+	patterns := []cdb.OptionPattern{}
 	for _, def := range dump.Defs {
 		patterns = append(patterns, translateDef(def)...)
 	}

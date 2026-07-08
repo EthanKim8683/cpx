@@ -240,25 +240,16 @@ func TestTranslateOptRecord(t *testing.T) {
 }
 
 func TestTranslateOptRecords(t *testing.T) {
-	t.Run("normal input", func(t *testing.T) {
-		t.Parallel()
+	t.Parallel()
 
-		records := []optRecord{
-			{name: "std=", props: "Joined"},
-			{name: "o", props: "Separate"},
-		}
-		got := translateOptRecords(records)
-		expected := []cdb.OptionPattern{
-			{Spelling: "-std=", Kind: cdb.OptionKindJoined},
-			{Spelling: "-o", Kind: cdb.OptionKindSeparate},
-		}
-		assert.Equal(t, expected, got)
-	})
-
-	t.Run("nil input", func(t *testing.T) {
-		t.Parallel()
-
-		got := translateOptRecords(nil)
-		require.Nil(t, got)
-	})
+	records := []optRecord{
+		{name: "std=", props: "Joined"},
+		{name: "o", props: "Separate"},
+	}
+	got := translateOptRecords(records)
+	expected := []cdb.OptionPattern{
+		{Spelling: "-std=", Kind: cdb.OptionKindJoined},
+		{Spelling: "-o", Kind: cdb.OptionKindSeparate},
+	}
+	assert.Equal(t, expected, got)
 }

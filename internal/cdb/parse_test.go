@@ -133,13 +133,15 @@ func TestParse(t *testing.T) {
 			name:     "only command name",
 			argv:     []string{"cc"},
 			wantName: "cc",
+			wantOpts: []Option{},
+			wantArgs: []string{},
 		},
 		{
 			name:     "flag option",
 			argv:     []string{"cc", "-c", "main.c"},
 			wantName: "cc",
 			wantOpts: []Option{
-				{Pattern: OptionPattern{Spelling: "-c", Kind: OptionKindFlag}},
+				{Pattern: OptionPattern{Spelling: "-c", Kind: OptionKindFlag}, Args: []string{}},
 			},
 			wantArgs: []string{"main.c"},
 		},
@@ -151,6 +153,13 @@ func TestParse(t *testing.T) {
 				{Pattern: OptionPattern{Spelling: "-std=", Kind: OptionKindJoined}, Args: []string{"c++17"}},
 			},
 			wantArgs: []string{"main.c"},
+		},
+		{
+			name:     "joined option exact match (treated as positional)",
+			argv:     []string{"cc", "-std="},
+			wantName: "cc",
+			wantOpts: []Option{},
+			wantArgs: []string{"-std="},
 		},
 		{
 			name:     "separate option",
@@ -177,11 +186,13 @@ func TestParse(t *testing.T) {
 			wantOpts: []Option{
 				{Pattern: OptionPattern{Spelling: "-", Kind: OptionKindRemainingArgs}, Args: []string{"a", "b", "c"}},
 			},
+			wantArgs: []string{},
 		},
 		{
 			name:     "unknown options become positional args",
 			argv:     []string{"cc", "-foo", "-bar"},
 			wantName: "cc",
+			wantOpts: []Option{},
 			wantArgs: []string{"-foo", "-bar"},
 		},
 		{
@@ -189,7 +200,7 @@ func TestParse(t *testing.T) {
 			argv:     []string{"cc", "-c", "-o", "out", "main.c", "-foo"},
 			wantName: "cc",
 			wantOpts: []Option{
-				{Pattern: OptionPattern{Spelling: "-c", Kind: OptionKindFlag}},
+				{Pattern: OptionPattern{Spelling: "-c", Kind: OptionKindFlag}, Args: []string{}},
 				{Pattern: OptionPattern{Spelling: "-o", Kind: OptionKindSeparate}, Args: []string{"out"}},
 			},
 			wantArgs: []string{"main.c", "-foo"},

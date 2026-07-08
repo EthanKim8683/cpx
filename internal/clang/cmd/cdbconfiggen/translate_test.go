@@ -168,7 +168,7 @@ func TestTranslateDef(t *testing.T) {
 				Name:         "foo",
 				Kind:         defRef{Def: "KIND_FLAG"},
 			},
-			want: nil,
+			want: []cdb.OptionPattern{},
 		},
 		{
 			name: "unknown kind produces no patterns",
