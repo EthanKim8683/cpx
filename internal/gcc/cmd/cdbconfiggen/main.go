@@ -1,6 +1,5 @@
-// Package main generates GCC CDB option configurations from .opt files. It
-// reads all .opt files from a directory, parses option records, and writes a
-// Go source file containing a *cdb.Config.
+// Package main implements a code generator that parses GCC's .opt option files
+// and translates them into an optimized static *cdb.Config for the cpx shim.
 package main
 
 import (

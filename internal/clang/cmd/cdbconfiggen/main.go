@@ -1,6 +1,5 @@
-// Package main generates Clang CDB option configurations from TableGen JSON
-// dumps. It reads a JSON dump produced by clang-tblgen or llvm-tblgen and
-// writes a Go source file containing a *cdb.Config.
+// Package main implements a code generator that parses Clang's TableGen JSON options
+// dumps and translates them into an optimized static *cdb.Config for the cpx shim.
 package main
 
 import (
