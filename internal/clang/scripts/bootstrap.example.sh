@@ -38,15 +38,13 @@ echo "--- Local Compiler Version ---"
 "$CLANG_BIN" --version
 echo "------------------------------"
 
+# Display tblgen version info
+echo "--- Local TableGen Version ---"
+"$TBLGEN" --version
+echo "------------------------------"
+
 echo "Base URL: $BASE_URL"
 echo "======================================"
-
-# Prompt to verify version and proceed
-read -p "Does the compiler version align with the base URL? Proceed with downloading? [Y/n] " response
-if [[ "$response" =~ ^[Nn] ]]; then
-    echo "Aborted."
-    exit 1
-fi
 
 mkdir -p "$TMP_DIR"
 
@@ -67,13 +65,6 @@ for file in "${TD_FILES[@]}"; do
     curl -fsSL -o "$target_path" "${BASE_URL}/${file}"
 done
 
-# Prompt to generate JSON dump
-read -p "TableGen files downloaded. Proceed with generating options.json? [Y/n] " response
-if [[ "$response" =~ ^[Nn] ]]; then
-    echo "Aborted."
-    exit 1
-fi
-
 echo "Generating JSON dump using tblgen..."
 "$TBLGEN" \
     -I "${TMP_DIR}/llvm/include" \
@@ -81,13 +72,6 @@ echo "Generating JSON dump using tblgen..."
     --dump-json \
     "${TMP_DIR}/clang/include/clang/Driver/Options.td" \
     -o "${TMP_DIR}/options.json"
-
-# Prompt to run config generator
-read -p "options.json generated. Proceed with running cdbconfiggen? [Y/n] " response
-if [[ "$response" =~ ^[Nn] ]]; then
-    echo "Aborted."
-    exit 1
-fi
 
 echo "Running cdbconfiggen..."
 go run ./internal/clang/cmd/cdbconfiggen -o "$OUTPUT_FILE" "${TMP_DIR}/options.json"

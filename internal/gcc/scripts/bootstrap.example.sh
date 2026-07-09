@@ -34,15 +34,9 @@ echo "------------------------------"
 echo "Base URL: $BASE_URL"
 echo "======================================"
 
-# Prompt to verify version and proceed
-read -p "Does the compiler version align with the base URL? Proceed with downloading? [Y/n] " response
-if [[ "$response" =~ ^[Nn] ]]; then
-    echo "Aborted."
-    exit 1
-fi
-
 mkdir -p "$TMP_DIR"
 
+# List of .opt files to fetch (adapted for this environment)
 OPT_FILES=(
     "common.opt"
     "params.opt"
@@ -58,13 +52,6 @@ for file in "${OPT_FILES[@]}"; do
     echo "  - $file"
     curl -fsSL -o "$target_path" "${BASE_URL}/${file}"
 done
-
-# Prompt to run config generator
-read -p "Option files downloaded. Proceed with running cdbconfiggen? [Y/n] " response
-if [[ "$response" =~ ^[Nn] ]]; then
-    echo "Aborted."
-    exit 1
-fi
 
 echo "Running cdbconfiggen..."
 go run ./internal/gcc/cmd/cdbconfiggen -o "$OUTPUT_FILE" "$TMP_DIR"
