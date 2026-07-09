@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-import os
 import sys
 import urllib.request
 import subprocess
@@ -20,8 +18,8 @@ sys.exit(1)
 #     echo "{}" > tmp/options.json
 
 # Constants (DO NOT CHANGE)
-TMP_DIR = Path("./internal/clang/tmp")
-OUTPUT_FILE = Path("./internal/clang/generated_cdbconfig.go")
+PKG_DIR = Path(__file__).resolve().parent.parent
+TMP_DIR = PKG_DIR / "tmp"
 
 # TODO: Configure the variables below to match your local environment.
 
@@ -81,9 +79,9 @@ try:
         [
             "go",
             "run",
-            "./internal/clang/cmd/cdbconfiggen",
+            str(PKG_DIR / "cmd" / "cdbconfiggen"),
             "-o",
-            str(OUTPUT_FILE),
+            str(PKG_DIR / "generated_cdbconfig.go"),
             str(TMP_DIR / "options.json"),
         ],
         check=True,

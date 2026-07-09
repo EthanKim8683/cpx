@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-import os
 import sys
 import urllib.request
 import subprocess
@@ -13,8 +11,8 @@ sys.exit(1)
 # to skip downloading and generate an empty option configuration.
 
 # Constants (DO NOT CHANGE)
-TMP_DIR = Path("./internal/gcc/tmp")
-OUTPUT_FILE = Path("./internal/gcc/generated_cdbconfig.go")
+PKG_DIR = Path(__file__).resolve().parent.parent
+TMP_DIR = PKG_DIR / "tmp"
 
 # TODO: Configure the variables below to match your local environment.
 
@@ -30,9 +28,6 @@ OPT_FILES = [
     "analyzer/analyzer.opt",
 ]
 
-TMP_DIR.mkdir(parents=True, exist_ok=True)
-
-# Download option files
 for file in OPT_FILES:
     src_url = f"{BASE_URL}/{file}"
     dest_path = TMP_DIR / file
@@ -48,7 +43,13 @@ print("Generating configuration...")
 file_args = [str(TMP_DIR / file) for file in OPT_FILES]
 try:
     subprocess.run(
-        ["go", "run", "./internal/gcc/cmd/cdbconfiggen", "-o", str(OUTPUT_FILE)]
+        [
+            "go",
+            "run",
+            str(PKG_DIR / "cmd" / "cdbconfiggen"),
+            "-o",
+            str(PKG_DIR / "generated_cdbconfig.go"),
+        ]
         + file_args,
         check=True,
     )
