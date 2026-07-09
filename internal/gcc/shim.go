@@ -20,8 +20,8 @@ func RunGCC(cfg *config.Config) error {
 	}
 
 	return (&cdb.Shim{
-		Name:     gcc,
-		Cfg:      CDBConfig,
+		Name: gcc,
+		Cfg:  CDBConfig,
 		Compiler: &cdb.ExecCompiler{
 			Bin:    bin,
 			Stdin:  os.Stdin,
@@ -39,8 +39,8 @@ func RunGXX(cfg *config.Config) error {
 	}
 
 	return (&cdb.Shim{
-		Name:     gxx,
-		Cfg:      CDBConfig,
+		Name: gxx,
+		Cfg:  CDBConfig,
 		Compiler: &cdb.ExecCompiler{
 			Bin:    bin,
 			Stdin:  os.Stdin,
