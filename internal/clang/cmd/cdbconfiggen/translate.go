@@ -111,8 +111,6 @@ func translateDef(def def) []cdb.OptionPattern {
 			Kind: cdb.OptionKindRemainingArgs,
 		})
 	default:
-		// We intentionally return nil here to signal that this option kind is unhandled
-		// and should be excluded from the generated configuration.
 		return nil
 	}
 
