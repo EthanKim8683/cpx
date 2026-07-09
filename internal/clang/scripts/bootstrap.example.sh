@@ -1,15 +1,15 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# If you are missing dependencies and do not plan on installing them:
+# If you do not have TableGen (or Clang) installed and do not plan to install
+# them, replace the download and TableGen compilation steps below with:
 #
-# 1. Clang is installed, but TableGen is not:
-#    Rewrite the download/generation steps below to fetch a pre-compiled options.json
-#    dump for your version and place it under tmp/options.json.
+#   - If Clang is installed but TableGen is missing:
+#     Download a pre-compiled options.json dump online and save it to
+#     tmp/options.json.
 #
-# 2. Neither Clang nor TableGen are installed:
-#    Rewrite the download/generation steps below to write an empty JSON object directly to tmp/options.json:
-#    echo "{}" > tmp/options.json
+#   - If neither Clang nor TableGen are installed:
+#     echo "{}" > tmp/options.json
 
 # TODO: Remove this line only after adapting this script to your environment
 echo "Read internal/clang/scripts/bootstrap.sh before continuing." && exit 1
@@ -18,16 +18,19 @@ echo "Read internal/clang/scripts/bootstrap.sh before continuing." && exit 1
 TMP_DIR="tmp"
 OUTPUT_FILE="generated_cdbconfig.go"
 
-# TODO: Configure these variables to match the local environment
-# Verify that this URL matches the compiler's version (e.g. release/17.x for Clang 17)
-# Note: For Apple Clang, target Apple's Swift fork (e.g. https://raw.githubusercontent.com/swiftlang/llvm-project/)
+# TODO: Configure all the variables below to match your local environment.
+
+# Verify that this URL matches the compiler's version (e.g. release/17.x for Clang 17).
+# Note: For Apple Clang, target Apple's Swift fork (e.g. https://raw.githubusercontent.com/swiftlang/llvm-project/).
 BASE_URL="https://raw.githubusercontent.com/llvm/llvm-project/release/17.x"
+
+# Path to the TableGen executable.
 TBLGEN="/opt/homebrew/opt/llvm/bin/clang-tblgen"
-# Locate Options.td within clang/
-# In llvm/llvm-project:
-# - release/^18.x: clang/include/clang/Options/Options.td
-# - release/<18.x: clang/include/clang/Driver/Options.td
+
+# Locate Options.td within clang/ (release/^18.x uses clang/include/clang/Options/Options.td;
+# release/<18.x uses clang/include/clang/Driver/Options.td).
 OPTIONS_TD_FILE="clang/include/clang/Driver/Options.td"
+
 # Recursively locate dependencies by following 'include "..."' directives in Options.td,
 # resolving them using clang/include and llvm/include as search paths.
 TD_FILES=(
