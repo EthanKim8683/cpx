@@ -130,11 +130,11 @@ func translateDef(def def) []cdb.OptionPattern {
 
 // unmarshalDump parses a TableGen JSON dump into a dump struct.
 func unmarshalDump(data []byte) (*dump, error) {
-	var dump dump
-	if err := json.Unmarshal(data, &dump); err != nil {
+	var d dump
+	if err := json.Unmarshal(data, &d); err != nil {
 		return nil, fmt.Errorf("unmarshaling dump: %w", err)
 	}
-	return &dump, nil
+	return &d, nil
 }
 
 // translateDump translates an entire TableGen JSON dump into CDB option patterns.

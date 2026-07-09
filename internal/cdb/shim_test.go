@@ -29,7 +29,10 @@ func (m *mockRecorder) Record(records []Record) error {
 }
 
 func TestShim_Execute(t *testing.T) {
+	t.Parallel()
+
 	t.Run("successful execution", func(t *testing.T) {
+		t.Parallel()
 		compiler := &mockCompiler{}
 		recorder := &mockRecorder{}
 
@@ -50,6 +53,7 @@ func TestShim_Execute(t *testing.T) {
 	})
 
 	t.Run("compiler failure", func(t *testing.T) {
+		t.Parallel()
 		compiler := &mockCompiler{err: errors.New("compilation failed")}
 		recorder := &mockRecorder{}
 
@@ -70,6 +74,7 @@ func TestShim_Execute(t *testing.T) {
 	})
 
 	t.Run("record adder failure", func(t *testing.T) {
+		t.Parallel()
 		compiler := &mockCompiler{}
 		recorder := &mockRecorder{err: errors.New("db write failed")}
 
@@ -87,6 +92,7 @@ func TestShim_Execute(t *testing.T) {
 	})
 
 	t.Run("empty arguments", func(t *testing.T) {
+		t.Parallel()
 		shim := &Shim{}
 		err := shim.Execute([]string{})
 		require.Error(t, err)

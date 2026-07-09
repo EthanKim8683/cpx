@@ -8,6 +8,7 @@ import (
 )
 
 func TestFindPattern(t *testing.T) {
+	t.Parallel()
 	// Sorted: - (0 RemainingArgs), -MF (1 MultiArg), -c (2 Flag),
 	//         -o (3 Separate), -std (4 Flag), -std= (5 Joined),
 	//         -std=c++17 (6 Joined)
@@ -110,6 +111,8 @@ func TestFindPattern(t *testing.T) {
 }
 
 func TestParse(t *testing.T) {
+	t.Parallel()
+
 	cfg := NewConfig([]OptionPattern{
 		{Spelling: "-", Kind: OptionKindRemainingArgs},
 		{Spelling: "-MF", Kind: OptionKindMultiArg, NumArgs: 2},

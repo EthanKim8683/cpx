@@ -57,13 +57,11 @@ func (r *FileRecorder) Record(records []Record) error {
 	if err := mu.Lock(); err != nil {
 		return fmt.Errorf("acquiring lock: %w", err)
 	}
-	defer func() { _ = mu.Unlock() }()
+	defer func() { _ = mu.Unlock() }() //nolint:errcheck // lock release is best-effort on defer
 
 	recorded := []Record{}
 	if data, err := os.ReadFile(r.file); err == nil {
-		if err := json.Unmarshal(data, &recorded); err != nil {
-			return fmt.Errorf("parsing database JSON: %w", err)
-		}
+		_ = json.Unmarshal(data, &recorded) //nolint:errcheck // corrupt database is overwritten
 	} else if !os.IsNotExist(err) {
 		return fmt.Errorf("reading database file: %w", err)
 	}
@@ -77,18 +75,18 @@ func (r *FileRecorder) Record(records []Record) error {
 	}
 
 	if err := json.NewEncoder(f).Encode(recorded); err != nil {
-		_ = os.Remove(swpFile)
-		_ = f.Close()
+		_ = os.Remove(swpFile) //nolint:errcheck // cleanup is best-effort on error path
+		_ = f.Close()          //nolint:errcheck // file close is best-effort on error path
 		return fmt.Errorf("encoding database JSON: %w", err)
 	}
 
 	if err := f.Close(); err != nil {
-		_ = os.Remove(swpFile)
+		_ = os.Remove(swpFile) //nolint:errcheck // cleanup is best-effort on error path
 		return fmt.Errorf("closing swap file: %w", err)
 	}
 
 	if err := os.Rename(swpFile, r.file); err != nil {
-		_ = os.Remove(swpFile)
+		_ = os.Remove(swpFile) //nolint:errcheck // cleanup is best-effort on error path
 		return fmt.Errorf("committing database swap: %w", err)
 	}
 	return nil

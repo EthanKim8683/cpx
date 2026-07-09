@@ -95,9 +95,7 @@ func translateOptRecord(record optRecord) []cdb.OptionPattern {
 				Kind: cdb.OptionKindFlag,
 			})
 		case hasProp("Args", record.props):
-			// We intentionally discard the error here because the input option records
-			// are pre-validated by the compiler's build tools upstream.
-			n, _ := strconv.Atoi(propArgs("Args", record.props))
+			n, _ := strconv.Atoi(propArgs("Args", record.props)) //nolint:errcheck // strconv.Atoi is pre-validated by compiler config rules
 			partials = append(partials, cdb.OptionPattern{
 				Kind:    cdb.OptionKindMultiArg,
 				NumArgs: n,

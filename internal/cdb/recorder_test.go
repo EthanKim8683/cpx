@@ -7,6 +7,8 @@ import (
 )
 
 func TestMergeRecords(t *testing.T) {
+	t.Parallel()
+
 	a := []Record{
 		{File: "main.cpp", Dir: "/dir1", Shim: "g++"},
 		{File: "helper.cpp", Dir: "/dir1", Shim: "g++"},

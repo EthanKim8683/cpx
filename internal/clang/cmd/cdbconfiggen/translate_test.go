@@ -9,6 +9,8 @@ import (
 )
 
 func TestTranslateDef(t *testing.T) {
+	t.Parallel()
+
 	tests := []struct {
 		name string
 		def  def
@@ -197,6 +199,8 @@ func TestTranslateDef(t *testing.T) {
 }
 
 func TestUnmarshalDump(t *testing.T) {
+	t.Parallel()
+
 	t.Run("valid JSON", func(t *testing.T) {
 		t.Parallel()
 
@@ -217,6 +221,8 @@ func TestUnmarshalDump(t *testing.T) {
 }
 
 func TestTranslateDump(t *testing.T) {
+	t.Parallel()
+
 	t.Run("valid dump", func(t *testing.T) {
 		t.Parallel()
 

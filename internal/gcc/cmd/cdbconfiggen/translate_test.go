@@ -9,6 +9,8 @@ import (
 )
 
 func TestMergeOptRecords(t *testing.T) {
+	t.Parallel()
+
 	t.Run("merges duplicate names", func(t *testing.T) {
 		t.Parallel()
 
@@ -36,6 +38,8 @@ func TestMergeOptRecords(t *testing.T) {
 }
 
 func TestHasProp(t *testing.T) {
+	t.Parallel()
+
 	tests := []struct {
 		name  string
 		prop  string
@@ -91,6 +95,8 @@ func TestHasProp(t *testing.T) {
 }
 
 func TestPropArgs(t *testing.T) {
+	t.Parallel()
+
 	tests := []struct {
 		name  string
 		key   string
@@ -134,6 +140,8 @@ func TestPropArgs(t *testing.T) {
 }
 
 func TestNegative(t *testing.T) {
+	t.Parallel()
+
 	tests := []struct {
 		name string
 		in   string
@@ -155,6 +163,8 @@ func TestNegative(t *testing.T) {
 }
 
 func TestTranslateOptRecord(t *testing.T) {
+	t.Parallel()
+
 	tests := []struct {
 		name   string
 		record optRecord

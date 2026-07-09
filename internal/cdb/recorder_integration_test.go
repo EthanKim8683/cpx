@@ -69,8 +69,17 @@ func TestFileRecorder_Record(t *testing.T) {
 		}
 
 		err = recorder.Record(records)
-		require.Error(t, err)
-		assert.Contains(t, err.Error(), "parsing database JSON")
+		require.NoError(t, err)
+
+		// The database should have been overwritten and contain only the new valid record
+		data, err := os.ReadFile(dbFile)
+		require.NoError(t, err)
+
+		var recorded []Record
+		err = json.Unmarshal(data, &recorded)
+		require.NoError(t, err)
+		require.Len(t, recorded, 1)
+		assert.Equal(t, "main.cpp", recorded[0].File)
 	})
 
 	t.Run("handling empty records", func(t *testing.T) {

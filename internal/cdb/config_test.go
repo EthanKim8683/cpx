@@ -8,6 +8,8 @@ import (
 )
 
 func TestNewConfig(t *testing.T) {
+	t.Parallel()
+
 	tests := []struct {
 		name     string
 		input    []OptionPattern
@@ -159,6 +161,8 @@ func TestNewConfig(t *testing.T) {
 }
 
 func TestIsJoined(t *testing.T) {
+	t.Parallel()
+
 	tests := []struct {
 		name string
 		kind OptionKind

@@ -7,6 +7,8 @@ import (
 )
 
 func TestIsOptRecord(t *testing.T) {
+	t.Parallel()
+
 	tests := []struct {
 		name    string
 		content string
@@ -75,6 +77,8 @@ func TestIsOptRecord(t *testing.T) {
 }
 
 func TestParseOptRecord(t *testing.T) {
+	t.Parallel()
+
 	tests := []struct {
 		name      string
 		content   string
@@ -125,6 +129,8 @@ func TestParseOptRecord(t *testing.T) {
 }
 
 func TestParseOptRecords(t *testing.T) {
+	t.Parallel()
+
 	t.Run("single option record", func(t *testing.T) {
 		t.Parallel()
 
