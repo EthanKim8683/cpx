@@ -6,26 +6,40 @@ run:
 linters:
   default: none
   enable:
+    # --- Performance & Correctness ---
     - bodyclose
     - errcheck
-    - goconst
-    - gocritic
+    - errorlint
     - gosec
     - govet
     - ineffassign
-    - misspell
-    - nolintlint
-    - paralleltest
-    - revive
-    - staticcheck
-    - tparallel
-    - unconvert
-    - unused
-    - whitespace
-    - errorlint
-    - testifylint
     - makezero
     - perfsprint
+    - staticcheck
+    - unused
+    - copyloopvar
+    - reassign
+    - wastedassign
+
+    # --- Style & Maintainability ---
+    - decorder
+    - goconst
+    - gocritic
+    - misspell
+    - nolintlint
+    - predeclared
+    - revive
+    - unconvert
+    - usestdlibvars
+    - whitespace
+
+    # --- Test Quality ---
+    - paralleltest
+    - tparallel
+    - testifylint
+    - thelper
+    - usetesting
+
   settings:
     errcheck:
       check-type-assertions: true
@@ -68,6 +82,11 @@ linters:
 issues:
   max-same-issues: 0
 formatters:
+  enable:
+    - gofumpt
+  settings:
+    gofumpt:
+      extra-rules: true
   exclusions:
     generated: lax
     paths:

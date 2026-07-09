@@ -62,7 +62,7 @@ func TestFileRecorder_Record(t *testing.T) {
 		recorder := NewFileRecorder(dbFile)
 
 		// Write corrupt JSON to the database file
-		err := os.WriteFile(dbFile, []byte("{not valid json"), 0644)
+		err := os.WriteFile(dbFile, []byte("{not valid json"), 0o644)
 		require.NoError(t, err)
 
 		records := []Record{

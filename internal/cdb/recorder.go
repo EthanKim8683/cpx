@@ -50,7 +50,7 @@ type FileRecorder struct {
 // atomically via a temporary swap file to ensure the database is never left in a partially-written state.
 func (r *FileRecorder) Record(records []Record) error {
 	//nolint:gosec // compilation database directories must be user-accessible (0755)
-	if err := os.MkdirAll(filepath.Dir(r.file), 0755); err != nil {
+	if err := os.MkdirAll(filepath.Dir(r.file), 0o755); err != nil {
 		return fmt.Errorf("creating database directory: %w", err)
 	}
 

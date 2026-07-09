@@ -72,12 +72,12 @@ var CDBConfig = %#v
 		}
 	} else {
 		//nolint:gosec // generation output directories must be user-accessible (0755)
-		if err := os.MkdirAll(filepath.Dir(output), 0755); err != nil {
+		if err := os.MkdirAll(filepath.Dir(output), 0o755); err != nil {
 			fmt.Fprintf(os.Stderr, "failed to create output directory: %v\n", err)
 			os.Exit(1)
 		}
 		//nolint:gosec // generated go files must be user-readable (0644)
-		if err := os.WriteFile(output, buf.Bytes(), 0644); err != nil {
+		if err := os.WriteFile(output, buf.Bytes(), 0o644); err != nil {
 			fmt.Fprintf(os.Stderr, "failed to write output file: %v\n", err)
 			os.Exit(1)
 		}
