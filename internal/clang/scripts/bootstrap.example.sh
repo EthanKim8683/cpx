@@ -39,7 +39,7 @@ echo "TableGen version: $TBLGEN_VERSION"
 echo "Upstream URL:     $BASE_URL"
 echo "TableGen files:   ${TD_FILES[*]}"
 
-echo "Please verify the settings above and delete this safety check line to run." && exit 1
+echo "Configure the variables above and delete this safety check to run." && exit 1
 
 mkdir -p "$TMP_DIR"
 for file in "${TD_FILES[@]}"; do

@@ -9,8 +9,8 @@ OUTPUT_FILE="generated_cdbconfig.go"
 # Verify that this URL matches the compiler's version (e.g. releases/gcc-14 for GCC 14)
 BASE_URL="https://raw.githubusercontent.com/gcc-mirror/gcc/releases/gcc-16/gcc"
 # Refer to the upstream GCC Makefile to find options.cc (options.c for older versions) source dependencies.
-# You can check the target architecture (via $GCC_PATH -dumpmachine) to determine
-# if architecture-specific option files are needed (e.g. config/aarch64/aarch64.opt or config/i386/i386.opt).
+# You can check the target architecture (via $GCC_PATH -dumpmachine) to determine if target-specific
+# option files are needed (e.g. config/aarch64/aarch64.opt, config/i386/i386.opt, or config/darwin.opt).
 OPT_FILES=(
 	"c-family/c.opt"
 	"common.opt"
@@ -31,7 +31,7 @@ echo "Upstream URL: $BASE_URL"
 echo "Option files: ${OPT_FILES[*]}"
 
 # Safety barrier: edit the configurations above, then delete this line to execute the script
-echo "Please verify the configuration above and delete this safety check line to continue bootstrapping." && exit 1
+echo "Configure the variables above and delete this safety check to run." && exit 1
 
 mkdir -p "$TMP_DIR"
 for file in "${OPT_FILES[@]}"; do
