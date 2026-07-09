@@ -4,6 +4,9 @@ set -euo pipefail
 # If you do not have GCC and do not plan on installing it, set OPT_FILES=()
 # to bypass downloading and generate an empty option configuration.
 
+# TODO: Remove this line after adapting this script to your environment
+echo "Read internal/gcc/scripts/bootstrap.sh before continuing." && exit 1
+
 # Constants (DO NOT CHANGE)
 TMP_DIR="tmp"
 OUTPUT_FILE="generated_cdbconfig.go"
@@ -22,7 +25,7 @@ OPT_FILES=(
 	"analyzer/analyzer.opt"
 )
 
-# TODO: If unset, set GCC in .env at the root of the project
+# GCC is configured in the .env file at the repository root and loaded via direnv
 GCC_PATH="unset"
 GCC_VERSION="unset"
 if [ -n "${GCC:-}" ]; then
@@ -30,14 +33,10 @@ if [ -n "${GCC:-}" ]; then
 	GCC_VERSION=$("$GCC_PATH" --version | head -n 1)
 fi
 
-# If the path shows "unset" but GCC is installed, set the GCC path in the .env file at the repository root
 echo "GCC path:     $GCC_PATH"
 echo "GCC version:  $GCC_VERSION"
 echo "Upstream URL: $BASE_URL"
 echo "Option files: ${OPT_FILES[*]}"
-
-# TODO: Remove this line after configuring the variables
-echo "Read internal/gcc/scripts/bootstrap.sh before continuing." && exit 1
 
 mkdir -p "$TMP_DIR"
 for file in "${OPT_FILES[@]}"; do
