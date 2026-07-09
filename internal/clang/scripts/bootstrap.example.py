@@ -3,9 +3,9 @@ import urllib.request
 import subprocess
 from pathlib import Path
 
-# TODO: Remove this block only after adapting this script to your environment.
-print("Read internal/clang/scripts/bootstrap.py before continuing.")
-sys.exit(1)
+if True:  # TODO: Set to False only after adapting this script to your environment.
+    print("Read internal/clang/scripts/bootstrap.py before continuing.")
+    sys.exit(1)
 
 # If you do not have TableGen (or Clang) installed and do not plan to install
 # them, replace the download and TableGen compilation steps below with:
@@ -47,47 +47,35 @@ for file in TD_FILES:
     dest_path = TMP_DIR / file
     dest_path.parent.mkdir(parents=True, exist_ok=True)
     print(f"Downloading {file}...")
-    try:
-        urllib.request.urlretrieve(src_url, dest_path)
-    except Exception as e:
-        print(f"Error downloading {file}: {e}", file=sys.stderr)
-        sys.exit(1)
+    urllib.request.urlretrieve(src_url, dest_path)
 
 print("Generating options.json dump...")
-try:
-    subprocess.run(
-        [
-            TBLGEN,
-            "-I",
-            str(TMP_DIR / "llvm" / "include"),
-            "-I",
-            str(TMP_DIR / "clang" / "include"),
-            "--dump-json",
-            str(TMP_DIR / OPTIONS_TD_FILE),
-            "-o",
-            str(TMP_DIR / "options.json"),
-        ],
-        check=True,
-    )
-except subprocess.CalledProcessError as e:
-    print(f"Error running TableGen: {e}", file=sys.stderr)
-    sys.exit(1)
+subprocess.run(
+    [
+        TBLGEN,
+        "-I",
+        str(TMP_DIR / "llvm" / "include"),
+        "-I",
+        str(TMP_DIR / "clang" / "include"),
+        "--dump-json",
+        str(TMP_DIR / OPTIONS_TD_FILE),
+        "-o",
+        str(TMP_DIR / "options.json"),
+    ],
+    check=True,
+)
 
 print("Generating configuration...")
-try:
-    subprocess.run(
-        [
-            "go",
-            "run",
-            str(PKG_DIR / "cmd" / "cdbconfiggen"),
-            "-o",
-            str(PKG_DIR / "generated_cdbconfig.go"),
-            str(TMP_DIR / "options.json"),
-        ],
-        check=True,
-    )
-except subprocess.CalledProcessError as e:
-    print(f"Error running cdbconfiggen: {e}", file=sys.stderr)
-    sys.exit(1)
+subprocess.run(
+    [
+        "go",
+        "run",
+        str(PKG_DIR / "cmd" / "cdbconfiggen"),
+        "-o",
+        str(PKG_DIR / "generated_cdbconfig.go"),
+        str(TMP_DIR / "options.json"),
+    ],
+    check=True,
+)
 
 print("Bootstrap complete")
