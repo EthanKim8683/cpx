@@ -13,18 +13,6 @@ type defRef struct {
 	Def string `json:"def"` // name of the referenced def
 }
 
-const (
-	kindFlag                = "KIND_FLAG"
-	kindJoined              = "KIND_JOINED"
-	kindSeparate            = "KIND_SEPARATE"
-	kindCommaJoined         = "KIND_COMMAJOINED"
-	kindMultiArg            = "KIND_MULTIARG"
-	kindJoinedOrSeparate    = "KIND_JOINED_OR_SEPARATE"
-	kindJoinedAndSeparate   = "KIND_JOINED_AND_SEPARATE"
-	kindRemainingArgs       = "KIND_REMAINING_ARGS"
-	kindRemainingArgsJoined = "KIND_REMAINING_ARGS_JOINED"
-)
-
 // def represents a single TableGen def following the Option class defined in
 // llvm/include/llvm/Option/OptParser.td.
 type def struct {
@@ -48,6 +36,8 @@ type dump struct {
 
 // translateDef decomposes a single def into CDB option patterns.
 // Only defs inheriting from "Option" are considered.
+//
+//nolint:goconst // TableGen option kind keys are matched directly in the option kind switch statement
 func translateDef(def def) []cdb.OptionPattern {
 	if !slices.Contains(def.Superclasses, "Option") {
 		return nil
@@ -62,11 +52,11 @@ func translateDef(def def) []cdb.OptionPattern {
 	// partials holds intermediate patterns before prefix expansion.
 	partials := []cdb.OptionPattern{}
 	switch def.Kind.Def {
-	case kindFlag:
+	case "KIND_FLAG":
 		partials = append(partials, cdb.OptionPattern{
 			Kind: cdb.OptionKindFlag,
 		})
-	case kindJoined:
+	case "KIND_JOINED":
 		// KIND_JOINED options accept an empty suffix (e.g. -std alone is valid),
 		// so we emit both Joined and Flag patterns.
 		partials = append(partials, cdb.OptionPattern{
@@ -75,11 +65,11 @@ func translateDef(def def) []cdb.OptionPattern {
 		partials = append(partials, cdb.OptionPattern{
 			Kind: cdb.OptionKindFlag,
 		})
-	case kindSeparate:
+	case "KIND_SEPARATE":
 		partials = append(partials, cdb.OptionPattern{
 			Kind: cdb.OptionKindSeparate,
 		})
-	case kindCommaJoined:
+	case "KIND_COMMAJOINED":
 		// Decompose like KIND_JOINED (see above).
 		partials = append(partials, cdb.OptionPattern{
 			Kind: cdb.OptionKindJoined,
@@ -87,12 +77,12 @@ func translateDef(def def) []cdb.OptionPattern {
 		partials = append(partials, cdb.OptionPattern{
 			Kind: cdb.OptionKindFlag,
 		})
-	case kindMultiArg:
+	case "KIND_MULTIARG":
 		partials = append(partials, cdb.OptionPattern{
 			Kind:    cdb.OptionKindMultiArg,
 			NumArgs: def.NumArgs,
 		})
-	case kindJoinedOrSeparate:
+	case "KIND_JOINED_OR_SEPARATE":
 		// KIND_JOINED_OR_SEPARATE decomposes into Joined and Separate.
 		partials = append(partials, cdb.OptionPattern{
 			Kind: cdb.OptionKindJoined,
@@ -100,7 +90,7 @@ func translateDef(def def) []cdb.OptionPattern {
 		partials = append(partials, cdb.OptionPattern{
 			Kind: cdb.OptionKindSeparate,
 		})
-	case kindJoinedAndSeparate:
+	case "KIND_JOINED_AND_SEPARATE":
 		// Same empty-suffix reasoning as KIND_JOINED: JoinedAndSeparate for
 		// present arguments, Separate for empty (consumes next argv element).
 		partials = append(partials, cdb.OptionPattern{
@@ -109,11 +99,11 @@ func translateDef(def def) []cdb.OptionPattern {
 		partials = append(partials, cdb.OptionPattern{
 			Kind: cdb.OptionKindSeparate,
 		})
-	case kindRemainingArgs:
+	case "KIND_REMAINING_ARGS":
 		partials = append(partials, cdb.OptionPattern{
 			Kind: cdb.OptionKindRemainingArgs,
 		})
-	case kindRemainingArgsJoined:
+	case "KIND_REMAINING_ARGS_JOINED":
 		// Same empty-suffix reasoning as KIND_JOINED: RemainingArgsJoined for
 		// present arguments, RemainingArgs for empty (consumes remaining argv).
 		partials = append(partials, cdb.OptionPattern{
