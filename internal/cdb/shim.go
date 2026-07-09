@@ -3,42 +3,10 @@ package cdb
 import (
 	"errors"
 	"fmt"
-	"io"
 	"os"
-	"os/exec"
 
 	"golang.org/x/sync/errgroup"
 )
-
-// Compiler defines the interface for executing a compile command.
-type Compiler interface {
-	Compile(argv []string) error
-}
-
-// RecordAdder defines the interface for adding compilation records to a database.
-type RecordAdder interface {
-	Add(records []Record) error
-}
-
-// ExecCompiler implements Compiler by executing an external subprocess.
-type ExecCompiler struct {
-	// Bin is the path to the compiler executable.
-	Bin    string
-	Stdin  io.Reader
-	Stdout io.Writer
-	Stderr io.Writer
-}
-
-func (c *ExecCompiler) Compile(argv []string) error {
-	cmd := exec.Command(c.Bin, argv[1:]...)
-	cmd.Stdin = c.Stdin
-	cmd.Stdout = c.Stdout
-	cmd.Stderr = c.Stderr
-	if err := cmd.Run(); err != nil {
-		return fmt.Errorf("compilation failed: %w", err)
-	}
-	return nil
-}
 
 // Shim coordinates compiling a command while concurrently recording it to
 // a compilation database store.

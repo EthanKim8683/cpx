@@ -17,6 +17,11 @@ type Record struct {
 	Command Command
 }
 
+// RecordAdder defines the interface for adding compilation records to a database.
+type RecordAdder interface {
+	Add(records []Record) error
+}
+
 func mergeRecords(a, b []Record) []Record {
 	m := make(map[string]Record, len(a)+len(b))
 	for _, record := range a {
