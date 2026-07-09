@@ -96,9 +96,10 @@ func NewConfig(patterns []OptionPattern) *Config {
 		return 0
 	})
 
-	// Back-chain: for each joined kind, find the longest joined prefix
-	// by scanning backward. Used by findPattern on exact match to
-	// resolve to a joined option with a non-empty argument.
+	// Compute back-chains: for each joined pattern, scan forward to link
+	// any patterns that share it as a prefix. As we progress, backChains[j]
+	// is overwritten by longer matched prefixes, ensuring it always points
+	// to the longest joined proper prefix.
 	backChains := make([]int, len(patterns))
 	for i := range backChains {
 		backChains[i] = -1
