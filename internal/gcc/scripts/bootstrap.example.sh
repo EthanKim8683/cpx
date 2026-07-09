@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Do not change these variables
+# DO NOT CHANGE THESE VARIABLES
 TMP_DIR="tmp"
 OUTPUT_FILE="generated_cdbconfig.go"
 
-# Change these variables to match the local environment
+# CONFIGURE THESE VARIABLES TO MATCH THE LOCAL ENVIRONMENT
 # Verify that this URL matches the compiler's version (e.g. releases/gcc-14 for GCC 14)
 BASE_URL="https://raw.githubusercontent.com/gcc-mirror/gcc/releases/gcc-16/gcc"
 # Refer to the upstream GCC Makefile to find options.cc (options.c for older versions) source dependencies.
@@ -31,7 +31,8 @@ echo "GCC version:  $GCC_VERSION"
 echo "Upstream URL: $BASE_URL"
 echo "Option files: ${OPT_FILES[*]}"
 
-echo "Configure the variables above and delete this safety check to run." && exit 1
+# REMOVE THIS LINE AFTER CONFIGURING THE VARIABLES
+echo "Read internal/gcc/scripts/bootstrap.sh before continuing." && exit 1
 
 mkdir -p "$TMP_DIR"
 for file in "${OPT_FILES[@]}"; do
