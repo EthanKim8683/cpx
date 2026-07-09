@@ -6,9 +6,11 @@ TMP_DIR="tmp"
 OUTPUT_FILE="generated_cdbconfig.go"
 
 # Change these variables to match the local environment
-# Verify that this URL matches the compiler's version
+# Verify that this URL matches the compiler's version (e.g. releases/gcc-14 for GCC 14)
 BASE_URL="https://raw.githubusercontent.com/gcc-mirror/gcc/releases/gcc-16/gcc"
-# Refer to the upstream GCC Makefile for option source dependencies
+# Refer to the upstream GCC Makefile to find options.cc (options.c for older versions) source dependencies.
+# You can check the target architecture (via $GCC_PATH -dumpmachine) to determine
+# if architecture-specific option files are needed (e.g. config/aarch64/aarch64.opt or config/i386/i386.opt).
 OPT_FILES=(
 	"c-family/c.opt"
 	"common.opt"
@@ -16,7 +18,6 @@ OPT_FILES=(
 	"analyzer/analyzer.opt"
 )
 
-# Display environment configurations for verification
 GCC_PATH="unset"
 GCC_VERSION="unset"
 if [ -n "${GCC:-}" ]; then
@@ -29,6 +30,7 @@ echo "GCC version:  $GCC_VERSION"
 echo "Upstream URL: $BASE_URL"
 echo "Option files: ${OPT_FILES[*]}"
 
+# Safety barrier: edit the configurations above, then delete this line to execute the script
 echo "Please verify the configuration above and delete this safety check line to continue bootstrapping." && exit 1
 
 mkdir -p "$TMP_DIR"
