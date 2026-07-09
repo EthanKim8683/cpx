@@ -17,11 +17,6 @@ type Record struct {
 	Command Command
 }
 
-// RecordAdder defines the interface for adding compilation records to a database.
-type RecordAdder interface {
-	Add(records []Record) error
-}
-
 func mergeRecords(a, b []Record) []Record {
 	m := make(map[string]Record, len(a)+len(b))
 	for _, record := range a {
@@ -35,6 +30,11 @@ func mergeRecords(a, b []Record) []Record {
 		merged = append(merged, record)
 	}
 	return merged
+}
+
+// RecordAdder defines the interface for adding compilation records to a database.
+type RecordAdder interface {
+	Add(records []Record) error
 }
 
 // FileStore handles reading and writing compilation database records in a
@@ -78,7 +78,7 @@ func (s *FileStore) Add(records []Record) error {
 
 	if err := json.NewEncoder(f).Encode(stored); err != nil {
 		_ = os.Remove(swpFile)
-		f.Close()
+		_ = f.Close()
 		return fmt.Errorf("encoding database JSON: %w", err)
 	}
 
