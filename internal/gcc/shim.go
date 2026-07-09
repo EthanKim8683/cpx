@@ -3,7 +3,6 @@ package gcc
 
 import (
 	"errors"
-	"os"
 
 	"github.com/EthanKim8683/cpx/internal/cdb"
 	"github.com/EthanKim8683/cpx/internal/config"
@@ -22,14 +21,9 @@ func ExecuteGCC(cfg *config.Config, args []string) error {
 	}
 
 	shim := &cdb.Shim{
-		Name: gcc,
-		Cfg:  CDBConfig,
-		Compiler: &cdb.ExecCompiler{
-			Bin:    bin,
-			Stdin:  os.Stdin,
-			Stdout: os.Stdout,
-			Stderr: os.Stderr,
-		},
+		Name:        gcc,
+		Cfg:         CDBConfig,
+		Compiler:    &cdb.ExecCompiler{Bin: bin},
 		RecordAdder: cdb.NewStore(cfg.CDB),
 	}
 	return shim.Execute(args)
@@ -43,14 +37,9 @@ func ExecuteGXX(cfg *config.Config, args []string) error {
 	}
 
 	shim := &cdb.Shim{
-		Name: gxx,
-		Cfg:  CDBConfig,
-		Compiler: &cdb.ExecCompiler{
-			Bin:    bin,
-			Stdin:  os.Stdin,
-			Stdout: os.Stdout,
-			Stderr: os.Stderr,
-		},
+		Name:        gxx,
+		Cfg:         CDBConfig,
+		Compiler:    &cdb.ExecCompiler{Bin: bin},
 		RecordAdder: cdb.NewStore(cfg.CDB),
 	}
 	return shim.Execute(args)
