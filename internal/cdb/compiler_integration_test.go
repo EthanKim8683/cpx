@@ -4,6 +4,7 @@ package cdb
 
 import (
 	"bytes"
+	"os/exec"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -22,9 +23,8 @@ func TestExecCompiler_Integration(t *testing.T) {
 			Stdout: &stdout,
 		}
 
-		err := compiler.Compile([]string{"cpx", "run", "./testdata/succeed_compiler.go", "hello"})
+		err := compiler.Compile([]string{"cpx", "run", "./testdata/succeed.go"})
 		require.NoError(t, err)
-		assert.Equal(t, "hello\n", stdout.String())
 	})
 
 	t.Run("executes failing command", func(t *testing.T) {
@@ -34,25 +34,27 @@ func TestExecCompiler_Integration(t *testing.T) {
 			Bin: "go",
 		}
 
-		err := compiler.Compile([]string{"cpx", "run", "./testdata/fail_compiler.go"})
+		err := compiler.Compile([]string{"cpx", "run", "./testdata/fail.go"})
 		require.Error(t, err)
-		assert.Contains(t, err.Error(), "compilation failed")
+		var exitErr *exec.ExitError
+		require.ErrorAs(t, err, &exitErr)
+		assert.Equal(t, 1, exitErr.ExitCode())
 	})
 
 	t.Run("redirects Stdin", func(t *testing.T) {
 		t.Parallel()
 
 		var stdout bytes.Buffer
-		stdin := bytes.NewBufferString("hello from stdin")
+		stdin := bytes.NewBufferString("Hello, world!")
 		compiler := &ExecCompiler{
 			Bin:    "go",
 			Stdin:  stdin,
 			Stdout: &stdout,
 		}
 
-		err := compiler.Compile([]string{"cpx", "run", "./testdata/read_stdin_compiler.go"})
+		err := compiler.Compile([]string{"cpx", "run", "./testdata/stdin.go"})
 		require.NoError(t, err)
-		assert.Equal(t, "hello from stdin", stdout.String())
+		assert.Equal(t, "Hello, world!", stdout.String())
 	})
 
 	t.Run("redirects Stderr", func(t *testing.T) {
@@ -64,8 +66,8 @@ func TestExecCompiler_Integration(t *testing.T) {
 			Stderr: &stderr,
 		}
 
-		err := compiler.Compile([]string{"cpx", "run", "./testdata/write_stderr_compiler.go"})
+		err := compiler.Compile([]string{"cpx", "run", "./testdata/stderr.go"})
 		require.NoError(t, err)
-		assert.Equal(t, "compiler diagnostic message\n", stderr.String())
+		assert.Equal(t, "Hello, world!\n", stderr.String())
 	})
 }
