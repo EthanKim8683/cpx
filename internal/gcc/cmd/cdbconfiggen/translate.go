@@ -80,7 +80,6 @@ func translateOptRecord(record optRecord) []cdb.OptionPattern {
 		return nil
 	}
 
-	// partials holds intermediate patterns before negation expansion.
 	partials := []cdb.OptionPattern{}
 	if hasProp("Joined", record.props) {
 		partials = append(partials, cdb.OptionPattern{
@@ -123,14 +122,12 @@ func translateOptRecord(record optRecord) []cdb.OptionPattern {
 		})
 	}
 
-	// patterns holds the final patterns with spellings filled in.
 	patterns := []cdb.OptionPattern{}
 	for _, partial := range partials {
 		partial.Spelling = "-" + record.name
 		patterns = append(patterns, partial)
 	}
 
-	// Add negated form for negatable names (e.g. -ffoo → -fno-foo).
 	if negateRE.MatchString(record.name) && !hasProp("RejectNegative", record.props) {
 		for _, partial := range partials {
 			partial.Spelling = "-" + negative(record.name)

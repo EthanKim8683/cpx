@@ -42,14 +42,12 @@ func translateDef(def def) []cdb.OptionPattern {
 	if !slices.Contains(def.Superclasses, "Option") {
 		return nil
 	}
-	// NoDriverOption flags are internal and not exposed to the driver command line.
 	for _, flag := range def.Flags {
 		if flag.Def == "NoDriverOption" {
 			return nil
 		}
 	}
 
-	// partials holds intermediate patterns before prefix expansion.
 	partials := []cdb.OptionPattern{}
 	switch def.Kind.Def {
 	case "KIND_FLAG":
@@ -116,7 +114,6 @@ func translateDef(def def) []cdb.OptionPattern {
 		return nil
 	}
 
-	// Expand each prefix × kind into a separate pattern.
 	patterns := []cdb.OptionPattern{}
 	for _, prefix := range def.Prefixes {
 		for _, partial := range partials {
