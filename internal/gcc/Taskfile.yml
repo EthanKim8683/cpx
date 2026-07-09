@@ -4,11 +4,17 @@ tasks:
     desc: Bootstrap GCC integration
     deps:
       - task: copy-bootstrap-example
-    cmds: ["{{.PYTHON}} internal/gcc/scripts/bootstrap.py"]
-    sources: [internal/gcc/scripts/bootstrap.py]
-    generates: [internal/gcc/generated_cdbconfig.go]
+    cmds:
+      - "${PYTHON3} internal/gcc/scripts/bootstrap.py"
+    sources:
+      - internal/gcc/scripts/bootstrap.py
+    generates:
+      - internal/gcc/generated_cdbconfig.go
   copy-bootstrap-example:
     desc: Copy bootstrap example
-    cmds: [cp internal/gcc/scripts/bootstrap.example.py internal/gcc/scripts/bootstrap.py]
-    sources: [internal/gcc/scripts/bootstrap.example.py]
-    generates: [internal/gcc/scripts/bootstrap.py]
+    cmds:
+      - cp internal/gcc/scripts/bootstrap.example.py internal/gcc/scripts/bootstrap.py
+    sources:
+      - internal/gcc/scripts/bootstrap.example.py
+    generates:
+      - internal/gcc/scripts/bootstrap.py

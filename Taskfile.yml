@@ -1,15 +1,9 @@
 version: 3
 dotenv: ['.env']
-vars:
-  PYTHON: '{{if eq OS "windows"}}python{{else}}python3{{end}}'
 includes:
   gcc: ./internal/gcc/Taskfile.yml
   clang: ./internal/clang/Taskfile.yml
 tasks:
-  gen-env-example:
-    desc: Generate .env.example file
-    cmds:
-      - npx -y @dotenvx/dotenvx ext genexample -f .env
 # TODO: add tasks for building shims; remember gxx -> g++, clangxx -> clang++
 # must depend on generated cdb configs
   bootstrap:

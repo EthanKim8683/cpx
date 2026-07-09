@@ -1,4 +1,4 @@
-// Package main implements the g++ compiler wrapper shim.
+// Package main implements the g++ compiler shim.
 package main
 
 import (

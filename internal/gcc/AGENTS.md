@@ -1,3 +1,5 @@
+TODO: really rewrite. i think it's still a little stale
+
 # GCC CDB Configuration Generator — Agent Bootstrapping
 
 Generate [generated_cdbconfig.go](generated_cdbconfig.go) — a Go source file containing GCC's option configuration as a `*cdb.Config` value for the compilation database.
@@ -13,20 +15,19 @@ The bootstrapping process is automated via the package taskfile.
 ## Steps
 
 ### 1. Run the Bootstrap Task
-Execute the top-level task from the root of the repository:
+
+Execute from the repository root:
 
 ```sh
 task gcc:bootstrap
 ```
 
-*   **First Run**: If `internal/gcc/scripts/bootstrap.sh` does not exist, the task will copy it from `bootstrap.example.sh` and exit.
-*   **Adaptation**: The agent (or user) should verify `GCC` is set in the environment or `.env` (so `direnv` loads it automatically). Additionally, verify that `BASE_URL` in `bootstrap.sh` points to the correct GCC mirror branch corresponding to the compiler version.
-*   **Second Run**: Execute `task gcc:bootstrap` again. The script will output the compiler version, configured URL, prompt for interactive confirmations, download the `.opt` files to `internal/gcc/tmp/`, and run `cdbconfiggen` to write `generated_cdbconfig.go`.
+* **First run**: If `internal/gcc/scripts/bootstrap.py` does not exist, the task copies `bootstrap.example.py` to `bootstrap.py`.
+* **Adaptation**: Edit `bootstrap.py`. Set the guard to `if False` after reviewing the script. Verify `GO`, `PYTHON3`, and `GCC` are set in `.env` (loaded by direnv). Set `BASE_URL` to match your GCC version and `OPT_FILES` per the comments in the script (use `$GCC -dumpmachine` for arch-specific `.opt` files).
+* **Run**: `task gcc:bootstrap` downloads `.opt` files to `internal/gcc/tmp/` and runs `cdbconfiggen` to write `generated_cdbconfig.go`.
 
 ### 2. Manual Regeneration
-If you have already downloaded the `.opt` files and only want to rerun the generator (for example, after editing the generator codebase):
 
-```sh
-task gcc:generate
-```
+If `.opt` files are already in `tmp/` and you only need to rerun the generator (for example, after editing `cdbconfiggen`):
 
+Re-run the `go run` invocation at the end of `bootstrap.py`, or run `task gcc:bootstrap` again.

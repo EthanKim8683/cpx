@@ -1,5 +1,5 @@
 // Package cdb provides compiler-agnostic configuration structures, types,
-// and execution coordination for building compilation databases.
+// compilation-database storage, and shim orchestration.
 package cdb
 
 import (

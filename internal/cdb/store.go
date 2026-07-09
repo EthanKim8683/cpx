@@ -32,19 +32,19 @@ func mergeRecords(a, b []Record) []Record {
 	return merged
 }
 
-// Recorder defines the interface for recording compilation records to a database.
+// Store defines the interface for reading and writing compilation database records.
 type Store interface {
 	Add(records []Record) error
 	Records() ([]Record, error)
 }
 
-// FileRecorder handles reading and writing compilation database records in a
+// FileStore handles reading and writing compilation database records in a
 // thread-safe manner using file locking.
 type FileStore struct {
 	file string
 }
 
-// Record merges new compilation records into the database file.
+// Add merges new compilation records into the database file.
 //
 // To prevent database corruption and guarantee reliability during concurrent compiler
 // execution, updates are serialized using an advisory lock, and the write is performed
@@ -101,6 +101,7 @@ func (s *FileStore) Add(records []Record) error {
 	return nil
 }
 
+// Records returns all compilation records stored in the database file.
 func (s *FileStore) Records() ([]Record, error) {
 	//nolint:gosec // compilation database directories must be user-accessible (0755)
 	if err := os.MkdirAll(filepath.Dir(s.file), 0o755); err != nil {

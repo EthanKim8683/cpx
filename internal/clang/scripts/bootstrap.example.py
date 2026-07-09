@@ -1,3 +1,4 @@
+import os
 import sys
 import urllib.request
 import subprocess
@@ -17,7 +18,8 @@ if True:  # TODO: Set to False only after adapting this script to your environme
 #   - If neither Clang nor TableGen are installed:
 #     echo "{}" > tmp/options.json
 
-# Constants (DO NOT CHANGE)
+# Constants (DO NOT MODIFY)
+GO = os.environ.get("GO", "go")
 PKG_DIR = Path(__file__).resolve().parent.parent
 TMP_DIR = PKG_DIR / "tmp"
 
@@ -68,7 +70,7 @@ subprocess.run(
 print("Generating configuration...")
 subprocess.run(
     [
-        "go",
+        GO,
         "run",
         str(PKG_DIR / "cmd" / "cdbconfiggen"),
         "-o",

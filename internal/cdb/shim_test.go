@@ -94,7 +94,7 @@ func TestShim_Execute(t *testing.T) {
 		require.Error(t, err)
 		assert.Contains(t, err.Error(), "compilation failed")
 
-		// Record update still runs concurrently
+		// Store update still runs concurrently with compilation.
 		records, err := store.Records()
 		require.NoError(t, err)
 

@@ -1,4 +1,4 @@
-// Package main implements the gcc compiler wrapper shim.
+// Package main implements the gcc compiler shim.
 package main
 
 import (

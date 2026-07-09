@@ -1,4 +1,4 @@
-// Package gcc provides option configuration and execution shim wrappers for the GCC toolchain.
+// Package gcc provides generated option configuration and GCC toolchain shims.
 package gcc
 
 import (

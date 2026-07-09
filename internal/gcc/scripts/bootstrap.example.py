@@ -1,3 +1,4 @@
+import os
 import sys
 import urllib.request
 import subprocess
@@ -10,22 +11,23 @@ if True:  # TODO: Set to False only after adapting this script to your environme
 # If you do not have GCC installed and do not plan to install it, set OPT_FILES=()
 # to skip downloading and generate an empty option configuration.
 
-# TODO: Configure the variables below to match your local environment.
-
-# Constants (DO NOT CHANGE)
+# Constants (DO NOT MODIFY)
+GO = os.environ.get("GO", "go")
 PKG_DIR = Path(__file__).resolve().parent.parent
 TMP_DIR = PKG_DIR / "tmp"
 
-# Verify that this URL matches your compiler's version (e.g. releases/gcc-16 for GCC 16).
-BASE_URL = "https://raw.githubusercontent.com/gcc-mirror/gcc/releases/gcc-16/gcc"
+# TODO: Configure the variables below to match your local environment.
 
-# Refer to the upstream Makefile.in to find options.cc (options.c for older versions) source dependencies.
-# Check the target architecture (via $GCC -dumpmachine) to include target-specific files (e.g. config/aarch64/aarch64.opt).
+# Verify that this URL matches your compiler's version (e.g. releases/gcc-16 for GCC 16).
+BASE_URL = "https://raw.githubusercontent.com/gcc-mirror/gcc/releases/gcc-16"
+
+# Refer to the upstream gcc/Makefile.in to find the .opt files options.cc (options.c for older versions) depends on.
+# Check the target architecture (via $GCC -dumpmachine) to identify target-specific files (e.g. gcc/config/aarch64/aarch64.opt).
 OPT_FILES = [
-    "c-family/c.opt",
-    "common.opt",
-    "params.opt",
-    "analyzer/analyzer.opt",
+    "gcc/c-family/c.opt",
+    "gcc/common.opt",
+    "gcc/params.opt",
+    "gcc/analyzer/analyzer.opt",
 ]
 
 for file in OPT_FILES:
@@ -39,7 +41,7 @@ print("Generating configuration...")
 file_args = [str(TMP_DIR / file) for file in OPT_FILES]
 subprocess.run(
     [
-        "go",
+        GO,
         "run",
         str(PKG_DIR / "cmd" / "cdbconfiggen"),
         "-o",
