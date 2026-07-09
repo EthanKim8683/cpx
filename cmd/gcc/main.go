@@ -1,4 +1,4 @@
-// Package main implements the g++ compiler wrapper shim.
+// Package main implements the gcc compiler wrapper shim.
 package main
 
 import (
@@ -16,7 +16,7 @@ func execute() error {
 	if err != nil {
 		return err
 	}
-	return gcc.ExecuteGXX(&cfg, os.Args)
+	return gcc.ExecuteGCC(&cfg, os.Args)
 }
 
 func main() {
@@ -24,7 +24,7 @@ func main() {
 		if exitErr, ok := errors.AsType[*exec.ExitError](err); ok {
 			os.Exit(exitErr.ExitCode())
 		}
-		fmt.Fprintf(os.Stderr, "cpx g++: %v\n", err)
+		fmt.Fprintf(os.Stderr, "cpx gcc: %v\n", err)
 		os.Exit(1)
 	}
 }

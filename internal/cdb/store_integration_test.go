@@ -15,7 +15,7 @@ import (
 )
 
 //nolint:gosec // integration tests dynamically read/write temp files
-func TestFileRecorder_Record(t *testing.T) {
+func TestStore_Add(t *testing.T) {
 	t.Parallel()
 
 	t.Run("successfully add record", func(t *testing.T) {
@@ -23,7 +23,7 @@ func TestFileRecorder_Record(t *testing.T) {
 
 		tempDir := t.TempDir()
 		dbFile := filepath.Join(tempDir, "cdb.json")
-		recorder := NewFileRecorder(dbFile)
+		store := NewStore(dbFile)
 
 		records := []Record{
 			{
@@ -33,7 +33,7 @@ func TestFileRecorder_Record(t *testing.T) {
 			},
 		}
 
-		err := recorder.Record(records)
+		err := store.Add(records)
 		require.NoError(t, err)
 
 		// Verify the file exists and is populated
@@ -59,7 +59,7 @@ func TestFileRecorder_Record(t *testing.T) {
 
 		tempDir := t.TempDir()
 		dbFile := filepath.Join(tempDir, "cdb.json")
-		recorder := NewFileRecorder(dbFile)
+		store := NewStore(dbFile)
 
 		// Write corrupt JSON to the database file
 		err := os.WriteFile(dbFile, []byte("{not valid json"), 0o644)
@@ -69,7 +69,7 @@ func TestFileRecorder_Record(t *testing.T) {
 			{File: "main.cpp", Dir: "/workspace", Shim: "g++"},
 		}
 
-		err = recorder.Record(records)
+		err = store.Add(records)
 		require.NoError(t, err)
 
 		// The database should have been overwritten and contain only the new valid record
@@ -88,10 +88,10 @@ func TestFileRecorder_Record(t *testing.T) {
 
 		tempDir := t.TempDir()
 		dbFile := filepath.Join(tempDir, "cdb.json")
-		recorder := NewFileRecorder(dbFile)
+		store := NewStore(dbFile)
 
 		// Add empty records — should succeed without error
-		err := recorder.Record([]Record{})
+		err := store.Add([]Record{})
 		require.NoError(t, err)
 
 		// Database file should exist but contain empty JSON array
@@ -108,7 +108,7 @@ func TestFileRecorder_Record(t *testing.T) {
 
 		tempDir := t.TempDir()
 		dbFile := filepath.Join(tempDir, "cdb.json")
-		recorder := NewFileRecorder(dbFile)
+		store := NewStore(dbFile)
 
 		const goroutines = 50
 		var wg sync.WaitGroup
@@ -124,7 +124,7 @@ func TestFileRecorder_Record(t *testing.T) {
 						Shim: "g++",
 					},
 				}
-				err := recorder.Record(records)
+				err := store.Add(records)
 				assert.NoError(t, err)
 			}()
 		}
@@ -156,7 +156,7 @@ func TestFileRecorder_Record(t *testing.T) {
 
 		tempDir := t.TempDir()
 		dbFile := filepath.Join(tempDir, "cdb.json")
-		recorder := NewFileRecorder(dbFile)
+		store := NewStore(dbFile)
 
 		const goroutines = 50
 		var wg sync.WaitGroup
@@ -172,7 +172,7 @@ func TestFileRecorder_Record(t *testing.T) {
 						Shim: "g++",
 					},
 				}
-				err := recorder.Record(records)
+				err := store.Add(records)
 				assert.NoError(t, err)
 			}()
 		}

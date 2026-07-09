@@ -14,14 +14,14 @@ const (
 	gxx = "g++"
 )
 
-// RunGCC executes the gcc driver shim under the given configuration.
-func RunGCC(cfg *config.Config) error {
+// ExecuteGCC executes the gcc driver shim under the given configuration.
+func ExecuteGCC(cfg *config.Config, args []string) error {
 	bin := cfg.GCC
 	if bin == "" {
 		return errors.New("GCC not set")
 	}
 
-	return (&cdb.Shim{
+	shim := &cdb.Shim{
 		Name: gcc,
 		Cfg:  CDBConfig,
 		Compiler: &cdb.ExecCompiler{
@@ -30,18 +30,19 @@ func RunGCC(cfg *config.Config) error {
 			Stdout: os.Stdout,
 			Stderr: os.Stderr,
 		},
-		Recorder: cdb.NewFileRecorder(cfg.CDB),
-	}).Execute(os.Args)
+		RecordAdder: cdb.NewStore(cfg.CDB),
+	}
+	return shim.Execute(args)
 }
 
-// RunGXX executes the g++ driver shim under the given configuration.
-func RunGXX(cfg *config.Config) error {
+// ExecuteGXX executes the g++ driver shim under the given configuration.
+func ExecuteGXX(cfg *config.Config, args []string) error {
 	bin := cfg.GXX
 	if bin == "" {
 		return errors.New("GXX not set")
 	}
 
-	return (&cdb.Shim{
+	shim := &cdb.Shim{
 		Name: gxx,
 		Cfg:  CDBConfig,
 		Compiler: &cdb.ExecCompiler{
@@ -50,6 +51,7 @@ func RunGXX(cfg *config.Config) error {
 			Stdout: os.Stdout,
 			Stderr: os.Stderr,
 		},
-		Recorder: cdb.NewFileRecorder(cfg.CDB),
-	}).Execute(os.Args)
+		RecordAdder: cdb.NewStore(cfg.CDB),
+	}
+	return shim.Execute(args)
 }
