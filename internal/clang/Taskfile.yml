@@ -1,0 +1,18 @@
+version: '3'
+
+tasks:
+  bootstrap:
+    desc: "Bootstrap Clang option configuration template and run the installer"
+    cmds:
+      - |
+        if [ ! -f scripts/bootstrap.sh ]; then
+          cp scripts/bootstrap.example.sh scripts/bootstrap.sh
+          echo "Created scripts/bootstrap.sh from template. Please configure it in .env and run again."
+          exit 1
+        fi
+      - bash scripts/bootstrap.sh
+
+  generate:
+    desc: "Regenerate Clang option configuration from options.json dump in tmp"
+    cmds:
+      - go run ./cmd/cdbconfiggen -o generated_cdbconfig.go ./tmp/options.json

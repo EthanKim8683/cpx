@@ -1,4 +1,9 @@
 version: 3
+
+includes:
+  gcc: ./internal/gcc/Taskfile.yml
+  clang: ./internal/clang/Taskfile.yml
+
 tasks:
   default:
     cmds:
@@ -7,3 +12,17 @@ tasks:
     desc: Generate .env.example file
     cmds:
       - npx -y @dotenvx/dotenvx ext genexample -f .env
+# TODO: add tasks for building shims; remember gxx -> g++, clangxx -> clang++
+# must depend on generated cdb configs
+
+  bootstrap:
+    desc: Bootstrap GCC and Clang option configurations
+    cmds:
+      - task: gcc:bootstrap
+      - task: clang:bootstrap
+
+  generate:
+    desc: Regenerate GCC and Clang configurations from local tmp files
+    cmds:
+      - task: gcc:generate
+      - task: clang:generate
