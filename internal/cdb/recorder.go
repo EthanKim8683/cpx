@@ -48,19 +48,19 @@ type FileRecorder struct {
 // To prevent database corruption and guarantee reliability during concurrent compiler
 // execution, updates are serialized using an advisory lock, and the write is performed
 // atomically via a temporary swap file to ensure the database is never left in a partially-written state.
-func (s *FileRecorder) Record(records []Record) error {
-	if err := os.MkdirAll(filepath.Dir(s.file), 0755); err != nil {
+func (r *FileRecorder) Record(records []Record) error {
+	if err := os.MkdirAll(filepath.Dir(r.file), 0755); err != nil {
 		return fmt.Errorf("creating database directory: %w", err)
 	}
 
-	mu := flock.New(s.file + ".lock")
+	mu := flock.New(r.file + ".lock")
 	if err := mu.Lock(); err != nil {
 		return fmt.Errorf("acquiring lock: %w", err)
 	}
 	defer func() { _ = mu.Unlock() }()
 
 	stored := []Record{}
-	if data, err := os.ReadFile(s.file); err == nil {
+	if data, err := os.ReadFile(r.file); err == nil {
 		if err := json.Unmarshal(data, &stored); err != nil {
 			return fmt.Errorf("parsing database JSON: %w", err)
 		}
@@ -70,7 +70,7 @@ func (s *FileRecorder) Record(records []Record) error {
 
 	stored = mergeRecords(stored, records)
 
-	swpFile := s.file + ".swp"
+	swpFile := r.file + ".swp"
 	f, err := os.Create(swpFile)
 	if err != nil {
 		return fmt.Errorf("creating swap file: %w", err)
@@ -87,7 +87,7 @@ func (s *FileRecorder) Record(records []Record) error {
 		return fmt.Errorf("closing swap file: %w", err)
 	}
 
-	if err := os.Rename(swpFile, s.file); err != nil {
+	if err := os.Rename(swpFile, r.file); err != nil {
 		_ = os.Remove(swpFile)
 		return fmt.Errorf("committing database swap: %w", err)
 	}

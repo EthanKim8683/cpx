@@ -22,7 +22,7 @@ func TestFileRecorder_Record(t *testing.T) {
 
 		tempDir := t.TempDir()
 		dbFile := filepath.Join(tempDir, "cdb.json")
-		store := NewFileRecorder(dbFile)
+		recorder := NewFileRecorder(dbFile)
 
 		records := []Record{
 			{
@@ -32,7 +32,7 @@ func TestFileRecorder_Record(t *testing.T) {
 			},
 		}
 
-		err := store.Record(records)
+		err := recorder.Record(records)
 		require.NoError(t, err)
 
 		// Verify the file exists and is populated
@@ -46,11 +46,11 @@ func TestFileRecorder_Record(t *testing.T) {
 		data, err := os.ReadFile(dbFile)
 		require.NoError(t, err)
 
-		var stored []Record
-		err = json.Unmarshal(data, &stored)
+		var recorded []Record
+		err = json.Unmarshal(data, &recorded)
 		require.NoError(t, err)
-		require.Len(t, stored, 1)
-		assert.Equal(t, "main.cpp", stored[0].File)
+		require.Len(t, recorded, 1)
+		assert.Equal(t, "main.cpp", recorded[0].File)
 	})
 
 	t.Run("handling corrupt JSON", func(t *testing.T) {
@@ -58,7 +58,7 @@ func TestFileRecorder_Record(t *testing.T) {
 
 		tempDir := t.TempDir()
 		dbFile := filepath.Join(tempDir, "cdb.json")
-		store := NewFileRecorder(dbFile)
+		recorder := NewFileRecorder(dbFile)
 
 		// Write corrupt JSON to the database file
 		err := os.WriteFile(dbFile, []byte("{not valid json"), 0644)
@@ -68,7 +68,7 @@ func TestFileRecorder_Record(t *testing.T) {
 			{File: "main.cpp", Dir: "/workspace", Shim: "g++"},
 		}
 
-		err = store.Record(records)
+		err = recorder.Record(records)
 		require.Error(t, err)
 		assert.Contains(t, err.Error(), "parsing database JSON")
 	})
@@ -78,19 +78,19 @@ func TestFileRecorder_Record(t *testing.T) {
 
 		tempDir := t.TempDir()
 		dbFile := filepath.Join(tempDir, "cdb.json")
-		store := NewFileRecorder(dbFile)
+		recorder := NewFileRecorder(dbFile)
 
 		// Add empty records — should succeed without error
-		err := store.Record([]Record{})
+		err := recorder.Record([]Record{})
 		require.NoError(t, err)
 
 		// Database file should exist but contain empty JSON array
 		data, err := os.ReadFile(dbFile)
 		require.NoError(t, err)
 
-		var stored []Record
-		require.NoError(t, json.Unmarshal(data, &stored))
-		assert.Empty(t, stored)
+		var recorded []Record
+		require.NoError(t, json.Unmarshal(data, &recorded))
+		assert.Empty(t, recorded)
 	})
 
 	t.Run("concurrent updates", func(t *testing.T) {
@@ -98,7 +98,7 @@ func TestFileRecorder_Record(t *testing.T) {
 
 		tempDir := t.TempDir()
 		dbFile := filepath.Join(tempDir, "cdb.json")
-		store := NewFileRecorder(dbFile)
+		recorder := NewFileRecorder(dbFile)
 
 		const goroutines = 50
 		var wg sync.WaitGroup
@@ -114,7 +114,7 @@ func TestFileRecorder_Record(t *testing.T) {
 						Shim: "g++",
 					},
 				}
-				err := store.Record(records)
+				err := recorder.Record(records)
 				assert.NoError(t, err)
 			}()
 		}
@@ -124,12 +124,12 @@ func TestFileRecorder_Record(t *testing.T) {
 		data, err := os.ReadFile(dbFile)
 		require.NoError(t, err)
 
-		var stored []Record
-		require.NoError(t, json.Unmarshal(data, &stored))
-		require.Len(t, stored, goroutines)
+		var recorded []Record
+		require.NoError(t, json.Unmarshal(data, &recorded))
+		require.Len(t, recorded, goroutines)
 
-		byFile := make(map[string]Record, len(stored))
-		for _, r := range stored {
+		byFile := make(map[string]Record, len(recorded))
+		for _, r := range recorded {
 			byFile[r.File] = r
 		}
 
@@ -146,7 +146,7 @@ func TestFileRecorder_Record(t *testing.T) {
 
 		tempDir := t.TempDir()
 		dbFile := filepath.Join(tempDir, "cdb.json")
-		store := NewFileRecorder(dbFile)
+		recorder := NewFileRecorder(dbFile)
 
 		const goroutines = 50
 		var wg sync.WaitGroup
@@ -162,7 +162,7 @@ func TestFileRecorder_Record(t *testing.T) {
 						Shim: "g++",
 					},
 				}
-				err := store.Record(records)
+				err := recorder.Record(records)
 				assert.NoError(t, err)
 			}()
 		}
@@ -172,9 +172,9 @@ func TestFileRecorder_Record(t *testing.T) {
 		data, err := os.ReadFile(dbFile)
 		require.NoError(t, err)
 
-		var stored []Record
-		require.NoError(t, json.Unmarshal(data, &stored))
-		require.Len(t, stored, 1, "shared.cpp should exist exactly once")
-		assert.Equal(t, "shared.cpp", stored[0].File)
+		var recorded []Record
+		require.NoError(t, json.Unmarshal(data, &recorded))
+		require.Len(t, recorded, 1, "shared.cpp should exist exactly once")
+		assert.Equal(t, "shared.cpp", recorded[0].File)
 	})
 }

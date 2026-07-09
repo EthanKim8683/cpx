@@ -31,13 +31,13 @@ func (m *mockRecorder) Record(records []Record) error {
 func TestShim_Execute(t *testing.T) {
 	t.Run("successful execution", func(t *testing.T) {
 		compiler := &mockCompiler{}
-		adder := &mockRecorder{}
+		recorder := &mockRecorder{}
 
 		shim := &Shim{
 			Name:     "g++",
 			Cfg:      &Config{Patterns: []OptionPattern{}},
 			Compiler: compiler,
-			Recorder: adder,
+			Recorder: recorder,
 		}
 
 		args := []string{"g++", "main.cpp"}
@@ -45,19 +45,19 @@ func TestShim_Execute(t *testing.T) {
 		require.NoError(t, err)
 
 		assert.Equal(t, args, compiler.argv)
-		require.Len(t, adder.records, 1)
-		assert.Equal(t, "main.cpp", adder.records[0].File)
+		require.Len(t, recorder.records, 1)
+		assert.Equal(t, "main.cpp", recorder.records[0].File)
 	})
 
 	t.Run("compiler failure", func(t *testing.T) {
 		compiler := &mockCompiler{err: errors.New("compilation failed")}
-		adder := &mockRecorder{}
+		recorder := &mockRecorder{}
 
 		shim := &Shim{
 			Name:     "g++",
 			Cfg:      &Config{Patterns: []OptionPattern{}},
 			Compiler: compiler,
-			Recorder: adder,
+			Recorder: recorder,
 		}
 
 		args := []string{"g++", "main.cpp"}
@@ -66,18 +66,18 @@ func TestShim_Execute(t *testing.T) {
 		assert.Contains(t, err.Error(), "compilation failed")
 
 		// Record update still runs concurrently
-		require.Len(t, adder.records, 1)
+		require.Len(t, recorder.records, 1)
 	})
 
 	t.Run("record adder failure", func(t *testing.T) {
 		compiler := &mockCompiler{}
-		adder := &mockRecorder{err: errors.New("db write failed")}
+		recorder := &mockRecorder{err: errors.New("db write failed")}
 
 		shim := &Shim{
 			Name:     "g++",
 			Cfg:      &Config{Patterns: []OptionPattern{}},
 			Compiler: compiler,
-			Recorder: adder,
+			Recorder: recorder,
 		}
 
 		args := []string{"g++", "main.cpp"}
