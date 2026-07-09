@@ -4,7 +4,7 @@ tasks:
     desc: Bootstrap Clang integration
     deps:
       - task: copy-bootstrap-example
-    cmds: [python3 internal/clang/scripts/bootstrap.py]
+    cmds: ["{{.PYTHON}} internal/clang/scripts/bootstrap.py"]
     sources: [internal/clang/scripts/bootstrap.py]
     generates: [internal/clang/generated_cdbconfig.go]
   copy-bootstrap-example:
