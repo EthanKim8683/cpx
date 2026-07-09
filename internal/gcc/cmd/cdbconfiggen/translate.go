@@ -95,7 +95,8 @@ func translateOptRecord(record optRecord) []cdb.OptionPattern {
 				Kind: cdb.OptionKindFlag,
 			})
 		case hasProp("Args", record.props):
-			n, _ := strconv.Atoi(propArgs("Args", record.props)) //nolint:errcheck // strconv.Atoi is pre-validated by compiler config rules
+			//nolint:errcheck // strconv.Atoi is pre-validated by compiler config rules
+			n, _ := strconv.Atoi(propArgs("Args", record.props))
 			partials = append(partials, cdb.OptionPattern{
 				Kind:    cdb.OptionKindMultiArg,
 				NumArgs: n,

@@ -33,7 +33,8 @@ Arguments:
 	}
 	dumpFile := args[0]
 
-	data, err := os.ReadFile(dumpFile) //nolint:gosec // path to dump file is user-provided CLI argument
+	//nolint:gosec // path to dump file is user-provided CLI argument
+	data, err := os.ReadFile(dumpFile)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "failed to read dump file: %v\n", err)
 		os.Exit(1)
@@ -70,11 +71,13 @@ var CDBConfig = %#v
 			os.Exit(1)
 		}
 	} else {
-		if err := os.MkdirAll(filepath.Dir(output), 0755); err != nil { //nolint:gosec // generation output directories must be user-accessible (0755)
+		//nolint:gosec // generation output directories must be user-accessible (0755)
+		if err := os.MkdirAll(filepath.Dir(output), 0755); err != nil {
 			fmt.Fprintf(os.Stderr, "failed to create output directory: %v\n", err)
 			os.Exit(1)
 		}
-		if err := os.WriteFile(output, buf.Bytes(), 0644); err != nil { //nolint:gosec // generated go files must be user-readable (0644)
+		//nolint:gosec // generated go files must be user-readable (0644)
+		if err := os.WriteFile(output, buf.Bytes(), 0644); err != nil {
 			fmt.Fprintf(os.Stderr, "failed to write output file: %v\n", err)
 			os.Exit(1)
 		}
