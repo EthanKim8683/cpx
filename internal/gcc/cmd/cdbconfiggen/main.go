@@ -11,16 +11,15 @@ import (
 	"path/filepath"
 
 	"github.com/EthanKim8683/cpx/internal/cdb"
-	"github.com/spf13/afero"
 )
 
 func main() {
 	var output string
 	flag.Usage = func() {
-		fmt.Fprintf(os.Stderr, `Usage: %s [flags] <dir>
+		fmt.Fprintf(os.Stderr, `Usage: %s [flags] <files...>
 
 Arguments:
-  dir     search for .opt files in dir
+  files   list of .opt files to read
 
 `, os.Args[0])
 		flag.PrintDefaults()
@@ -28,32 +27,20 @@ Arguments:
 	flag.StringVar(&output, "o", "", "write output to `file`")
 	flag.Parse()
 
-	args := flag.Args()
-	if len(args) != 1 {
-		flag.Usage()
-		os.Exit(1)
-	}
-	dir := args[0]
-
-	fs := afero.NewBasePathFs(afero.NewOsFs(), dir)
-	files, err := afero.Glob(fs, "**/*.opt")
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "failed to glob files in %s: %v\n", dir, err)
-		os.Exit(1)
-	}
-
+	files := flag.Args()
 	contents := make([]string, 0, len(files))
 	var errs error
 	for _, file := range files {
-		content, err := afero.ReadFile(fs, file)
+		//nolint:gosec // cdbconfiggen is a local code generator; reading target files is expected
+		content, err := os.ReadFile(file)
 		if err != nil {
-			errs = errors.Join(errs, fmt.Errorf("failed to read file %s: %w", file, err))
+			errs = errors.Join(errs, err)
 			continue
 		}
 		contents = append(contents, string(content))
 	}
 	if errs != nil {
-		fmt.Fprintf(os.Stderr, "failed to read files in %s: %v\n", dir, errs)
+		fmt.Fprintf(os.Stderr, "failed to read files: %v\n", errs)
 		os.Exit(1)
 	}
 
