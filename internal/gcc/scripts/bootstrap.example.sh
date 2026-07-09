@@ -1,59 +1,43 @@
 #!/usr/bin/env bash
-# bootstrap.sh - Parameterized GCC CDB Option Parser Bootstrapper
-# This script fetches GCC .opt files from upstream and runs cdbconfiggen.
 set -euo pipefail
 
-# -- Configuration --
-# These values should be adapted for the local environment.
-GCC_BIN="${GCC:-}"
-BASE_URL="${BASE_URL:-https://raw.githubusercontent.com/gcc-mirror/gcc/releases/gcc-14/gcc}"
+# Do not change these variables
+TMP_DIR="tmp"
+OUTPUT_FILE="generated_cdbconfig.go"
 
-# Fixed paths in the cpx package structure
-TMP_DIR="internal/gcc/tmp"
-OUTPUT_FILE="internal/gcc/generated_cdbconfig.go"
-
-echo "=== GCC Option Config Bootstrapper ==="
-
-# Validate that GCC environment variable is set
-if [ -z "$GCC_BIN" ]; then
-    echo "Error: GCC environment variable is not set." >&2
-    echo "Please set it in your .env file (e.g. GCC=/usr/bin/gcc) so direnv loads it automatically." >&2
-    exit 1
-fi
-
-if ! command -v "$GCC_BIN" >/dev/null 2>&1; then
-    echo "Error: '$GCC_BIN' is not executable or not in PATH." >&2
-    exit 1
-fi
-
-# Display compiler version info
-echo "--- Local Compiler Version ---"
-"$GCC_BIN" --version
-echo "------------------------------"
-
-echo "Base URL: $BASE_URL"
-echo "======================================"
-
-mkdir -p "$TMP_DIR"
-
-# List of .opt files to fetch (adapted for this environment)
+# Change these variables to match the local environment
+# Verify that this URL matches the compiler's version
+BASE_URL="https://raw.githubusercontent.com/gcc-mirror/gcc/releases/gcc-16/gcc"
+# Refer to the upstream GCC Makefile for option source dependencies
 OPT_FILES=(
-    "common.opt"
-    "params.opt"
-    "c-family/c.opt"
-    "analyzer/analyzer.opt"
+	"c-family/c.opt"
+	"common.opt"
+	"params.opt"
+	"analyzer/analyzer.opt"
 )
 
-echo "Downloading option source files..."
+# Display environment configurations for verification
+GCC_PATH="${GCC:-unset}"
+GCC_VERSION="unknown"
+if [ "$GCC_PATH" != "unset" ] && command -v "$GCC_PATH" >/dev/null 2>&1; then
+	GCC_VERSION=$("$GCC_PATH" --version | head -n 1)
+fi
+
+echo "GCC path:     $GCC_PATH"
+echo "GCC version:  $GCC_VERSION"
+echo "Upstream URL: $BASE_URL"
+echo "Option files: ${OPT_FILES[*]}"
+
+echo "Please verify the settings above and delete this safety check line to run." && exit 1
+
+mkdir -p "$TMP_DIR"
 for file in "${OPT_FILES[@]}"; do
-    target_path="${TMP_DIR}/${file}"
-    mkdir -p "$(dirname "$target_path")"
-    
-    echo "  - $file"
-    curl -fsSL -o "$target_path" "${BASE_URL}/${file}"
+	src="${BASE_URL}/${file}"
+	dest="${TMP_DIR}/${file}"
+	echo "Downloading $file..."
+	mkdir -p "$(dirname "$dest")"
+	curl -fsSL "$src" -o "$dest"
 done
 
-echo "Running cdbconfiggen..."
-go run ./internal/gcc/cmd/cdbconfiggen -o "$OUTPUT_FILE" "$TMP_DIR"
-
-echo "Success! Config generated at $OUTPUT_FILE"
+echo "Generating configuration..."
+go run ./cmd/cdbconfiggen -o "$OUTPUT_FILE" "$TMP_DIR"

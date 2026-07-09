@@ -1,79 +1,62 @@
 #!/usr/bin/env bash
-# bootstrap.sh - Parameterized Clang CDB Option Parser Bootstrapper
-# This script fetches Clang TableGen files, compiles them into a JSON dump, and runs cdbconfiggen.
 set -euo pipefail
 
-# -- Configuration --
-# These values should be adapted for the local environment.
-CLANG_BIN="${CLANG:-}"
+# Do not change these variables
+TMP_DIR="tmp"
+OUTPUT_FILE="generated_cdbconfig.go"
+
+# Change these variables to match the local environment
+# Verify that this URL matches the compiler's version
+BASE_URL="https://raw.githubusercontent.com/llvm/llvm-project/release/17.x"
 TBLGEN="${TBLGEN:-clang-tblgen}"
-BASE_URL="${BASE_URL:-https://raw.githubusercontent.com/llvm/llvm-project/release/17.x}"
 
-# Fixed paths in the cpx package structure
-TMP_DIR="internal/clang/tmp"
-OUTPUT_FILE="internal/clang/generated_cdbconfig.go"
-
-echo "=== Clang Option Config Bootstrapper ==="
-
-# Validate that CLANG environment variable is set
-if [ -z "$CLANG_BIN" ]; then
-    echo "Error: CLANG environment variable is not set." >&2
-    echo "Please set it in your .env file (e.g. CLANG=/usr/bin/clang) so direnv loads it automatically." >&2
-    exit 1
-fi
-
-if ! command -v "$CLANG_BIN" >/dev/null 2>&1; then
-    echo "Error: '$CLANG_BIN' is not executable or not in PATH." >&2
-    exit 1
-fi
-
-if ! command -v "$TBLGEN" >/dev/null 2>&1; then
-    echo "Error: '$TBLGEN' is not executable or not in PATH." >&2
-    echo "Please install llvm/clang development packages or specify TBLGEN path." >&2
-    exit 1
-fi
-
-# Display compiler version info
-echo "--- Local Compiler Version ---"
-"$CLANG_BIN" --version
-echo "------------------------------"
-
-# Display tblgen version info
-echo "--- Local TableGen Version ---"
-"$TBLGEN" --version
-echo "------------------------------"
-
-echo "Base URL: $BASE_URL"
-echo "======================================"
-
-mkdir -p "$TMP_DIR"
-
+# Refer to Clang's Driver CMakeLists.txt and Options.td for dependencies
 TD_FILES=(
-    "clang/include/clang/Driver/Options.td"
-    "clang/include/clang/Driver/OptionDocEmitter.td"
-    "llvm/include/llvm/Option/OptParser.td"
-    "clang/include/clang/Basic/DiagnosticOptions.td"
-    "clang/include/clang/Basic/DiagnosticGroups.td"
+	"clang/include/clang/Driver/Options.td"
+	"clang/include/clang/Driver/OptionDocEmitter.td"
+	"llvm/include/llvm/Option/OptParser.td"
+	"clang/include/clang/Basic/DiagnosticOptions.td"
+	"clang/include/clang/Basic/DiagnosticGroups.td"
 )
 
-echo "Downloading TableGen source files..."
+# Display environment configurations for verification
+CLANG_PATH="${CLANG:-unset}"
+CLANG_VERSION="unknown"
+if [ "$CLANG_PATH" != "unset" ] && command -v "$CLANG_PATH" >/dev/null 2>&1; then
+	CLANG_VERSION=$("$CLANG_PATH" --version | head -n 1)
+fi
+
+TBLGEN_PATH="${TBLGEN}"
+TBLGEN_VERSION="unknown"
+if command -v "$TBLGEN_PATH" >/dev/null 2>&1; then
+	TBLGEN_VERSION=$("$TBLGEN_PATH" --version | head -n 1)
+fi
+
+echo "Clang path:       $CLANG_PATH"
+echo "Clang version:    $CLANG_VERSION"
+echo "TableGen path:    $TBLGEN_PATH"
+echo "TableGen version: $TBLGEN_VERSION"
+echo "Upstream URL:     $BASE_URL"
+echo "TableGen files:   ${TD_FILES[*]}"
+
+echo "Please verify the settings above and delete this safety check line to run." && exit 1
+
+mkdir -p "$TMP_DIR"
 for file in "${TD_FILES[@]}"; do
-    target_path="${TMP_DIR}/${file}"
-    mkdir -p "$(dirname "$target_path")"
-    
-    echo "  - $file"
-    curl -fsSL -o "$target_path" "${BASE_URL}/${file}"
+	src="${BASE_URL}/${file}"
+	dest="${TMP_DIR}/${file}"
+	echo "Downloading $file..."
+	mkdir -p "$(dirname "$dest")"
+	curl -fsSL "$src" -o "$dest"
 done
 
-echo "Generating JSON dump using tblgen..."
-"$TBLGEN" \
-    -I "${TMP_DIR}/llvm/include" \
-    -I "${TMP_DIR}/clang/include" \
-    --dump-json \
-    "${TMP_DIR}/clang/include/clang/Driver/Options.td" \
-    -o "${TMP_DIR}/options.json"
+echo "Generating options.json dump..."
+"$TBLGEN_PATH" \
+	-I "${TMP_DIR}/llvm/include" \
+	-I "${TMP_DIR}/clang/include" \
+	--dump-json \
+	"${TMP_DIR}/clang/include/clang/Driver/Options.td" \
+	-o "${TMP_DIR}/options.json"
 
-echo "Running cdbconfiggen..."
-go run ./internal/clang/cmd/cdbconfiggen -o "$OUTPUT_FILE" "${TMP_DIR}/options.json"
-
-echo "Success! Config generated at $OUTPUT_FILE"
+echo "Generating configuration..."
+go run ./cmd/cdbconfiggen -o "$OUTPUT_FILE" "${TMP_DIR}/options.json"
