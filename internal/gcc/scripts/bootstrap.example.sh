@@ -30,6 +30,7 @@ if [ -n "${GCC:-}" ]; then
 	GCC_VERSION=$("$GCC_PATH" --version | head -n 1)
 fi
 
+# If the path shows "unset" but GCC is installed, set the GCC path in the .env file at the repository root
 echo "GCC path:     $GCC_PATH"
 echo "GCC version:  $GCC_VERSION"
 echo "Upstream URL: $BASE_URL"

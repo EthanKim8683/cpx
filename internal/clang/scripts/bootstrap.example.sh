@@ -17,17 +17,15 @@ OUTPUT_FILE="generated_cdbconfig.go"
 
 # TODO: Configure these variables to match the local environment
 # Verify that this URL matches the compiler's version (e.g. release/17.x for Clang 17)
+# Note: For Apple Clang, target Apple's Swift fork (e.g. https://raw.githubusercontent.com/swiftlang/llvm-project/swift-5.10-RELEASE)
 BASE_URL="https://raw.githubusercontent.com/llvm/llvm-project/release/17.x"
 TBLGEN="${TBLGEN:-clang-tblgen}"
 
 # Refer to Clang's Options.td and diagnostic TableGen files for dependencies.
-# Note: TableGen files are version-dependent (e.g. OptionDocEmitter.td was added in Clang 17).
+# Note: TableGen files are version-dependent.
 TD_FILES=(
-	"clang/include/clang/Driver/Options.td"
-	"clang/include/clang/Driver/OptionDocEmitter.td"
-	"llvm/include/llvm/Option/OptParser.td"
-	"clang/include/clang/Basic/DiagnosticOptions.td"
-	"clang/include/clang/Basic/DiagnosticGroups.td"
+  "clang/include/clang/Driver/Options.td"
+  "llvm/include/llvm/Option/OptParser.td"
 )
 
 CLANG_PATH="unset"
@@ -43,6 +41,7 @@ if command -v "$TBLGEN_PATH" >/dev/null 2>&1; then
 	TBLGEN_VERSION=$("$TBLGEN_PATH" --version | head -n 1)
 fi
 
+# If the path shows "unset" but Clang is installed, set the CLANG path in the .env file at the repository root
 echo "Clang path:       $CLANG_PATH"
 echo "Clang version:    $CLANG_VERSION"
 echo "TableGen path:    $TBLGEN_PATH"
@@ -63,6 +62,8 @@ for file in "${TD_FILES[@]}"; do
 done
 
 echo "Generating options.json dump..."
+# TODO: Adjust these TableGen include paths (-I) and compile target file if your compiler fork
+# or targeted version uses a different options directory layout.
 "$TBLGEN_PATH" \
 	-I "${TMP_DIR}/llvm/include" \
 	-I "${TMP_DIR}/clang/include" \
