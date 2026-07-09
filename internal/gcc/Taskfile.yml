@@ -1,18 +1,14 @@
 version: '3'
-
 tasks:
   bootstrap:
-    desc: "Bootstrap GCC option configuration template and run the installer"
-    cmds:
-      - |
-        if [ ! -f scripts/bootstrap.sh ]; then
-          cp scripts/bootstrap.example.sh scripts/bootstrap.sh
-          echo "Created scripts/bootstrap.sh from template. Please configure it in .env and run again."
-          exit 1
-        fi
-      - bash scripts/bootstrap.sh
-
-  generate:
-    desc: "Regenerate GCC option configuration from downloaded tmp files"
-    cmds:
-      - go run ./cmd/cdbconfiggen -o generated_cdbconfig.go ./tmp
+    desc: Bootstrap GCC integration
+    deps:
+      - task: copy-bootstrap-example
+    cmds: [python3 internal/gcc/scripts/bootstrap.py]
+    sources: [internal/gcc/scripts/bootstrap.py]
+    generates: [internal/gcc/generated_cdbconfig.go]
+  copy-bootstrap-example:
+    desc: Copy bootstrap example
+    cmds: [cp internal/gcc/scripts/bootstrap.example.py internal/gcc/scripts/bootstrap.py]
+    sources: [internal/gcc/scripts/bootstrap.example.py]
+    generates: [internal/gcc/scripts/bootstrap.py]
