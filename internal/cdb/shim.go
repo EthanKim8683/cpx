@@ -12,13 +12,13 @@ import (
 // a compilation database store.
 type Shim struct {
 	// Name is the name of the compiler shim (e.g., "g++").
-	Name        string
+	Name string
 	// Cfg is the compiler-specific option pattern configuration.
-	Cfg         *Config
+	Cfg *Config
 	// Compiler is the compiler execution dependency.
-	Compiler    Compiler
+	Compiler Compiler
 	// Recorder is the compilation database storage dependency.
-	Recorder    Recorder
+	Recorder Recorder
 }
 
 func (s *Shim) update(argv []string) error {

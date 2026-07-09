@@ -209,13 +209,13 @@ func TestParse(t *testing.T) {
 			name:       "separate missing argument",
 			argv:       []string{"cc", "-o"},
 			wantErr:    true,
-			errContain: "option -o takes 1 arguments",
+			errContain: "option -o takes 1 argument(s)",
 		},
 		{
 			name:       "multi-arg missing arguments",
 			argv:       []string{"cc", "-MF", "a"},
 			wantErr:    true,
-			errContain: "option -MF takes 2 arguments",
+			errContain: "option -MF takes 2 argument(s)",
 		},
 	}
 

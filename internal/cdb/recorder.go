@@ -59,16 +59,16 @@ func (r *FileRecorder) Record(records []Record) error {
 	}
 	defer func() { _ = mu.Unlock() }()
 
-	stored := []Record{}
+	recorded := []Record{}
 	if data, err := os.ReadFile(r.file); err == nil {
-		if err := json.Unmarshal(data, &stored); err != nil {
+		if err := json.Unmarshal(data, &recorded); err != nil {
 			return fmt.Errorf("parsing database JSON: %w", err)
 		}
 	} else if !os.IsNotExist(err) {
 		return fmt.Errorf("reading database file: %w", err)
 	}
 
-	stored = mergeRecords(stored, records)
+	recorded = mergeRecords(recorded, records)
 
 	swpFile := r.file + ".swp"
 	f, err := os.Create(swpFile)
@@ -76,7 +76,7 @@ func (r *FileRecorder) Record(records []Record) error {
 		return fmt.Errorf("creating swap file: %w", err)
 	}
 
-	if err := json.NewEncoder(f).Encode(stored); err != nil {
+	if err := json.NewEncoder(f).Encode(recorded); err != nil {
 		_ = os.Remove(swpFile)
 		_ = f.Close()
 		return fmt.Errorf("encoding database JSON: %w", err)

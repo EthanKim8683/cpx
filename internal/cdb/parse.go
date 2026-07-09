@@ -11,17 +11,17 @@ type Option struct {
 	// Pattern is the compiler option pattern that was matched.
 	Pattern OptionPattern
 	// Args contains the arguments consumed by the option.
-	Args    []string
+	Args []string
 }
 
 // Command represents a parsed command with its name, options, and positional arguments.
 type Command struct {
 	// Name is the name of the executable or driver (argv[0]).
-	Name    string
+	Name string
 	// Options is the list of parsed option flags and their arguments.
 	Options []Option
 	// Args contains the positional arguments (e.g., source file paths).
-	Args    []string
+	Args []string
 }
 
 // findPattern locates the option pattern matching arg.
@@ -61,7 +61,7 @@ func findPattern(cfg *Config, arg string) *OptionPattern {
 	return nil
 }
 
-// Parse parses argv into a Command. The first element is the command name.
+// Parse parses argv into a Command.
 func Parse(cfg *Config, argv []string) (Command, error) {
 	if len(argv) == 0 {
 		return Command{}, fmt.Errorf("argv is empty")

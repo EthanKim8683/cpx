@@ -64,7 +64,7 @@ type OptionPattern struct {
 	// Spelling is the exact spelling prefix of the option flag (e.g. "-std=" or "-c").
 	Spelling string
 	// Kind specifies how the option consumes arguments from the command line.
-	Kind     OptionKind
+	Kind OptionKind
 	// NumArgs is used only by OptionKindMultiArg; zero for all other kinds.
 	NumArgs int
 }
@@ -72,7 +72,7 @@ type OptionPattern struct {
 // Config holds sorted option entries with back-chain links for prefix matching.
 type Config struct {
 	// Patterns is the list of compiler option patterns, sorted lexicographically.
-	Patterns   []OptionPattern
+	Patterns []OptionPattern
 	// BackChains maps each index in Patterns to the index of its longest joined proper prefix
 	// pattern, or -1 if no such prefix exists.
 	BackChains []int
