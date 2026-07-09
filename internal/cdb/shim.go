@@ -9,18 +9,22 @@ import (
 	"golang.org/x/sync/errgroup"
 )
 
-// Compiler defines the interface for executing a compile command.
+// Compiler runs a compile command.
+//
+// ExecCompiler is the real implementation. Shim depends on Compiler so tests
+// can substitute a fake.
 type Compiler interface {
 	Compile(argv []string) error
 }
 
-// ExecCompiler implements Compiler by executing an external subprocess.
+// ExecCompiler is the subprocess-backed Compiler implementation.
 type ExecCompiler struct {
-	// Bin is the path to the compiler executable.
+	// Bin is the absolute path to the compiler driver executable.
 	Bin string
 }
 
-// Compile executes the compiler binary as a subprocess with the provided arguments.
+// Compile runs Bin with argv[1:]. Stdin, stdout, and stderr are inherited from
+// the shim process so behavior matches invoking the driver directly.
 func (c *ExecCompiler) Compile(argv []string) error {
 	//nolint:gosec // c.Bin and argv are external compiler driver inputs we must execute
 	cmd := exec.Command(c.Bin, argv[1:]...)

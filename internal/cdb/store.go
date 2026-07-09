@@ -32,7 +32,10 @@ func mergeRecords(a, b []Record) []Record {
 	return merged
 }
 
-// Store defines the interface for reading and writing compilation database records.
+// Store provides compilation-database persistence.
+//
+// FileStore is the real implementation. Shim depends on Store so tests can
+// substitute a fake.
 type Store interface {
 	Add(records []Record) error
 	Records() ([]Record, error)
