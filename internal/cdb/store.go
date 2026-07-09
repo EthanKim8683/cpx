@@ -32,9 +32,9 @@ func mergeRecords(a, b []Record) []Record {
 	return merged
 }
 
-// Store handles reading and writing compilation database records in a
+// FileStore handles reading and writing compilation database records in a
 // thread-safe manner using file locking.
-type Store struct {
+type FileStore struct {
 	file string
 }
 
@@ -43,7 +43,7 @@ type Store struct {
 // To prevent database corruption and guarantee reliability during concurrent compiler
 // execution, updates are serialized using an advisory lock, and the write is performed
 // atomically via a temporary swap file to ensure the database is never left in a partially-written state.
-func (s *Store) Add(records []Record) error {
+func (s *FileStore) Add(records []Record) error {
 	if err := os.MkdirAll(filepath.Dir(s.file), 0755); err != nil {
 		return fmt.Errorf("creating database directory: %w", err)
 	}
@@ -52,7 +52,7 @@ func (s *Store) Add(records []Record) error {
 	if err := mu.Lock(); err != nil {
 		return fmt.Errorf("acquiring lock: %w", err)
 	}
-	defer mu.Unlock()
+	defer func() { _ = mu.Unlock() }()
 
 	stored := []Record{}
 	if data, err := os.ReadFile(s.file); err == nil {
@@ -89,7 +89,7 @@ func (s *Store) Add(records []Record) error {
 	return nil
 }
 
-// NewStore creates a new Store instance managing the specified database file.
-func NewStore(file string) *Store {
-	return &Store{file: file}
+// NewFileStore creates a new FileStore instance managing the specified database file.
+func NewFileStore(file string) *FileStore {
+	return &FileStore{file: file}
 }

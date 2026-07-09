@@ -10,16 +10,19 @@ import (
 	"golang.org/x/sync/errgroup"
 )
 
+// Compiler defines the interface for executing a compile command.
 type Compiler interface {
 	Compile(argv []string) error
 }
 
+// RecordAdder defines the interface for adding compilation records to a database.
 type RecordAdder interface {
 	Add(records []Record) error
 }
 
 // ExecCompiler implements Compiler by executing an external subprocess.
 type ExecCompiler struct {
+	// Bin is the path to the compiler executable.
 	Bin    string
 	Stdin  io.Reader
 	Stdout io.Writer
@@ -29,17 +32,8 @@ type ExecCompiler struct {
 func (c *ExecCompiler) Compile(argv []string) error {
 	cmd := exec.Command(c.Bin, argv[1:]...)
 	cmd.Stdin = c.Stdin
-	if cmd.Stdin == nil {
-		cmd.Stdin = os.Stdin
-	}
 	cmd.Stdout = c.Stdout
-	if cmd.Stdout == nil {
-		cmd.Stdout = os.Stdout
-	}
 	cmd.Stderr = c.Stderr
-	if cmd.Stderr == nil {
-		cmd.Stderr = os.Stderr
-	}
 	if err := cmd.Run(); err != nil {
 		return fmt.Errorf("compilation failed: %w", err)
 	}
@@ -49,9 +43,13 @@ func (c *ExecCompiler) Compile(argv []string) error {
 // Shim coordinates compiling a command while concurrently recording it to
 // a compilation database store.
 type Shim struct {
+	// Name is the name of the compiler shim (e.g., "g++").
 	Name        string
+	// Cfg is the compiler-specific option pattern configuration.
 	Cfg         *Config
+	// Compiler is the compiler execution dependency.
 	Compiler    Compiler
+	// RecordAdder is the compilation database storage dependency.
 	RecordAdder RecordAdder
 }
 
