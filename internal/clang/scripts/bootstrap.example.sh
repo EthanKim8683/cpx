@@ -6,11 +6,12 @@ TMP_DIR="tmp"
 OUTPUT_FILE="generated_cdbconfig.go"
 
 # Change these variables to match the local environment
-# Verify that this URL matches the compiler's version
+# Verify that this URL matches the compiler's version (e.g. release/17.x for Clang 17)
 BASE_URL="https://raw.githubusercontent.com/llvm/llvm-project/release/17.x"
 TBLGEN="${TBLGEN:-clang-tblgen}"
 
-# Refer to Clang's Driver CMakeLists.txt and Options.td for dependencies
+# Refer to Clang's Options.td and diagnostic TableGen files for dependencies.
+# Note: TableGen files are version-dependent (e.g. OptionDocEmitter.td was added in Clang 17).
 TD_FILES=(
 	"clang/include/clang/Driver/Options.td"
 	"clang/include/clang/Driver/OptionDocEmitter.td"
@@ -19,15 +20,15 @@ TD_FILES=(
 	"clang/include/clang/Basic/DiagnosticGroups.td"
 )
 
-# Display environment configurations for verification
-CLANG_PATH="${CLANG:-unset}"
-CLANG_VERSION="unknown"
-if [ "$CLANG_PATH" != "unset" ] && command -v "$CLANG_PATH" >/dev/null 2>&1; then
+CLANG_PATH="unset"
+CLANG_VERSION="unset"
+if [ -n "${CLANG:-}" ]; then
+	CLANG_PATH="$CLANG"
 	CLANG_VERSION=$("$CLANG_PATH" --version | head -n 1)
 fi
 
-TBLGEN_PATH="${TBLGEN}"
-TBLGEN_VERSION="unknown"
+TBLGEN_PATH="${TBLGEN:-clang-tblgen}"
+TBLGEN_VERSION="unset"
 if command -v "$TBLGEN_PATH" >/dev/null 2>&1; then
 	TBLGEN_VERSION=$("$TBLGEN_PATH" --version | head -n 1)
 fi
