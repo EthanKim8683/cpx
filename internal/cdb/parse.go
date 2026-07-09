@@ -1,6 +1,7 @@
 package cdb
 
 import (
+	"errors"
 	"fmt"
 	"sort"
 	"strings"
@@ -64,7 +65,7 @@ func findPattern(cfg *Config, arg string) *OptionPattern {
 // Parse parses argv into a Command.
 func Parse(cfg *Config, argv []string) (Command, error) {
 	if len(argv) == 0 {
-		return Command{}, fmt.Errorf("argv is empty")
+		return Command{}, errors.New("argv is empty")
 	}
 
 	name := argv[0]

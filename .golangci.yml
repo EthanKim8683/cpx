@@ -22,6 +22,10 @@ linters:
     - unconvert
     - unused
     - whitespace
+    - errorlint
+    - testifylint
+    - makezero
+    - perfsprint
   settings:
     errcheck:
       check-type-assertions: true

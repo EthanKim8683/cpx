@@ -2,7 +2,7 @@
 package gcc
 
 import (
-	"fmt"
+	"errors"
 	"os"
 
 	"github.com/EthanKim8683/cpx/internal/cdb"
@@ -18,7 +18,7 @@ const (
 func RunGCC(cfg *config.Config) error {
 	bin := cfg.GCC
 	if bin == "" {
-		return fmt.Errorf("GCC not set")
+		return errors.New("GCC not set")
 	}
 
 	return (&cdb.Shim{
@@ -38,7 +38,7 @@ func RunGCC(cfg *config.Config) error {
 func RunGXX(cfg *config.Config) error {
 	bin := cfg.GXX
 	if bin == "" {
-		return fmt.Errorf("GXX not set")
+		return errors.New("GXX not set")
 	}
 
 	return (&cdb.Shim{

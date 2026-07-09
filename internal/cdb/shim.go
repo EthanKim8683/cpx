@@ -52,7 +52,7 @@ func (s *Shim) update(argv []string) error {
 // and concurrently parses and updates the compilation database.
 func (s *Shim) Execute(argv []string) error {
 	if len(argv) == 0 {
-		return fmt.Errorf("no compiler arguments provided")
+		return errors.New("no compiler arguments provided")
 	}
 
 	var g errgroup.Group
