@@ -14,7 +14,7 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func TestFileStore_Add(t *testing.T) {
+func TestFileRecordAdder_Add(t *testing.T) {
 	t.Parallel()
 
 	t.Run("successfully add record", func(t *testing.T) {
@@ -22,7 +22,7 @@ func TestFileStore_Add(t *testing.T) {
 
 		tempDir := t.TempDir()
 		dbFile := filepath.Join(tempDir, "cdb.json")
-		store := NewFileStore(dbFile)
+		store := NewFileRecordAdder(dbFile)
 
 		records := []Record{
 			{
@@ -58,7 +58,7 @@ func TestFileStore_Add(t *testing.T) {
 
 		tempDir := t.TempDir()
 		dbFile := filepath.Join(tempDir, "cdb.json")
-		store := NewFileStore(dbFile)
+		store := NewFileRecordAdder(dbFile)
 
 		// Write corrupt JSON to the database file
 		err := os.WriteFile(dbFile, []byte("{not valid json"), 0644)
@@ -78,7 +78,7 @@ func TestFileStore_Add(t *testing.T) {
 
 		tempDir := t.TempDir()
 		dbFile := filepath.Join(tempDir, "cdb.json")
-		store := NewFileStore(dbFile)
+		store := NewFileRecordAdder(dbFile)
 
 		// Add empty records — should succeed without error
 		err := store.Add([]Record{})
@@ -98,7 +98,7 @@ func TestFileStore_Add(t *testing.T) {
 
 		tempDir := t.TempDir()
 		dbFile := filepath.Join(tempDir, "cdb.json")
-		store := NewFileStore(dbFile)
+		store := NewFileRecordAdder(dbFile)
 
 		const goroutines = 50
 		var wg sync.WaitGroup
@@ -146,7 +146,7 @@ func TestFileStore_Add(t *testing.T) {
 
 		tempDir := t.TempDir()
 		dbFile := filepath.Join(tempDir, "cdb.json")
-		store := NewFileStore(dbFile)
+		store := NewFileRecordAdder(dbFile)
 
 		const goroutines = 50
 		var wg sync.WaitGroup

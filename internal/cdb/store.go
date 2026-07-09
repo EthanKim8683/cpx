@@ -37,9 +37,9 @@ type RecordAdder interface {
 	Add(records []Record) error
 }
 
-// FileStore handles reading and writing compilation database records in a
+// FileRecordAdder handles reading and writing compilation database records in a
 // thread-safe manner using file locking.
-type FileStore struct {
+type FileRecordAdder struct {
 	file string
 }
 
@@ -48,7 +48,7 @@ type FileStore struct {
 // To prevent database corruption and guarantee reliability during concurrent compiler
 // execution, updates are serialized using an advisory lock, and the write is performed
 // atomically via a temporary swap file to ensure the database is never left in a partially-written state.
-func (s *FileStore) Add(records []Record) error {
+func (s *FileRecordAdder) Add(records []Record) error {
 	if err := os.MkdirAll(filepath.Dir(s.file), 0755); err != nil {
 		return fmt.Errorf("creating database directory: %w", err)
 	}
@@ -94,7 +94,7 @@ func (s *FileStore) Add(records []Record) error {
 	return nil
 }
 
-// NewFileStore creates a new FileStore instance managing the specified database file.
-func NewFileStore(file string) *FileStore {
-	return &FileStore{file: file}
+// NewFileRecordAdder creates a new FileRecordAdder instance managing the specified database file.
+func NewFileRecordAdder(file string) *FileRecordAdder {
+	return &FileRecordAdder{file: file}
 }
