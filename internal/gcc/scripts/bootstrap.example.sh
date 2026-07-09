@@ -1,11 +1,14 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# DO NOT CHANGE THESE VARIABLES
+# If you do not have GCC and do not plan on installing it, set OPT_FILES=()
+# to bypass downloading and generate an empty option configuration.
+
+# Constants (DO NOT CHANGE)
 TMP_DIR="tmp"
 OUTPUT_FILE="generated_cdbconfig.go"
 
-# CONFIGURE THESE VARIABLES TO MATCH THE LOCAL ENVIRONMENT
+# TODO: Configure these variables to match the local environment
 # Verify that this URL matches the compiler's version (e.g. releases/gcc-14 for GCC 14)
 BASE_URL="https://raw.githubusercontent.com/gcc-mirror/gcc/releases/gcc-16/gcc"
 # Refer to the upstream GCC Makefile to find options.cc (options.c for older versions) source dependencies.
@@ -19,6 +22,7 @@ OPT_FILES=(
 	"analyzer/analyzer.opt"
 )
 
+# TODO: If unset, set GCC in .env at the root of the project
 GCC_PATH="unset"
 GCC_VERSION="unset"
 if [ -n "${GCC:-}" ]; then
@@ -31,7 +35,7 @@ echo "GCC version:  $GCC_VERSION"
 echo "Upstream URL: $BASE_URL"
 echo "Option files: ${OPT_FILES[*]}"
 
-# REMOVE THIS LINE AFTER CONFIGURING THE VARIABLES
+# TODO: Remove this line after configuring the variables
 echo "Read internal/gcc/scripts/bootstrap.sh before continuing." && exit 1
 
 mkdir -p "$TMP_DIR"

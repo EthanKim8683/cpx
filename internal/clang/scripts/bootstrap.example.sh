@@ -1,11 +1,21 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Do not change these variables
+# If you are missing dependencies and do not plan on installing them:
+#
+# 1. Has Clang but no TableGen:
+#    Since you are using Clang, you should look into obtaining a pre-compiled options.json dump
+#    online for your version and placing it under tmp/options.json.
+#
+# 2. No Clang and no TableGen:
+#    If you do not use Clang at all, you can generate an empty option configuration by running:
+#    echo "{}" > tmp/options.json
+
+# Constants (DO NOT CHANGE)
 TMP_DIR="tmp"
 OUTPUT_FILE="generated_cdbconfig.go"
 
-# Change these variables to match the local environment
+# TODO: Configure these variables to match the local environment
 # Verify that this URL matches the compiler's version (e.g. release/17.x for Clang 17)
 BASE_URL="https://raw.githubusercontent.com/llvm/llvm-project/release/17.x"
 TBLGEN="${TBLGEN:-clang-tblgen}"
