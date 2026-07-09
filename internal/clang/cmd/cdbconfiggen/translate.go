@@ -14,10 +14,15 @@ type defRef struct {
 }
 
 const (
-	kindFlag          = "KIND_FLAG"
-	kindJoined        = "KIND_JOINED"
-	kindSeparate      = "KIND_SEPARATE"
-	kindRemainingArgs = "KIND_REMAINING_ARGS"
+	kindFlag                = "KIND_FLAG"
+	kindJoined              = "KIND_JOINED"
+	kindSeparate            = "KIND_SEPARATE"
+	kindCommaJoined         = "KIND_COMMAJOINED"
+	kindMultiArg            = "KIND_MULTIARG"
+	kindJoinedOrSeparate    = "KIND_JOINED_OR_SEPARATE"
+	kindJoinedAndSeparate   = "KIND_JOINED_AND_SEPARATE"
+	kindRemainingArgs       = "KIND_REMAINING_ARGS"
+	kindRemainingArgsJoined = "KIND_REMAINING_ARGS_JOINED"
 )
 
 // def represents a single TableGen def following the Option class defined in
@@ -74,7 +79,7 @@ func translateDef(def def) []cdb.OptionPattern {
 		partials = append(partials, cdb.OptionPattern{
 			Kind: cdb.OptionKindSeparate,
 		})
-	case "KIND_COMMAJOINED":
+	case kindCommaJoined:
 		// Decompose like KIND_JOINED (see above).
 		partials = append(partials, cdb.OptionPattern{
 			Kind: cdb.OptionKindJoined,
@@ -82,12 +87,12 @@ func translateDef(def def) []cdb.OptionPattern {
 		partials = append(partials, cdb.OptionPattern{
 			Kind: cdb.OptionKindFlag,
 		})
-	case "KIND_MULTIARG":
+	case kindMultiArg:
 		partials = append(partials, cdb.OptionPattern{
 			Kind:    cdb.OptionKindMultiArg,
 			NumArgs: def.NumArgs,
 		})
-	case "KIND_JOINED_OR_SEPARATE":
+	case kindJoinedOrSeparate:
 		// KIND_JOINED_OR_SEPARATE decomposes into Joined and Separate.
 		partials = append(partials, cdb.OptionPattern{
 			Kind: cdb.OptionKindJoined,
@@ -95,7 +100,7 @@ func translateDef(def def) []cdb.OptionPattern {
 		partials = append(partials, cdb.OptionPattern{
 			Kind: cdb.OptionKindSeparate,
 		})
-	case "KIND_JOINED_AND_SEPARATE":
+	case kindJoinedAndSeparate:
 		// Same empty-suffix reasoning as KIND_JOINED: JoinedAndSeparate for
 		// present arguments, Separate for empty (consumes next argv element).
 		partials = append(partials, cdb.OptionPattern{
@@ -108,7 +113,7 @@ func translateDef(def def) []cdb.OptionPattern {
 		partials = append(partials, cdb.OptionPattern{
 			Kind: cdb.OptionKindRemainingArgs,
 		})
-	case "KIND_REMAINING_ARGS_JOINED":
+	case kindRemainingArgsJoined:
 		// Same empty-suffix reasoning as KIND_JOINED: RemainingArgsJoined for
 		// present arguments, RemainingArgs for empty (consumes remaining argv).
 		partials = append(partials, cdb.OptionPattern{
