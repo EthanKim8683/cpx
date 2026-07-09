@@ -32,6 +32,9 @@ linters:
     - unconvert
     - usestdlibvars
     - whitespace
+    - ireturn
+    - errname
+    - tagalign
 
     # --- Test Quality ---
     - paralleltest
