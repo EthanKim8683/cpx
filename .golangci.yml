@@ -1,53 +1,77 @@
 version: "2"
-
+run:
+  build-tags:
+    - integration
+  tests: true
 linters:
-  default: standard
+  default: none
   enable:
-    - revive
-    - thelper
-    - testifylint
-    - forbidigo
-    - testableexamples
-    - depguard
+    - bodyclose
+    - errcheck
+    - goconst
     - gocritic
+    - gosec
+    - govet
+    - ineffassign
     - misspell
+    - nolintlint
+    - paralleltest
+    - revive
+    - staticcheck
+    - tparallel
+    - unconvert
+    - unused
+    - whitespace
   settings:
-    gocritic:
-      disabled-checks:
-        - exitAfterDefer
+    errcheck:
+      check-type-assertions: true
+      check-blank: true
+    goconst:
+      min-len: 3
+      min-occurrences: 3
+    govet:
+      disable:
+        - fieldalignment
+      enable-all: true
+    nolintlint:
+      require-explanation: true
+      require-specific: true
     revive:
       rules:
-        - name: exported
         - name: package-comments
-    depguard:
-      rules:
-        tests-no-gocmp:
-          files:
-            - $test
-          list-mode: lax
-          deny:
-            - pkg: github.com/google/go-cmp
-              desc: use testify assertions; see docs/adr/0004-testing-frameworks.md
-    forbidigo:
-      analyze-types: true
-      forbid:
-        - pattern: ^reflect\.DeepEqual$
-          msg: use testify assertions; see docs/adr/0004-testing-frameworks.md
+          severity: warning
+        - name: exported
+          severity: warning
+        - name: context-as-argument
+        - name: context-keys-type
+        - name: error-return
+        - name: error-strings
+        - name: error-naming
+        - name: var-naming
+        - name: increment-decrement
+        - name: range
   exclusions:
-    presets:
-      - common-false-positives
-      - legacy
-      - std-error-handling
+    generated: lax
     rules:
-      - path-except: '_test\.go'
-        linters:
-          - testifylint
-          - forbidigo
-          - depguard
-
-run:
-  timeout: 5m
-
+      - linters:
+          - goconst
+        path: .*_test\.go
+      - linters:
+          - goconst
+        path: .*translate\.go
+      - linters:
+          - gosec
+        text: .*(G204|G301|G304|G306).*
+    paths:
+      - third_party$
+      - builtin$
+      - examples$
+issues:
+  max-same-issues: 0
 formatters:
-  enable:
-    - goimports
+  exclusions:
+    generated: lax
+    paths:
+      - third_party$
+      - builtin$
+      - examples$
