@@ -39,7 +39,7 @@ echo "TableGen version: $TBLGEN_VERSION"
 echo "Upstream URL:     $BASE_URL"
 echo "TableGen files:   ${TD_FILES[*]}"
 
-# REMOVE THIS LINE AFTER CONFIGURING THE VARIABLES
+# TODO: Remove this line after configuring the variables
 echo "Read internal/clang/scripts/bootstrap.sh before continuing." && exit 1
 
 mkdir -p "$TMP_DIR"
