@@ -1,3 +1,4 @@
+// Package gcc provides option configuration and execution shim wrappers for the GCC toolchain.
 package gcc
 
 import (
@@ -13,6 +14,7 @@ const (
 	gxx string = "g++"
 )
 
+// RunGCC executes the gcc driver shim under the given configuration.
 func RunGCC(cfg *config.Config) error {
 	bin := cfg.GCC
 	if bin == "" {
@@ -32,6 +34,7 @@ func RunGCC(cfg *config.Config) error {
 	}).Execute(os.Args)
 }
 
+// RunGXX executes the g++ driver shim under the given configuration.
 func RunGXX(cfg *config.Config) error {
 	bin := cfg.GXX
 	if bin == "" {

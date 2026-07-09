@@ -20,6 +20,7 @@ type ExecCompiler struct {
 	Stderr io.Writer
 }
 
+// Compile executes the compiler binary as a subprocess with the provided arguments.
 func (c *ExecCompiler) Compile(argv []string) error {
 	cmd := exec.Command(c.Bin, argv[1:]...)
 	cmd.Stdin = c.Stdin
