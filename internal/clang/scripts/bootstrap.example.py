@@ -44,36 +44,6 @@ TD_FILES = [
     "llvm/include/llvm/Option/OptParser.td",
 ]
 
-# Clang is configured in the .env file at the repository root and loaded via direnv
-clang_bin = os.environ.get("CLANG", "")
-clang_path = clang_bin if clang_bin else "unset"
-clang_version = "unset"
-
-if clang_bin:
-    try:
-        result = subprocess.run([clang_bin, "--version"], capture_output=True, text=True, check=True)
-        clang_version = result.stdout.splitlines()[0]
-    except Exception:
-        clang_version = "unknown"
-
-tblgen_version = "unset"
-if TBLGEN:
-    try:
-        result = subprocess.run([TBLGEN, "--version"], capture_output=True, text=True, check=True)
-        tblgen_version = result.stdout.splitlines()[0]
-    except Exception:
-        tblgen_version = "unknown"
-
-print(f"Clang path:       {clang_path}")
-print(f"Clang version:    {clang_version}")
-print(f"TableGen path:    {TBLGEN}")
-print(f"TableGen version: {tblgen_version}")
-print(f"Upstream URL:     {BASE_URL}")
-print(f"TableGen files:   {' '.join(TD_FILES)}")
-
-TMP_DIR.mkdir(parents=True, exist_ok=True)
-
-# Download option files
 for file in TD_FILES:
     src_url = f"{BASE_URL}/{file}"
     dest_path = TMP_DIR / file
@@ -87,25 +57,37 @@ for file in TD_FILES:
 
 print("Generating options.json dump...")
 try:
-    subprocess.run([
-        TBLGEN,
-        "-I", str(TMP_DIR / "llvm/include"),
-        "-I", str(TMP_DIR / "clang/include"),
-        "--dump-json",
-        str(TMP_DIR / OPTIONS_TD_FILE),
-        "-o", str(TMP_DIR / "options.json")
-    ], check=True)
+    subprocess.run(
+        [
+            TBLGEN,
+            "-I",
+            str(TMP_DIR / "llvm" / "include"),
+            "-I",
+            str(TMP_DIR / "clang" / "include"),
+            "--dump-json",
+            str(TMP_DIR / OPTIONS_TD_FILE),
+            "-o",
+            str(TMP_DIR / "options.json"),
+        ],
+        check=True,
+    )
 except subprocess.CalledProcessError as e:
     print(f"Error running TableGen: {e}", file=sys.stderr)
     sys.exit(1)
 
 print("Generating configuration...")
 try:
-    subprocess.run([
-        "go", "run", "./internal/clang/cmd/cdbconfiggen",
-        "-o", str(OUTPUT_FILE),
-        str(TMP_DIR / "options.json")
-    ], check=True)
+    subprocess.run(
+        [
+            "go",
+            "run",
+            "./internal/clang/cmd/cdbconfiggen",
+            "-o",
+            str(OUTPUT_FILE),
+            str(TMP_DIR / "options.json"),
+        ],
+        check=True,
+    )
 except subprocess.CalledProcessError as e:
     print(f"Error running cdbconfiggen: {e}", file=sys.stderr)
     sys.exit(1)
