@@ -23,7 +23,7 @@ func TestStore_Add(t *testing.T) {
 
 		tempDir := t.TempDir()
 		dbFile := filepath.Join(tempDir, "cdb.json")
-		store := NewStore(dbFile)
+		store := NewFileStore(dbFile)
 
 		records := []Record{
 			{
@@ -59,7 +59,7 @@ func TestStore_Add(t *testing.T) {
 
 		tempDir := t.TempDir()
 		dbFile := filepath.Join(tempDir, "cdb.json")
-		store := NewStore(dbFile)
+		store := NewFileStore(dbFile)
 
 		// Write corrupt JSON to the database file
 		err := os.WriteFile(dbFile, []byte("{not valid json"), 0o644)
@@ -88,7 +88,7 @@ func TestStore_Add(t *testing.T) {
 
 		tempDir := t.TempDir()
 		dbFile := filepath.Join(tempDir, "cdb.json")
-		store := NewStore(dbFile)
+		store := NewFileStore(dbFile)
 
 		// Add empty records — should succeed without error
 		err := store.Add([]Record{})
@@ -108,7 +108,7 @@ func TestStore_Add(t *testing.T) {
 
 		tempDir := t.TempDir()
 		dbFile := filepath.Join(tempDir, "cdb.json")
-		store := NewStore(dbFile)
+		store := NewFileStore(dbFile)
 
 		const goroutines = 50
 		var wg sync.WaitGroup
@@ -156,7 +156,7 @@ func TestStore_Add(t *testing.T) {
 
 		tempDir := t.TempDir()
 		dbFile := filepath.Join(tempDir, "cdb.json")
-		store := NewStore(dbFile)
+		store := NewFileStore(dbFile)
 
 		const goroutines = 50
 		var wg sync.WaitGroup

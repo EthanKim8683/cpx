@@ -16,7 +16,13 @@ func execute() error {
 	if err != nil {
 		return err
 	}
-	return gcc.ExecuteGCC(&cfg, os.Args)
+
+	dir, err := os.Getwd()
+	if err != nil {
+		return err
+	}
+
+	return gcc.ExecuteGCC(&cfg, os.Args, dir)
 }
 
 func main() {

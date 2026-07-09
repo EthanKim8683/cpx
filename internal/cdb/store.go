@@ -33,17 +33,14 @@ func mergeRecords(a, b []Record) []Record {
 }
 
 // Recorder defines the interface for recording compilation records to a database.
-type RecordAdder interface {
+type Store interface {
 	Add(records []Record) error
-}
-
-type RecordReader interface {
 	Records() ([]Record, error)
 }
 
 // FileRecorder handles reading and writing compilation database records in a
 // thread-safe manner using file locking.
-type Store struct {
+type FileStore struct {
 	file string
 }
 
@@ -52,7 +49,7 @@ type Store struct {
 // To prevent database corruption and guarantee reliability during concurrent compiler
 // execution, updates are serialized using an advisory lock, and the write is performed
 // atomically via a temporary swap file to ensure the database is never left in a partially-written state.
-func (s *Store) Add(records []Record) error {
+func (s *FileStore) Add(records []Record) error {
 	//nolint:gosec // compilation database directories must be user-accessible (0755)
 	if err := os.MkdirAll(filepath.Dir(s.file), 0o755); err != nil {
 		return fmt.Errorf("creating database directory: %w", err)
@@ -104,9 +101,7 @@ func (s *Store) Add(records []Record) error {
 	return nil
 }
 
-var _ RecordAdder = (*Store)(nil)
-
-func (s *Store) Records() ([]Record, error) {
+func (s *FileStore) Records() ([]Record, error) {
 	//nolint:gosec // compilation database directories must be user-accessible (0755)
 	if err := os.MkdirAll(filepath.Dir(s.file), 0o755); err != nil {
 		return nil, fmt.Errorf("creating database directory: %w", err)
@@ -130,9 +125,9 @@ func (s *Store) Records() ([]Record, error) {
 	return records, nil
 }
 
-var _ RecordReader = (*Store)(nil)
+var _ Store = (*FileStore)(nil)
 
-// NewFileRecorder creates a new FileRecorder instance managing the specified database file.
-func NewStore(file string) *Store {
-	return &Store{file: file}
+// NewFileStore creates a new FileStore instance managing the specified database file.
+func NewFileStore(file string) *FileStore {
+	return &FileStore{file: file}
 }

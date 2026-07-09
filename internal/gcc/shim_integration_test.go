@@ -24,13 +24,13 @@ func TestExecuteGCC(t *testing.T) {
 		t.Skip("GCC not set")
 	}
 
-	dir, err := os.Getwd()
-	require.NoError(t, err)
 	tmpDir := t.TempDir()
 	mainC := filepath.Join(tmpDir, "main.c")
-	os.WriteFile(mainC, []byte("int main() { return 0; }"), 0644)
 	mainO := filepath.Join(tmpDir, "main.o")
 	cdbJSON := filepath.Join(tmpDir, ".cpx", "cdb.json")
+
+	os.WriteFile(mainC, []byte("int main() { return 0; }"), 0644)
+
 	args := []string{
 		gcc,
 		"-o", mainO,
@@ -39,20 +39,20 @@ func TestExecuteGCC(t *testing.T) {
 		"-O2",
 		mainC,
 	}
-	command, err := cdb.Parse(CDBConfig, args)
-	require.NoError(t, err)
-
 	require.NoError(t, ExecuteGCC(&config.Config{
 		GCC: cfg.GCC,
 		CDB: cdbJSON,
-	}, args))
+	}, args, tmpDir))
 
-	records, err := cdb.NewStore(cdbJSON).Records()
+	records, err := cdb.NewFileStore(cdbJSON).Records()
 	require.NoError(t, err)
-	require.ElementsMatch(t, []cdb.Record{
+
+	command, err := cdb.Parse(CDBConfig, args)
+	require.NoError(t, err)
+	assert.ElementsMatch(t, []cdb.Record{
 		{
 			File:    mainC,
-			Dir:     dir,
+			Dir:     tmpDir,
 			Shim:    gcc,
 			Command: command,
 		},
@@ -73,35 +73,35 @@ func TestExecuteGXX(t *testing.T) {
 		t.Skip("GXX not set")
 	}
 
-	dir, err := os.Getwd()
-	require.NoError(t, err)
 	tmpDir := t.TempDir()
 	mainCPP := filepath.Join(tmpDir, "main.cpp")
-	os.WriteFile(mainCPP, []byte("int main() { return 0; }"), 0644)
 	mainO := filepath.Join(tmpDir, "main.o")
 	cdbJSON := filepath.Join(tmpDir, ".cpx", "cdb.json")
+
+	os.WriteFile(mainCPP, []byte("int main() { return 0; }"), 0644)
+
 	args := []string{
 		gxx,
 		"-o", mainO,
-		"-std=c++17",
+		"-std=c11",
 		"-D", "DEFINE",
 		"-O2",
 		mainCPP,
 	}
-	command, err := cdb.Parse(CDBConfig, args)
-	require.NoError(t, err)
-
 	require.NoError(t, ExecuteGXX(&config.Config{
 		GXX: cfg.GXX,
 		CDB: cdbJSON,
-	}, args))
+	}, args, tmpDir))
 
-	records, err := cdb.NewStore(cdbJSON).Records()
+	records, err := cdb.NewFileStore(cdbJSON).Records()
 	require.NoError(t, err)
-	require.ElementsMatch(t, []cdb.Record{
+
+	command, err := cdb.Parse(CDBConfig, args)
+	require.NoError(t, err)
+	assert.ElementsMatch(t, []cdb.Record{
 		{
 			File:    mainCPP,
-			Dir:     dir,
+			Dir:     tmpDir,
 			Shim:    gxx,
 			Command: command,
 		},
