@@ -3,14 +3,21 @@
 package cdb
 
 import (
-	"encoding/json"
-	"os"
-	"path/filepath"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
+
+type mockRecordAdder struct {
+	records []Record
+	err     error
+}
+
+func (m *mockRecordAdder) Add(records []Record) error {
+	m.records = append(m.records, records...)
+	return m.err
+}
 
 func TestShim_Integration(t *testing.T) {
 	t.Parallel()
@@ -18,71 +25,39 @@ func TestShim_Integration(t *testing.T) {
 	t.Run("update writes to store", func(t *testing.T) {
 		t.Parallel()
 
-		tempDir := t.TempDir()
-		dbFile := filepath.Join(tempDir, "cdb.json")
-		store := NewStore(dbFile)
-
+		store := &mockRecordAdder{}
 		shim := &Shim{
-			Name:  "g++",
-			Bin:   "echo", // not used by update()
-			Cfg:   &Config{Patterns: []OptionPattern{}},
-			Store: store,
+			Name:        "g++",
+			Cfg:         &Config{Patterns: []OptionPattern{}},
+			Compiler:    &ExecCompiler{Bin: "echo"},
+			RecordAdder: store,
 		}
 
 		args := []string{"g++", "main.cpp", "solve.cpp"}
 		err := shim.update(args)
 		require.NoError(t, err)
 
-		// Verify db file exists and has correct records
-		data, err := os.ReadFile(dbFile)
-		require.NoError(t, err)
-
-		var stored []Record
-		err = json.Unmarshal(data, &stored)
-		require.NoError(t, err)
-		assert.Len(t, stored, 2)
-		
-		files := map[string]bool{
-			stored[0].File: true,
-			stored[1].File: true,
-		}
-		assert.True(t, files["main.cpp"])
-		assert.True(t, files["solve.cpp"])
-	})
-
-	t.Run("compile runs binary", func(t *testing.T) {
-		t.Parallel()
-
-		shim := &Shim{
-			Name: "g++",
-			Bin:  "true", // exits with 0 immediately
-		}
-
-		args := []string{"g++"}
-		err := shim.compile(args)
-		require.NoError(t, err)
+		require.Len(t, store.records, 2)
+		assert.Equal(t, "main.cpp", store.records[0].File)
+		assert.Equal(t, "solve.cpp", store.records[1].File)
 	})
 
 	t.Run("Execute runs both compile and update", func(t *testing.T) {
 		t.Parallel()
 
-		tempDir := t.TempDir()
-		dbFile := filepath.Join(tempDir, "cdb.json")
-		store := NewStore(dbFile)
-
+		store := &mockRecordAdder{}
 		shim := &Shim{
-			Name:  "g++",
-			Bin:   "true", // exits with 0 immediately
-			Cfg:   &Config{Patterns: []OptionPattern{}},
-			Store: store,
+			Name:        "g++",
+			Cfg:         &Config{Patterns: []OptionPattern{}},
+			Compiler:    &ExecCompiler{Bin: "true"},
+			RecordAdder: store,
 		}
 
 		args := []string{"g++", "main.cpp"}
 		err := shim.Execute(args)
 		require.NoError(t, err)
 
-		// Verify compiler output database was created
-		_, err = os.Stat(dbFile)
-		require.NoError(t, err)
+		require.Len(t, store.records, 1)
+		assert.Equal(t, "main.cpp", store.records[0].File)
 	})
 }
