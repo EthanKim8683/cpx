@@ -13,6 +13,13 @@ type defRef struct {
 	Def string `json:"def"` // name of the referenced def
 }
 
+const (
+	kindFlag          = "KIND_FLAG"
+	kindJoined        = "KIND_JOINED"
+	kindSeparate      = "KIND_SEPARATE"
+	kindRemainingArgs = "KIND_REMAINING_ARGS"
+)
+
 // def represents a single TableGen def following the Option class defined in
 // llvm/include/llvm/Option/OptParser.td.
 type def struct {
@@ -50,11 +57,11 @@ func translateDef(def def) []cdb.OptionPattern {
 	// partials holds intermediate patterns before prefix expansion.
 	partials := []cdb.OptionPattern{}
 	switch def.Kind.Def {
-	case "KIND_FLAG":
+	case kindFlag:
 		partials = append(partials, cdb.OptionPattern{
 			Kind: cdb.OptionKindFlag,
 		})
-	case "KIND_JOINED":
+	case kindJoined:
 		// KIND_JOINED options accept an empty suffix (e.g. -std alone is valid),
 		// so we emit both Joined and Flag patterns.
 		partials = append(partials, cdb.OptionPattern{
@@ -63,7 +70,7 @@ func translateDef(def def) []cdb.OptionPattern {
 		partials = append(partials, cdb.OptionPattern{
 			Kind: cdb.OptionKindFlag,
 		})
-	case "KIND_SEPARATE":
+	case kindSeparate:
 		partials = append(partials, cdb.OptionPattern{
 			Kind: cdb.OptionKindSeparate,
 		})
@@ -97,7 +104,7 @@ func translateDef(def def) []cdb.OptionPattern {
 		partials = append(partials, cdb.OptionPattern{
 			Kind: cdb.OptionKindSeparate,
 		})
-	case "KIND_REMAINING_ARGS":
+	case kindRemainingArgs:
 		partials = append(partials, cdb.OptionPattern{
 			Kind: cdb.OptionKindRemainingArgs,
 		})

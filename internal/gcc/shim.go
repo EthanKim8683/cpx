@@ -10,8 +10,8 @@ import (
 )
 
 const (
-	gcc string = "gcc"
-	gxx string = "g++"
+	gcc = "gcc"
+	gxx = "g++"
 )
 
 // RunGCC executes the gcc driver shim under the given configuration.

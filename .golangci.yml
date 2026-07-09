@@ -53,15 +53,10 @@ linters:
   exclusions:
     generated: lax
     rules:
+      # Exclude goconst from test files since duplicate string literals are extremely common in tests
       - linters:
           - goconst
         path: .*_test\.go
-      - linters:
-          - goconst
-        path: .*translate\.go
-      - linters:
-          - gosec
-        text: .*(G204|G301|G304|G306).*
     paths:
       - third_party$
       - builtin$

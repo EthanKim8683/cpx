@@ -22,7 +22,7 @@ type ExecCompiler struct {
 
 // Compile executes the compiler binary as a subprocess with the provided arguments.
 func (c *ExecCompiler) Compile(argv []string) error {
-	cmd := exec.Command(c.Bin, argv[1:]...)
+	cmd := exec.Command(c.Bin, argv[1:]...) //nolint:gosec // c.Bin and argv are external compiler driver inputs we must execute
 	cmd.Stdin = c.Stdin
 	cmd.Stdout = c.Stdout
 	cmd.Stderr = c.Stderr

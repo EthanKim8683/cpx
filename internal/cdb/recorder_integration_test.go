@@ -14,6 +14,7 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
+//nolint:gosec // integration tests dynamically read/write temp files
 func TestFileRecorder_Record(t *testing.T) {
 	t.Parallel()
 

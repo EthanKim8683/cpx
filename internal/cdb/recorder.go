@@ -49,7 +49,7 @@ type FileRecorder struct {
 // execution, updates are serialized using an advisory lock, and the write is performed
 // atomically via a temporary swap file to ensure the database is never left in a partially-written state.
 func (r *FileRecorder) Record(records []Record) error {
-	if err := os.MkdirAll(filepath.Dir(r.file), 0755); err != nil {
+	if err := os.MkdirAll(filepath.Dir(r.file), 0755); err != nil { //nolint:gosec // compilation database directories must be user-accessible (0755)
 		return fmt.Errorf("creating database directory: %w", err)
 	}
 
@@ -69,7 +69,7 @@ func (r *FileRecorder) Record(records []Record) error {
 	recorded = mergeRecords(recorded, records)
 
 	swpFile := r.file + ".swp"
-	f, err := os.Create(swpFile)
+	f, err := os.Create(swpFile) //nolint:gosec // database file path is designated by user configuration
 	if err != nil {
 		return fmt.Errorf("creating swap file: %w", err)
 	}
