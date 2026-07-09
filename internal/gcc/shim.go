@@ -20,9 +20,14 @@ func RunGCC(cfg *config.Config) error {
 	}
 
 	return (&cdb.Shim{
-		Name:        gcc,
-		Cfg:         CDBConfig,
-		Compiler:    &cdb.ExecCompiler{Bin: bin},
+		Name:     gcc,
+		Cfg:      CDBConfig,
+		Compiler: &cdb.ExecCompiler{
+			Bin:    bin,
+			Stdin:  os.Stdin,
+			Stdout: os.Stdout,
+			Stderr: os.Stderr,
+		},
 		RecordAdder: cdb.NewFileStore(cfg.CDB),
 	}).Execute(os.Args)
 }
@@ -34,9 +39,14 @@ func RunGXX(cfg *config.Config) error {
 	}
 
 	return (&cdb.Shim{
-		Name:        gxx,
-		Cfg:         CDBConfig,
-		Compiler:    &cdb.ExecCompiler{Bin: bin},
+		Name:     gxx,
+		Cfg:      CDBConfig,
+		Compiler: &cdb.ExecCompiler{
+			Bin:    bin,
+			Stdin:  os.Stdin,
+			Stdout: os.Stdout,
+			Stderr: os.Stderr,
+		},
 		RecordAdder: cdb.NewFileStore(cfg.CDB),
 	}).Execute(os.Args)
 }

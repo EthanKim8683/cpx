@@ -3,7 +3,6 @@ package cdb
 import (
 	"fmt"
 	"io"
-	"os"
 	"os/exec"
 )
 
@@ -24,17 +23,8 @@ type ExecCompiler struct {
 func (c *ExecCompiler) Compile(argv []string) error {
 	cmd := exec.Command(c.Bin, argv[1:]...)
 	cmd.Stdin = c.Stdin
-	if cmd.Stdin == nil {
-		cmd.Stdin = os.Stdin
-	}
 	cmd.Stdout = c.Stdout
-	if cmd.Stdout == nil {
-		cmd.Stdout = os.Stdout
-	}
 	cmd.Stderr = c.Stderr
-	if cmd.Stderr == nil {
-		cmd.Stderr = os.Stderr
-	}
 	if err := cmd.Run(); err != nil {
 		return fmt.Errorf("compilation failed: %w", err)
 	}
