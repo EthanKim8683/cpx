@@ -1,21 +1,27 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# If you do not have GCC and do not plan on installing it, set OPT_FILES=()
-# to bypass downloading and generate an empty option configuration.
-
 # TODO: Remove this line only after adapting this script to your environment
 echo "Read internal/gcc/scripts/bootstrap.sh before continuing." && exit 1
+
+# If you do not have GCC installed and do not plan to install it,
+# replace the download step below with:
+#
+#   OPT_FILES=()
+#
+# to bypass downloading and generate an empty option configuration.
 
 # Constants (DO NOT CHANGE)
 TMP_DIR="tmp"
 OUTPUT_FILE="generated_cdbconfig.go"
 
-# TODO: Configure these variables to match the local environment
-# Verify that this URL matches the compiler's version (e.g. releases/gcc-14 for GCC 14)
+# TODO: Configure the variables below to match your local environment.
+
+# Verify that this URL matches your compiler's version (e.g. releases/gcc-14 for GCC 14).
 BASE_URL="https://raw.githubusercontent.com/gcc-mirror/gcc/releases/gcc-16/gcc"
+
 # Refer to the upstream gcc/gcc/Makefile.in to find options.cc (options.c for older versions) source dependencies.
-# Check the target architecture (via $GCC_PATH -dumpmachine) to include target-specific files (e.g. gcc/config/aarch64/aarch64.opt).
+# Check the target architecture (via $GCC_PATH -dumpmachine) to include target-specific files (e.g. config/aarch64/aarch64.opt).
 OPT_FILES=(
 	"c-family/c.opt"
 	"common.opt"
