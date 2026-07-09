@@ -14,7 +14,7 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func TestFileRecordAdder_Add(t *testing.T) {
+func TestFileRecorder_Record(t *testing.T) {
 	t.Parallel()
 
 	t.Run("successfully add record", func(t *testing.T) {
@@ -22,7 +22,7 @@ func TestFileRecordAdder_Add(t *testing.T) {
 
 		tempDir := t.TempDir()
 		dbFile := filepath.Join(tempDir, "cdb.json")
-		store := NewFileRecordAdder(dbFile)
+		store := NewFileRecorder(dbFile)
 
 		records := []Record{
 			{
@@ -32,7 +32,7 @@ func TestFileRecordAdder_Add(t *testing.T) {
 			},
 		}
 
-		err := store.Add(records)
+		err := store.Record(records)
 		require.NoError(t, err)
 
 		// Verify the file exists and is populated
@@ -58,7 +58,7 @@ func TestFileRecordAdder_Add(t *testing.T) {
 
 		tempDir := t.TempDir()
 		dbFile := filepath.Join(tempDir, "cdb.json")
-		store := NewFileRecordAdder(dbFile)
+		store := NewFileRecorder(dbFile)
 
 		// Write corrupt JSON to the database file
 		err := os.WriteFile(dbFile, []byte("{not valid json"), 0644)
@@ -68,7 +68,7 @@ func TestFileRecordAdder_Add(t *testing.T) {
 			{File: "main.cpp", Dir: "/workspace", Shim: "g++"},
 		}
 
-		err = store.Add(records)
+		err = store.Record(records)
 		require.Error(t, err)
 		assert.Contains(t, err.Error(), "parsing database JSON")
 	})
@@ -78,10 +78,10 @@ func TestFileRecordAdder_Add(t *testing.T) {
 
 		tempDir := t.TempDir()
 		dbFile := filepath.Join(tempDir, "cdb.json")
-		store := NewFileRecordAdder(dbFile)
+		store := NewFileRecorder(dbFile)
 
 		// Add empty records — should succeed without error
-		err := store.Add([]Record{})
+		err := store.Record([]Record{})
 		require.NoError(t, err)
 
 		// Database file should exist but contain empty JSON array
@@ -98,7 +98,7 @@ func TestFileRecordAdder_Add(t *testing.T) {
 
 		tempDir := t.TempDir()
 		dbFile := filepath.Join(tempDir, "cdb.json")
-		store := NewFileRecordAdder(dbFile)
+		store := NewFileRecorder(dbFile)
 
 		const goroutines = 50
 		var wg sync.WaitGroup
@@ -114,7 +114,7 @@ func TestFileRecordAdder_Add(t *testing.T) {
 						Shim: "g++",
 					},
 				}
-				err := store.Add(records)
+				err := store.Record(records)
 				assert.NoError(t, err)
 			}()
 		}
@@ -146,7 +146,7 @@ func TestFileRecordAdder_Add(t *testing.T) {
 
 		tempDir := t.TempDir()
 		dbFile := filepath.Join(tempDir, "cdb.json")
-		store := NewFileRecordAdder(dbFile)
+		store := NewFileRecorder(dbFile)
 
 		const goroutines = 50
 		var wg sync.WaitGroup
@@ -162,7 +162,7 @@ func TestFileRecordAdder_Add(t *testing.T) {
 						Shim: "g++",
 					},
 				}
-				err := store.Add(records)
+				err := store.Record(records)
 				assert.NoError(t, err)
 			}()
 		}

@@ -32,23 +32,23 @@ func mergeRecords(a, b []Record) []Record {
 	return merged
 }
 
-// RecordAdder defines the interface for adding compilation records to a database.
-type RecordAdder interface {
-	Add(records []Record) error
+// Recorder defines the interface for recording compilation records to a database.
+type Recorder interface {
+	Record(records []Record) error
 }
 
-// FileRecordAdder handles reading and writing compilation database records in a
+// FileRecorder handles reading and writing compilation database records in a
 // thread-safe manner using file locking.
-type FileRecordAdder struct {
+type FileRecorder struct {
 	file string
 }
 
-// Add merges new compilation records into the database file.
+// Record merges new compilation records into the database file.
 //
 // To prevent database corruption and guarantee reliability during concurrent compiler
 // execution, updates are serialized using an advisory lock, and the write is performed
 // atomically via a temporary swap file to ensure the database is never left in a partially-written state.
-func (s *FileRecordAdder) Add(records []Record) error {
+func (s *FileRecorder) Record(records []Record) error {
 	if err := os.MkdirAll(filepath.Dir(s.file), 0755); err != nil {
 		return fmt.Errorf("creating database directory: %w", err)
 	}
@@ -94,7 +94,7 @@ func (s *FileRecordAdder) Add(records []Record) error {
 	return nil
 }
 
-// NewFileRecordAdder creates a new FileRecordAdder instance managing the specified database file.
-func NewFileRecordAdder(file string) *FileRecordAdder {
-	return &FileRecordAdder{file: file}
+// NewFileRecorder creates a new FileRecorder instance managing the specified database file.
+func NewFileRecorder(file string) *FileRecorder {
+	return &FileRecorder{file: file}
 }

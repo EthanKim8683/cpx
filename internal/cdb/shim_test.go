@@ -18,12 +18,12 @@ func (m *mockCompiler) Compile(argv []string) error {
 	return m.err
 }
 
-type mockRecordAdder struct {
+type mockRecorder struct {
 	records []Record
 	err     error
 }
 
-func (m *mockRecordAdder) Add(records []Record) error {
+func (m *mockRecorder) Record(records []Record) error {
 	m.records = append(m.records, records...)
 	return m.err
 }
@@ -31,13 +31,13 @@ func (m *mockRecordAdder) Add(records []Record) error {
 func TestShim_Execute(t *testing.T) {
 	t.Run("successful execution", func(t *testing.T) {
 		compiler := &mockCompiler{}
-		adder := &mockRecordAdder{}
+		adder := &mockRecorder{}
 
 		shim := &Shim{
-			Name:        "g++",
-			Cfg:         &Config{Patterns: []OptionPattern{}},
-			Compiler:    compiler,
-			RecordAdder: adder,
+			Name:     "g++",
+			Cfg:      &Config{Patterns: []OptionPattern{}},
+			Compiler: compiler,
+			Recorder: adder,
 		}
 
 		args := []string{"g++", "main.cpp"}
@@ -51,13 +51,13 @@ func TestShim_Execute(t *testing.T) {
 
 	t.Run("compiler failure", func(t *testing.T) {
 		compiler := &mockCompiler{err: errors.New("compilation failed")}
-		adder := &mockRecordAdder{}
+		adder := &mockRecorder{}
 
 		shim := &Shim{
-			Name:        "g++",
-			Cfg:         &Config{Patterns: []OptionPattern{}},
-			Compiler:    compiler,
-			RecordAdder: adder,
+			Name:     "g++",
+			Cfg:      &Config{Patterns: []OptionPattern{}},
+			Compiler: compiler,
+			Recorder: adder,
 		}
 
 		args := []string{"g++", "main.cpp"}
@@ -71,13 +71,13 @@ func TestShim_Execute(t *testing.T) {
 
 	t.Run("record adder failure", func(t *testing.T) {
 		compiler := &mockCompiler{}
-		adder := &mockRecordAdder{err: errors.New("db write failed")}
+		adder := &mockRecorder{err: errors.New("db write failed")}
 
 		shim := &Shim{
-			Name:        "g++",
-			Cfg:         &Config{Patterns: []OptionPattern{}},
-			Compiler:    compiler,
-			RecordAdder: adder,
+			Name:     "g++",
+			Cfg:      &Config{Patterns: []OptionPattern{}},
+			Compiler: compiler,
+			Recorder: adder,
 		}
 
 		args := []string{"g++", "main.cpp"}

@@ -28,7 +28,7 @@ func RunGCC(cfg *config.Config) error {
 			Stdout: os.Stdout,
 			Stderr: os.Stderr,
 		},
-		RecordAdder: cdb.NewFileRecordAdder(cfg.CDB),
+		Recorder: cdb.NewFileRecorder(cfg.CDB),
 	}).Execute(os.Args)
 }
 
@@ -47,6 +47,6 @@ func RunGXX(cfg *config.Config) error {
 			Stdout: os.Stdout,
 			Stderr: os.Stderr,
 		},
-		RecordAdder: cdb.NewFileRecordAdder(cfg.CDB),
+		Recorder: cdb.NewFileRecorder(cfg.CDB),
 	}).Execute(os.Args)
 }

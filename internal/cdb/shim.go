@@ -17,8 +17,8 @@ type Shim struct {
 	Cfg         *Config
 	// Compiler is the compiler execution dependency.
 	Compiler    Compiler
-	// RecordAdder is the compilation database storage dependency.
-	RecordAdder RecordAdder
+	// Recorder is the compilation database storage dependency.
+	Recorder    Recorder
 }
 
 func (s *Shim) update(argv []string) error {
@@ -42,7 +42,7 @@ func (s *Shim) update(argv []string) error {
 		})
 	}
 
-	if err := s.RecordAdder.Add(records); err != nil {
+	if err := s.Recorder.Record(records); err != nil {
 		return fmt.Errorf("updating compilation database: %w", err)
 	}
 	return nil
